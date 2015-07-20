@@ -8,6 +8,6 @@
     </local:VisualItemBase.Resources>
     <StackPanel Orientation="Horizontal">
         <Button Name="ClearButton" Click="ClearButton_Click">Clear</Button>
-        <CheckBox Name="ToggleButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"></CheckBox>
+        <CheckBox Name="ToggleButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" />
     </StackPanel>
 </local:VisualItemBase>

@@ -5,12 +5,12 @@
     Height="Auto" Width="Auto">
     <Grid>
         <Grid.Resources>
-            <local:CollectionMarkerListTemplateSelector x:Key="templateSelector"/>
+            <local:CollectionMarkerListTemplateSelector x:Key="TemplateSelector"/>
 
-            <DataTemplate x:Key="textureTemplate">
+            <DataTemplate x:Key="TextureTemplate">
                 <local:Texture2DItemOnList/>
             </DataTemplate>
-            <DataTemplate x:Key="genericTemplate">
+            <DataTemplate x:Key="GenericTemplate">
                 <local:GenericItemOnList/>
             </DataTemplate>
         </Grid.Resources>
@@ -24,7 +24,7 @@
                 LostFocus="ListView_LostFocus" 
                 GotFocus="ListView_GotFocus" 
                 MouseRightButtonDown="ListView_MouseRightButtonDown"
-                ItemTemplateSelector="{StaticResource templateSelector}">
+                ItemTemplateSelector="{StaticResource TemplateSelector}">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="CollectionListView_DoubleClick" />

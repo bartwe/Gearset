@@ -1,29 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Gearset.Components.CurveEditorControl;
 using System.Windows;
+using Microsoft.Xna.Framework;
 
-namespace Gearset.Components
-{
-    class Bender : Gear
-    {
-        private CurveTreeViewModel curveTreeViewModel;
-
-        public CurveEditorWindow Window { get; private set; }
-        public float SeekNeedlePosition { get { return (float)Window.horizontalRuler.NeedlePosition; } }
-        public BenderConfig Config { get { return GearsetSettings.Instance.BenderConfig; } }
+namespace Gearset.Components {
+    class Bender : Gear {
+        readonly CurveTreeViewModel curveTreeViewModel;
 
         public Bender()
-            : base (GearsetSettings.Instance.BenderConfig)
-        {
+            : base(GearsetSettings.Instance.BenderConfig) {
             Window = new CurveEditorWindow();
 
             if (Config.Visible)
                 Window.Show();
-            
+
             curveTreeViewModel = new CurveTreeViewModel(Window.curveEditorControl);
 
             Window.DataContext = Window.curveEditorControl.ControlsViewModel;
@@ -32,7 +21,7 @@ namespace Gearset.Components
             Window.Left = Config.Left;
             Window.Width = Config.Width;
             Window.Height = Config.Height;
-            Window.IsVisibleChanged += new System.Windows.DependencyPropertyChangedEventHandler(Window_IsVisibleChanged);
+            Window.IsVisibleChanged += Window_IsVisibleChanged;
 
 
             //Curve c1 = new Curve();
@@ -61,13 +50,15 @@ namespace Gearset.Components
             //RemoveCurveOrGroup("Another curve");
         }
 
-        void Window_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
-        {
+        public CurveEditorWindow Window { get; private set; }
+        public float SeekNeedlePosition { get { return (float)Window.horizontalRuler.NeedlePosition; } }
+        public BenderConfig Config { get { return GearsetSettings.Instance.BenderConfig; } }
+
+        void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
             Config.Visible = Window.IsVisible;
         }
 
-        protected override void OnVisibleChanged()
-        {
+        protected override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -77,16 +68,14 @@ namespace Gearset.Components
         /// </summary>
         /// <param name="name">The name of the curve, a dot-separated path can be used to group curves</param>
         /// <param name="curve">The curve to add to Bender</param>
-        public void AddCurve(String name, Curve curve)
-        {
+        public void AddCurve(String name, Curve curve) {
             curveTreeViewModel.AddCurve(name, curve);
         }
 
         /// <summary>
         /// Removes the provided Curve from Bender.
         /// </summary>
-        public void RemoveCurve(Curve curve)
-        {
+        public void RemoveCurve(Curve curve) {
             curveTreeViewModel.RemoveCurve(curve);
         }
 
@@ -94,22 +83,18 @@ namespace Gearset.Components
         /// Removes a Curve or a Group by name. The complete dot-separated
         /// path to the curve or group must be given.
         /// </summary>
-        public void RemoveCurveOrGroup(String name)
-        {
+        public void RemoveCurveOrGroup(String name) {
             curveTreeViewModel.RemoveCurveOrGroup(name);
         }
 
-        public override void Update(GameTime gameTime)
-        {
+        public override void Update(GameTime gameTime) {
             Window.curveEditorControl.UpdateRender();
             Window.horizontalRuler.UpdateRender();
             Window.verticalRuler.UpdateRender();
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            
+        public override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
         }
     }

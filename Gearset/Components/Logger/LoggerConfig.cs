@@ -1,27 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     [Serializable]
-    public class LoggerConfig : GearConfig
-    {
-        [InspectorIgnoreAttribute]
-        public double Top { get; internal set; }
-        [InspectorIgnoreAttribute]
-        public double Left { get; internal set; }
-        [InspectorIgnoreAttribute]
-        public double Width { get; internal set; }
-        [InspectorIgnoreAttribute]
-        public double Height { get; internal set; }
-
-        [InspectorIgnore]
-        public List<String> HiddenStreams { get; internal set; }
-
-        public LoggerConfig()
-        {
+    public class LoggerConfig : GearConfig {
+        public LoggerConfig() {
             // Defaults
             Top = 300;
             Left = 40;
@@ -30,5 +13,20 @@ namespace Gearset.Components
 
             HiddenStreams = new List<string>();
         }
+
+        [InspectorIgnore]
+        public double Top { get; internal set; }
+
+        [InspectorIgnore]
+        public double Left { get; internal set; }
+
+        [InspectorIgnore]
+        public double Width { get; internal set; }
+
+        [InspectorIgnore]
+        public double Height { get; internal set; }
+
+        [InspectorIgnore]
+        public List<String> HiddenStreams { get; internal set; }
     }
 }

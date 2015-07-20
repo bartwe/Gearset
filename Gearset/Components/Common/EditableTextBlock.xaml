@@ -13,7 +13,7 @@
     <TextBox.Template>
         <ControlTemplate TargetType="TextBox">
             <Grid>
-                <TextBox Name="PART_TextBox" Visibility="Hidden" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay}" Background="{TemplateBinding Background}"></TextBox>
+                <TextBox Name="PART_TextBox" Visibility="Hidden" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay}" Background="{TemplateBinding Background}" />
                 <TextBlock Name="PART_TextBlock"
                            Style="{DynamicResource {x:Type TextBlock}}"
                            Text="{TemplateBinding Text}"

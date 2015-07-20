@@ -12,26 +12,26 @@
                     <ResourceDictionary>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Style.Resources>
-                                <TextBlock x:Key="placeholder" Padding="1 0 1 0" Text="(Empty string)" FontSize="11" Foreground="#666"/>
+                                <TextBlock x:Key="Placeholder" Padding="1 0 1 0" Text="(Empty string)" FontSize="11" Foreground="#666"/>
                             </Style.Resources>
                             <Setter Property="TextAlignment" Value="Right"/>
                             <Style.Triggers>
                                 <Trigger Property="Text" Value="">
                                     <Setter Property="Background">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="None" AlignmentX="Right" Visual="{StaticResource placeholder}"/>
+                                            <VisualBrush Stretch="None" AlignmentX="Right" Visual="{StaticResource Placeholder}"/>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="Text" Value="{x:Null}">
                                     <Setter Property="Background">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="None" AlignmentX="Right" Visual="{StaticResource placeholder}"/>
+                                            <VisualBrush Stretch="None" AlignmentX="Right" Visual="{StaticResource Placeholder}"/>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource normal1}"/>
+                                    <Setter Property="Background" Value="{DynamicResource Normal1}"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

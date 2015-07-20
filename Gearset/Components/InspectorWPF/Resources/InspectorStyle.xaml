@@ -48,7 +48,7 @@
     </Style>
 
 
-    <Style x:Key="inspectorTreeViewItem" TargetType="{x:Type TreeViewItem}">
+    <Style x:Key="InspectorTreeViewItem" TargetType="{x:Type TreeViewItem}">
         <Style.Triggers>
             <Trigger Property="ItemsControl.AlternationIndex" Value="1">
                 <Setter Property="Background" Value="#04FFFFFF"/>
@@ -170,7 +170,7 @@
     </Style>
 
     <!-- Style for 2D Spinners -->
-    <Style x:Key="spinner2DButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="Spinner2DButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="17"/>
         <Setter Property="Margin" Value="1 0 0 0"/>

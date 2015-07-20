@@ -16,8 +16,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Grid>
-                            <Rectangle RadiusX="6" RadiusY="6" Fill="{TemplateBinding Background}">
-                            </Rectangle>
+                            <Rectangle RadiusX="6" RadiusY="6" Fill="{TemplateBinding Background}" />
                             <ContentPresenter
                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -42,6 +41,6 @@
         </Style>
     </local:VisualItemBase.Resources>
     <StackPanel Orientation="Horizontal">
-        <CheckBox Name="ToggleButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"></CheckBox>
+        <CheckBox Name="ToggleButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" />
     </StackPanel>
 </local:VisualItemBase>

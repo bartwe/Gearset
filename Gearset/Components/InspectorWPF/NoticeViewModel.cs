@@ -1,28 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-namespace Gearset.Components.InspectorWPF
-{
-    public class NoticeViewModel : INotifyPropertyChanged
-    {
-        public String NoticeText { get { return noticeText; } set { noticeText = value; OnPropertyChanged("NoticeText"); } }
-        private String noticeText;
+namespace Gearset.Components.InspectorWPF {
+    public class NoticeViewModel : INotifyPropertyChanged {
+        String _noticeText;
+        String _noticeHyperlinkText;
+        String _noticeHyperlinkUrl;
 
-        public String NoticeHyperlinkText { get { return noticeHyperlinkText; } set { noticeHyperlinkText = value; OnPropertyChanged("NoticeHyperlinkText"); } }
-        private String noticeHyperlinkText;
+        public String NoticeText {
+            get { return _noticeText; }
+            set {
+                _noticeText = value;
+                OnPropertyChanged("NoticeText");
+            }
+        }
 
-        public String NoticeHyperlinkUrl { get { return noticeHyperlinkUrl; } set { noticeHyperlinkUrl = value; OnPropertyChanged("NoticeHyperlinkUrl"); } }
-        private String noticeHyperlinkUrl;
+        public String NoticeHyperlinkText {
+            get { return _noticeHyperlinkText; }
+            set {
+                _noticeHyperlinkText = value;
+                OnPropertyChanged("NoticeHyperlinkText");
+            }
+        }
+
+        public String NoticeHyperlinkUrl {
+            get { return _noticeHyperlinkUrl; }
+            set {
+                _noticeHyperlinkUrl = value;
+                OnPropertyChanged("NoticeHyperlinkUrl");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(String propertyName)
-        {
-            if (PropertyChanged != null)
-            {
+        void OnPropertyChanged(String propertyName) {
+            if (PropertyChanged != null) {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }

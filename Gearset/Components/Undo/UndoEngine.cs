@@ -1,26 +1,21 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 
-namespace Gearset
-{
-    public class UndoEngine
-    {
+namespace Gearset {
+    public class UndoEngine {
         /// <summary>
         /// History of commands for undo.
         /// </summary>
-        private LinkedList<IUndoable> undoStack;
+        readonly LinkedList<IUndoable> _undoStack;
 
         /// <summary>
         /// History of commands for redo.
         /// </summary>
-        private LinkedList<IUndoable> redoStack;
+        readonly LinkedList<IUndoable> _redoStack;
 
-        public UndoEngine()
-        {
-            undoStack = new LinkedList<IUndoable>();
-            redoStack = new LinkedList<IUndoable>();
+        public UndoEngine() {
+            _undoStack = new LinkedList<IUndoable>();
+            _redoStack = new LinkedList<IUndoable>();
 
 //#if DEBUG
 //            GearsetResources.Console.Inspect("Undo Engine", this);
@@ -32,8 +27,7 @@ namespace Gearset
         /// be undone/redone.
         /// </summary>
         /// <param name="command">The command to execute and keep history of.</param>
-        public void Execute(IUndoable command)
-        {
+        public void Execute(IUndoable command) {
             command.Do();
             AddCommand(command);
         }
@@ -41,22 +35,18 @@ namespace Gearset
         /// <summary>
         /// Undoes the last done command
         /// </summary>
-        public void Undo()
-        {
-            if (undoStack.Count > 0)
-            {
-                IUndoable command = undoStack.Last.Value;
-                if (command.CanUndo)
-                {
+        public void Undo() {
+            if (_undoStack.Count > 0) {
+                var command = _undoStack.Last.Value;
+                if (command.CanUndo) {
                     command.Undo();
-                    undoStack.RemoveLast();
-                    redoStack.AddLast(command);
+                    _undoStack.RemoveLast();
+                    _redoStack.AddLast(command);
                 }
-                else
-                {
+                else {
 #if DEBUG
                     // WHY CANT UNDO?
-                    System.Diagnostics.Debugger.Break();
+                    Debugger.Break();
 #endif
                 }
             }
@@ -65,16 +55,13 @@ namespace Gearset
         /// <summary>
         /// Redo the last undone command
         /// </summary>
-        public void Redo()
-        {
-            if (redoStack.Count > 0)
-            {
-                IUndoable command = redoStack.Last.Value;
-                if (command.CanRedo)
-                {
+        public void Redo() {
+            if (_redoStack.Count > 0) {
+                var command = _redoStack.Last.Value;
+                if (command.CanRedo) {
                     command.Do();
-                    redoStack.RemoveLast();
-                    undoStack.AddLast(command);
+                    _redoStack.RemoveLast();
+                    _undoStack.AddLast(command);
                 }
             }
         }
@@ -84,12 +71,11 @@ namespace Gearset
         /// the command was executed somewhere else but still needs undo/redo.
         /// </summary>
         /// <param name="currentMover"></param>
-        public void AddCommand(IUndoable command)
-        {
-            undoStack.AddLast(command);
+        public void AddCommand(IUndoable command) {
+            _undoStack.AddLast(command);
 
             // Clear the redo stack (it might be empty already) because we just editted.
-            redoStack.Clear();
+            _redoStack.Clear();
         }
     }
 }

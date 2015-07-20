@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Gearset
-{
-    public interface IUndoable
-    {
+﻿namespace Gearset {
+    public interface IUndoable {
         bool CanUndo { get; }
         bool CanRedo { get; }
 

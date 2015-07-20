@@ -3,11 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     xmlns:local="clr-namespace:Gearset.Components.InspectorWPF"
-    xmlns:Behaviours="clr-namespace:Wpf.Behaviours"
+    xmlns:behaviours="clr-namespace:Wpf.Behaviours"
     Title="Finder"
     Height="350"
     Width="250"
-    Background="{DynamicResource background1}"
+    Background="{DynamicResource Background1}"
     FontSize="11"
     WindowStyle="None"
     UseLayoutRounding="True"
@@ -22,58 +22,58 @@
                 <ResourceDictionary Source="..\Common\ScrollViewerStyle.xaml"/>
                 <ResourceDictionary>
                     <!--SEARCHBOX STYLE-->
-                    <Style x:Key="searchBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Style x:Key="SearchBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                         <Style.Resources>
-                            <TextBlock x:Key="placeholder" Text="Type Search Query" FontSize="11" Foreground="#999"/>
+                            <TextBlock x:Key="Placeholder" Text="Type Search Query" FontSize="11" Foreground="#999"/>
                         </Style.Resources>
                         <Setter Property="Width" Value="250"/>
                         <Setter Property="TextAlignment" Value="Left"/>
                         <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Background" Value="{DynamicResource normal1}"/>
-                        <Setter Property="Foreground" Value="{DynamicResource normalText1}"/>
+                        <Setter Property="Background" Value="{DynamicResource Normal1}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource NormalText1}"/>
                         <Setter Property="BorderThickness" Value="1 0 0 0"/>
-                        <Setter Property="BorderBrush" Value="{DynamicResource border1}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource Border1}"/>
                         <Style.Triggers>
                             <Trigger Property="Text" Value="">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <VisualBrush Stretch="None" Viewport="5 5 200 16" ViewportUnits="Absolute" AlignmentX="Left" AlignmentY="Top" Visual="{StaticResource placeholder}"/>
+                                        <VisualBrush Stretch="None" Viewport="5 5 200 16" ViewportUnits="Absolute" AlignmentX="Left" AlignmentY="Top" Visual="{StaticResource Placeholder}"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="Text" Value="{x:Null}">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <VisualBrush Stretch="None" AlignmentX="Left" Visual="{StaticResource placeholder}"/>
+                                        <VisualBrush Stretch="None" AlignmentX="Left" Visual="{StaticResource Placeholder}"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource normal1}"/>
+                                <Setter Property="Background" Value="{DynamicResource Normal1}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
 
-                    <DataTemplate x:Key="descriptionCellTemplate">
-                        <TextBlock Foreground="{DynamicResource subtle1}" Text="{Binding Description}"/>
+                    <DataTemplate x:Key="DescriptionCellTemplate">
+                        <TextBlock Foreground="{DynamicResource Subtle1}" Text="{Binding Description}"/>
                     </DataTemplate>
 
-                    <Style x:Key="resultsStyle" TargetType="{x:Type ListView}">
-                        <Setter Property="Foreground" Value="{DynamicResource normalText1}"/>
+                    <Style x:Key="ResultsStyle" TargetType="{x:Type ListView}">
+                        <Setter Property="Foreground" Value="{DynamicResource NormalText1}"/>
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="ItemContainerStyle" Value="{StaticResource gridViewItemStyle}"/>
+                        <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewItemStyle}"/>
                         <Setter Property="View">
                             <Setter.Value>
                                 <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Behaviours:GridViewColumnResize.Width="*"/>
-                                    <GridViewColumn CellTemplate="{StaticResource descriptionCellTemplate}" Header="Description" Behaviours:GridViewColumnResize.Width="*"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" behaviours:GridViewColumnResize.Width="*"/>
+                                    <GridViewColumn CellTemplate="{StaticResource DescriptionCellTemplate}" Header="Description" behaviours:GridViewColumnResize.Width="*"/>
                                     
                                     <!--Style for the headers of the columns-->
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="{DynamicResource normal1}"/>
-                                            <Setter Property="Foreground" Value="{DynamicResource normalText1}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Normal1}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource NormalText1}"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
@@ -81,7 +81,7 @@
                                                             <Button Content="{TemplateBinding Content}" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
                                                             <Thumb x:Name="PART_HeaderGripper" BorderThickness="0"
                                                              HorizontalAlignment="Right" Width="2"
-                                                             Margin="0,0,0,0" Background="{DynamicResource highlight1}"/>
+                                                             Margin="0,0,0,0" Background="{DynamicResource Highlight1}"/>
                                                         </Grid>
                                                     </ControlTemplate>
                                                     
@@ -159,7 +159,7 @@
                 </Image>
             </Button>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0 0 5 0">
-                <TextBox Name="SearchTextBox" Style="{StaticResource searchBoxStyle}" Text="{Binding Config.SearchText, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="SearchTextBox_KeyDown"/>
+                <TextBox Name="SearchTextBox" Style="{StaticResource SearchBoxStyle}" Text="{Binding Config.SearchText, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="SearchTextBox_KeyDown"/>
                 <Button Click="Button_Click">Clear</Button>
             </StackPanel>
 
@@ -170,16 +170,15 @@
             <!--Rest of the title bar-->
             <Rectangle Fill="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"/>
         </DockPanel>
-        <ListView Behaviours:GridViewColumnResize.Enabled="True"
+        <ListView behaviours:GridViewColumnResize.Enabled="True"
             Name="ResultsListBox"  
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Style="{StaticResource resultsStyle}"
+            Style="{StaticResource ResultsStyle}"
             MouseDown="Item_MouseDown"
             MouseMove="Item_MouseMove"
-            KeyDown="ResultsListBox_KeyDown">
-        </ListView>
+            KeyDown="ResultsListBox_KeyDown" />
     </Grid>
 
 </Window>

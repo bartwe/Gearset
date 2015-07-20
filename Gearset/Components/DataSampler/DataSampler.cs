@@ -1,72 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Gearset.Components;
-using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
 
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     /// <summary>
     /// Keeps the history of a function.
     /// </summary>
-    public class DataSampler
-    {
-        public String Name { get; private set; }
-        public int SampleRate { get; set; }
-
-        public Func<float> Function { get; private set; }
-        public Func<float, float> Function2 { get; private set; }
-
+    public class DataSampler {
         public FixedLengthQueue<float> Values;
-        private int elapsedFrames;
+        int _elapsedFrames;
 
-        public DataSampler(String name)
-        {
-            this.Name = name;
-            this.SampleRate = 1;
+        public DataSampler(String name) {
+            Name = name;
+            SampleRate = 1;
             Values = new FixedLengthQueue<float>(GearsetResources.Console.Settings.DataSamplerConfig.DefaultHistoryLength);
         }
 
-        public DataSampler(String name, int historyLength, int sampleRate, Func<float, float> function)
-        {
-            this.Name = name;
-            this.Function2 = function;
-            this.SampleRate = sampleRate;
-            Values = new FixedLengthQueue<float>(historyLength);
-        }
-        
-        public DataSampler(String name, int historyLength, int sampleRate, Func<float> function)
-        {
-            this.Name = name;
-            this.Function = function;
-            this.SampleRate = sampleRate;
+        public DataSampler(String name, int historyLength, int sampleRate, Func<float, float> function) {
+            Name = name;
+            Function2 = function;
+            SampleRate = sampleRate;
             Values = new FixedLengthQueue<float>(historyLength);
         }
 
-        public void Update(GameTime gameTime)
-        {
+        public DataSampler(String name, int historyLength, int sampleRate, Func<float> function) {
+            Name = name;
+            Function = function;
+            SampleRate = sampleRate;
+            Values = new FixedLengthQueue<float>(historyLength);
+        }
+
+        public String Name { get; private set; }
+        public int SampleRate { get; set; }
+        public Func<float> Function { get; private set; }
+        public Func<float, float> Function2 { get; private set; }
+
+        public void Update(GameTime gameTime) {
             if (SampleRate == 0 || (Function == null && Function2 == null))
                 return;
 
-            elapsedFrames++;
+            _elapsedFrames++;
 
-            if (elapsedFrames >= SampleRate)
-            {
+            if (_elapsedFrames >= SampleRate) {
                 if (Function != null)
                     Values.Enqueue(Function());
                 else
                     Values.Enqueue(Function2((float)gameTime.ElapsedGameTime.TotalSeconds));
-                elapsedFrames = 0;
+                _elapsedFrames = 0;
             }
         }
 
         /// <summary>
         /// Takes a sample from the bound function.
         /// </summary>
-        public void TakeSample()
-        {
+        public void TakeSample() {
             if (Function != null)
                 Values.Enqueue(Function());
         }
@@ -76,8 +64,7 @@ namespace Gearset.Components
         /// not bound to a function.
         /// </summary>
         /// <param name="value"></param>
-        public void InsertSample(float value)
-        {
+        public void InsertSample(float value) {
             Values.Enqueue(value);
         }
     }
@@ -85,26 +72,25 @@ namespace Gearset.Components
     /// <summary>
     /// Keeps values of functions so they can be plotted.
     /// </summary>
-    public class DataSamplerManager : Gear
-    {
-        private Dictionary<String, DataSampler> samplers;
+    public class DataSamplerManager : Gear {
+        readonly Dictionary<String, DataSampler> _samplers;
 
         public DataSamplerConfig Config { get { return GearsetSettings.Instance.DataSamplerConfig; } }
 
 #if WINDOWS
-        public ObservableCollection<DataSampler> observableSamplers;
+        public ObservableCollection<DataSampler> ObservableSamplers;
         public ReadOnlyObservableCollection<DataSampler> Samplers { get; private set; }
 #else
         public List<DataSampler> observableSamplers;
         public List<DataSampler> Samplers { get; private set; }
 #endif
+
         public DataSamplerManager()
-            : base(GearsetSettings.Instance.DataSamplerConfig)
-        {
-            samplers = new Dictionary<string, DataSampler>();
+            : base(GearsetSettings.Instance.DataSamplerConfig) {
+            _samplers = new Dictionary<string, DataSampler>();
 #if WINDOWS
-            observableSamplers = new ObservableCollection<DataSampler>();
-            Samplers = new ReadOnlyObservableCollection<DataSampler>(observableSamplers);
+            ObservableSamplers = new ObservableCollection<DataSampler>();
+            Samplers = new ReadOnlyObservableCollection<DataSampler>(ObservableSamplers);
 #else
             observableSamplers = new List<DataSampler>();
             Samplers = new List<DataSampler>(observableSamplers);
@@ -115,25 +101,22 @@ namespace Gearset.Components
         /// Adds an sampler which is bound to a <c>function</c> that will be sampled
         /// every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
         /// </summary>
-        public void AddSampler(String name, int historyLength, int sampleRate, Func<float> function)
-        {
-            DataSampler sampler = new DataSampler(name, historyLength, sampleRate, function);
+        public void AddSampler(String name, int historyLength, int sampleRate, Func<float> function) {
+            var sampler = new DataSampler(name, historyLength, sampleRate, function);
             InsertSampler(name, sampler);
         }
 
-        private void InsertSampler(String name, DataSampler sampler)
-        {
-            samplers.Add(name, sampler);
-            observableSamplers.Add(sampler);
+        void InsertSampler(String name, DataSampler sampler) {
+            _samplers.Add(name, sampler);
+            ObservableSamplers.Add(sampler);
         }
 
         /// <summary>
         /// Adds an sampler which is bound to a <c>function</c> that will be sampled
         /// every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
         /// </summary>
-        public void AddSampler(String name, int historyLength, int sampleRate, Func<float, float> function)
-        {
-            DataSampler sampler = new DataSampler(name, historyLength, sampleRate, function);
+        public void AddSampler(String name, int historyLength, int sampleRate, Func<float, float> function) {
+            var sampler = new DataSampler(name, historyLength, sampleRate, function);
             InsertSampler(name, sampler);
         }
 
@@ -142,11 +125,9 @@ namespace Gearset.Components
         /// not exists it will be created. This function is intended to be used with sampler that
         /// are not bound to a function.
         /// </summary>
-        public void AddSample(String name, float value)
-        {
+        public void AddSample(String name, float value) {
             DataSampler sampler;
-            if (!samplers.TryGetValue(name, out sampler))
-            {
+            if (!_samplers.TryGetValue(name, out sampler)) {
                 sampler = new DataSampler(name);
                 InsertSampler(name, sampler);
             }
@@ -158,41 +139,32 @@ namespace Gearset.Components
         /// not exists it will be created with the specified historyLength. 
         /// This function is intended to be used with sampler that are not bound to a function.
         /// </summary>
-        public void AddSample(string name, float value, int historyLength)
-        {
+        public void AddSample(string name, float value, int historyLength) {
             DataSampler sampler;
-            if (!samplers.TryGetValue(name, out sampler))
-            {
+            if (!_samplers.TryGetValue(name, out sampler)) {
                 sampler = new DataSampler(name, historyLength, 0, default(Func<float>));
                 InsertSampler(name, sampler);
             }
-            else
-            {
+            else {
                 sampler.Values.Capacity = historyLength;
             }
             sampler.InsertSample(value);
         }
 
-        internal DataSampler GetSampler(String name)
-        {
+        internal DataSampler GetSampler(String name) {
             DataSampler sampler;
-            if (!samplers.TryGetValue(name, out sampler))
-            {
+            if (!_samplers.TryGetValue(name, out sampler)) {
                 AddSampler(name, Config.DefaultHistoryLength, 0, (Func<float>)null);
-                return samplers[name];
+                return _samplers[name];
             }
             return sampler;
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
+        public override void Update(GameTime gameTime) {
             // Update all samplers.
-            foreach (var sampler in samplers.Values)
-            {
+            foreach (var sampler in _samplers.Values) {
                 sampler.Update(gameTime);
             }
         }
-
-        
     }
 }

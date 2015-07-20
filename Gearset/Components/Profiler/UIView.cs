@@ -1,18 +1,16 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
+using System.ComponentModel;
+using Gearset.UI;
 using Microsoft.Xna.Framework;
 
-namespace Gearset.Components.Profiler
-{
-    public abstract class UIView : UI.Window
+namespace Gearset.Components.Profiler {
+    public abstract class UiView : Window
 #if WINDOWS
-        , INotifyPropertyChanged
-    {
+        , INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(String name)
-        {
+
+        protected void OnPropertyChanged(String name) {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
@@ -27,22 +25,17 @@ namespace Gearset.Components.Profiler
         /// Gets or sets a value indicating whether this <see cref="TimeRuler"/> is visible.
         /// </summary>
         /// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
-        public bool Visible
-        {
-            get
-            {
-                return _visible;
-            }
-            set
-            {
+        public bool Visible {
+            get { return _visible; }
+            set {
                 _visible = value;
                 if (VisibleChanged != null)
                     VisibleChanged(this, EventArgs.Empty);
-                
-                #if WINDOWS
-                    if (PropertyChanged != null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("Visible"));
-                #endif
+
+#if WINDOWS
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("Visible"));
+#endif
             }
         }
 
@@ -50,21 +43,19 @@ namespace Gearset.Components.Profiler
 
         internal ObservableCollection<Profiler.LevelItem> Levels = new ObservableCollection<Profiler.LevelItem>();
 
-        protected UIView(Profiler profiler, ProfilerConfig.UIViewConfig uiviewConfig, Vector2 size)
-            : base(uiviewConfig.Position, size) 
-        {
+        protected UiView(Profiler profiler, ProfilerConfig.UiViewConfig uiviewConfig, Vector2 size)
+            : base(uiviewConfig.Position, size) {
             Profiler = profiler;
 
             Visible = true;
 
             VisibleLevelsFlags = uiviewConfig.VisibleLevelsFlags;
 
-            for(var i = 0; i < Profiler.MaxLevels; i++)
-            {
-                var levelItem = new Profiler.LevelItem(i) { Name = Profiler.GetLevelNameFromLevelId(i), Enabled = IsVisibleLevelsFlagSet(i)};
+            for (var i = 0; i < Profiler.MaxLevels; i++) {
+                var levelItem = new Profiler.LevelItem(i) { Name = Profiler.GetLevelNameFromLevelId(i), Enabled = IsVisibleLevelsFlagSet(i) };
                 Levels.Add(levelItem);
 
-                levelItem.PropertyChanged += (sender, args) => { 
+                levelItem.PropertyChanged += (sender, args) => {
                     if (args.PropertyName == "Enabled")
                         SyncVisibleLevelsFlags((Profiler.LevelItem)sender);
                 };
@@ -73,33 +64,28 @@ namespace Gearset.Components.Profiler
 
         internal event EventHandler LevelsEnabledChanged;
 
-        public void EnableAllLevels()
-        {
+        public void EnableAllLevels() {
             foreach (var level in Levels)
                 level.Enabled = true;
         }
 
-        public void DisableAllLevels()
-        {
+        public void DisableAllLevels() {
             foreach (var level in Levels)
                 level.Enabled = false;
         }
 
         public int VisibleLevelsFlags { get; private set; }
 
-        static int GetFlagFromLevelId(int levelId)
-        {
+        static int GetFlagFromLevelId(int levelId) {
             return (1 << levelId);
         }
 
-        bool IsVisibleLevelsFlagSet(int levelId)
-        {
+        bool IsVisibleLevelsFlagSet(int levelId) {
             var flag = GetFlagFromLevelId(levelId);
             return (VisibleLevelsFlags & flag) != 0;
         }
 
-        void SyncVisibleLevelsFlags(Profiler.LevelItem levelItem)
-        {
+        void SyncVisibleLevelsFlags(Profiler.LevelItem levelItem) {
             var flag = GetFlagFromLevelId(levelItem.LevelId);
 
             if (levelItem.Enabled)

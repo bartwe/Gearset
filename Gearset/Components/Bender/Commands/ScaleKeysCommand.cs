@@ -1,70 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Gearset.Components.CurveEditorControl
-{
+namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Scales a set of keys.
     /// </summary>
-    public class ScaleKeysCommand : CurveEditorCommand
-    {
-        private long[] affectedKeys;
-        private Point[] normalizedPos;
+    public class ScaleKeysCommand : CurveEditorCommand {
+        readonly long[] _affectedKeys;
+        readonly Point[] _normalizedPos;
+        readonly ScaleBoxHandle _handle;
+        Point _min;
+        Point _max;
+        Point _newMin;
+        Point _newMax;
 
-        private Point handleOffset;
-        private Point min;
-        private Point max;
-        private ScaleBoxHandle handle;
-        private Point newMin;
-        private Point newMax;
-
-        public override bool CanUndo
-        {
-            get { return affectedKeys != null; }
-        }
-
-        /// <summary>
-        /// Creates a new command to scale a set of keys.
-        /// </summary>
-        /// <param name="min">The minimum position of the scale box grabbing all selected keys</param>
-        /// <param name="max">The maximum position of the scale box grabbing all selected keys</param>
         public ScaleKeysCommand(CurveEditorControl2 control, Point min, Point max, ScaleBoxHandle handle)
-            : base(control)
-        {
+            : base(control) {
             // Store the parameters.
-            this.min = min;
-            this.max = max;
-            this.newMin = min;
-            this.newMax = max;
-            this.handle = handle;
+            _min = min;
+            _max = max;
+            _newMin = min;
+            _newMax = max;
+            _handle = handle;
 
             // Store the current selection, if any.
-            affectedKeys = new long[control.Selection.Count];
-            normalizedPos = new Point[control.Selection.Count];
-            int i = 0;
-            foreach (KeyWrapper key in control.Selection)
-            {
-                affectedKeys[i] = key.Id;
+            _affectedKeys = new long[control.Selection.Count];
+            _normalizedPos = new Point[control.Selection.Count];
+            var i = 0;
+            foreach (var key in control.Selection) {
+                _affectedKeys[i] = key.Id;
 
-                Point pos = key.GetPosition();
-                normalizedPos[i].X = (pos.X - min.X) / (max.X - min.X);
-                normalizedPos[i].Y = (pos.Y - min.Y) / (max.Y - min.Y);
+                var pos = key.GetPosition();
+                _normalizedPos[i].X = (pos.X - min.X) / (max.X - min.X);
+                _normalizedPos[i].Y = (pos.Y - min.Y) / (max.Y - min.Y);
 
                 i++;
             }
         }
 
-        public override void Do()
-        {
-            ScaleKeys(newMin, newMax);
+        public override bool CanUndo { get { return _affectedKeys != null; } }
+
+        public override void Do() {
+            ScaleKeys(_newMin, _newMax);
         }
 
-        public override void Undo()
-        {
-            ScaleKeys(min, max);
+        public override void Undo() {
+            ScaleKeys(_min, _max);
         }
 
         /// <summary>
@@ -73,54 +53,47 @@ namespace Gearset.Components.CurveEditorControl
         /// added (without calling Do()) to the history.
         /// </summary>
         /// <param name="offset">offset in curve coords</param>
-        public void UpdateOffsets(Point offset)
-        {
-            newMin = min;
-            newMax = max;
+        public void UpdateOffsets(Point offset) {
+            _newMin = _min;
+            _newMax = _max;
 
             // Calculate the size of the new box.
-            switch (handle)
-            {
+            switch (_handle) {
                 case ScaleBoxHandle.BottomLeft:
-                    newMin = Point.Add(min, (Vector)offset);
+                    _newMin = Point.Add(_min, (Vector)offset);
                     break;
                 case ScaleBoxHandle.BottomRight:
-                    newMin.Y = min.Y + offset.Y;
-                    newMax.X = max.X + offset.X;
+                    _newMin.Y = _min.Y + offset.Y;
+                    _newMax.X = _max.X + offset.X;
                     break;
                 case ScaleBoxHandle.TopRight:
-                    newMax = Point.Add(max, (Vector)offset);
+                    _newMax = Point.Add(_max, (Vector)offset);
                     break;
                 case ScaleBoxHandle.TopLeft:
-                    newMin.X = min.X + offset.X;
-                    newMax.Y = max.Y + offset.Y;
+                    _newMin.X = _min.X + offset.X;
+                    _newMax.Y = _max.Y + offset.Y;
                     break;
             }
-            ScaleKeys(newMin, newMax);
-            
+            ScaleKeys(_newMin, _newMax);
         }
 
         /// <summary>
         /// Performs the actual movement of the keys.
         /// </summary>
-        private void ScaleKeys(Point newMin, Point newMax)
-        {
-            for (int i = 0; i < affectedKeys.Length; i++)
-            {
+        void ScaleKeys(Point newMin, Point newMax) {
+            for (var i = 0; i < _affectedKeys.Length; i++) {
                 // Remap to the new box;
-                Point newPosition = new Point((newMax.X - newMin.X) * normalizedPos[i].X + newMin.X, (newMax.Y - newMin.Y) * normalizedPos[i].Y + newMin.Y);
-                KeyWrapper k = Control.Keys[affectedKeys[i]];
+                var newPosition = new Point((newMax.X - newMin.X) * _normalizedPos[i].X + newMin.X, (newMax.Y - newMin.Y) * _normalizedPos[i].Y + newMin.Y);
+                var k = Control.Keys[_affectedKeys[i]];
                 k.MoveKey((float)(newPosition.X - k.Key.Position), (float)(newPosition.Y - k.Key.Value));
             }
         }
-
     }
 
-    public enum ScaleBoxHandle
-    {
+    public enum ScaleBoxHandle {
         TopLeft,
         TopRight,
         BottomRight,
-        BottomLeft,
+        BottomLeft
     }
 }

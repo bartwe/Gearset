@@ -7,7 +7,7 @@
     AllowDrop="True">
     <UserControl.Resources>
         <!-- Style for BoolButtons -->
-        <Style x:Key="wrapperButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Style x:Key="WrapperButtonStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="IsThreeState" Value="false"/>
             <Setter Property="Width" Value="10"/>
             <Setter Property="Height" Value="17"/>
@@ -19,8 +19,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Grid>
-                            <Rectangle RadiusX="2" RadiusY="2" Fill="{TemplateBinding Background}">
-                            </Rectangle>
+                            <Rectangle RadiusX="2" RadiusY="2" Fill="{TemplateBinding Background}" />
                             <ContentPresenter
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -45,7 +44,7 @@
         </Style>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-        <Style  x:Key="grabableTextBoxStyle" TargetType="TextBlock">
+        <Style  x:Key="GrabableTextBoxStyle" TargetType="TextBlock">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver"
                                   Value="True">
@@ -88,7 +87,7 @@
                 </Style>
             </Rectangle.Style>
         </Rectangle>-->
-        <Grid Name="labelsPanel" Grid.Column="1" Background="Transparent">
+        <Grid Name="LabelsPanel" Grid.Column="1" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -97,7 +96,7 @@
             <!--Node Name-->
             <TextBlock Name="TextBlock1" HorizontalAlignment ="Left" Grid.Column="0">
                 <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource grabableTextBoxStyle}">
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource GrabableTextBoxStyle}">
                         <Setter Property="FontWeight" Value="Normal"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding UserModified}" Value="True">
@@ -143,8 +142,8 @@
             </TextBlock>-->
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Column="3" >
-            <ToggleButton Style="{StaticResource wrapperButtonStyle}" IsChecked="{Binding Updating}" ToolTip="Show the Live value every frame" IsEnabled="True">L</ToggleButton>
-            <ToggleButton Style="{StaticResource wrapperButtonStyle}" IsChecked="{Binding Force}" ToolTip="Inject this value to the field/property every frame">I</ToggleButton>
+            <ToggleButton Style="{StaticResource WrapperButtonStyle}" IsChecked="{Binding Updating}" ToolTip="Show the Live value every frame" IsEnabled="True">L</ToggleButton>
+            <ToggleButton Style="{StaticResource WrapperButtonStyle}" IsChecked="{Binding Force}" ToolTip="Inject this value to the field/property every frame">I</ToggleButton>
             <!--<ToggleButton Style="{StaticResource wrapperButtonStyle}" IsChecked="{Binding Hidden}" ToolTip="Hidden (not implemented)">H</ToggleButton>-->
         </StackPanel>
     </Grid>

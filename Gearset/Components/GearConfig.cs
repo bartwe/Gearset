@@ -1,35 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     [Serializable]
-    public class GearConfig : INotifyPropertyChanged
-    {
-        [field: NonSerialized]
-        public event EventHandler<BooleanChangedEventArgs> EnabledChanged;
-        [field: NonSerialized]
-        public event EventHandler<BooleanChangedEventArgs> VisibleChanged;
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+    public class GearConfig : INotifyPropertyChanged {
+        bool _enabled;
+        bool _visible;
 
-        private bool enabled;
-        private bool visible;
+        public GearConfig() {
+            Enabled = true;
+            Visible = true;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Gear"/> is enabled.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-        [InspectorIgnoreAttribute]
-        public bool Enabled
-        {
-            get { return enabled; }
-            set
-            {
-                enabled = value; 
+        [InspectorIgnore]
+        public bool Enabled {
+            get { return _enabled; }
+            set {
+                _enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, new BooleanChangedEventArgs(value));
                 OnPropertyChanged("Enabled");
@@ -40,42 +31,40 @@ namespace Gearset.Components
         /// Gets or sets a value indicating whether this <see cref="Gear"/> is visible.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-        [InspectorIgnoreAttribute]
-        public bool Visible
-        {
-            get { return visible; }
-            set
-            {
-                visible = value; 
+        [InspectorIgnore]
+        public bool Visible {
+            get { return _visible; }
+            set {
+                _visible = value;
                 if (VisibleChanged != null)
-                    VisibleChanged(this, new BooleanChangedEventArgs(visible));
+                    VisibleChanged(this, new BooleanChangedEventArgs(_visible));
                 OnPropertyChanged("Visible");
             }
         }
 
-        public GearConfig()
-        {
-            Enabled = true;
-            Visible = true;
-        }
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [field: NonSerialized]
+        public event EventHandler<BooleanChangedEventArgs> EnabledChanged;
+
+        [field: NonSerialized]
+        public event EventHandler<BooleanChangedEventArgs> VisibleChanged;
 
         /// <summary>
         /// Call this method when a data-bound property changes so the UI gets notified.
         /// </summary>
-        protected void OnPropertyChanged(String propertyName)
-        {
+        protected void OnPropertyChanged(String propertyName) {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 
-    public class BooleanChangedEventArgs : EventArgs
-    {
-        public bool NewValue { get; set; }
-        public BooleanChangedEventArgs(bool newValue)
-        {
+    public class BooleanChangedEventArgs : EventArgs {
+        public BooleanChangedEventArgs(bool newValue) {
             NewValue = newValue;
         }
+
+        public bool NewValue { get; set; }
     }
 }

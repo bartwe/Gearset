@@ -16,15 +16,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Common\CommonStyle.xaml"/>
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="backgroundBrushSolid" Color="#00404040"/>
-                    <BitmapImage x:Key="iconImage" UriSource="icon.png"/>
-                    <BitmapImage x:Key="iconImageOver" UriSource="icon_over.png"/>
+                    <SolidColorBrush x:Key="BackgroundBrushSolid" Color="#00404040"/>
+                    <BitmapImage x:Key="IconImage" UriSource="icon.png"/>
+                    <BitmapImage x:Key="IconImageOver" UriSource="icon_over.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Window.ContextMenu>
-        <ContextMenu Name="ContextMenu" MenuItem.Click="ContextMenu_Click">
+        <ContextMenu Name="ContextMenu2" MenuItem.Click="ContextMenu_Click">
             <MenuItem Header="Support/Feature Request"/>
             <Separator/>
             <MenuItem Header="About"/>
@@ -53,10 +53,10 @@
         <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Height="20">
             <Image.Style>
                 <Style TargetType="Image">
-                    <Setter Property="Source" Value="{StaticResource iconImage}"/>
+                    <Setter Property="Source" Value="{StaticResource IconImage}"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Source" Value="{StaticResource iconImageOver}"/>
+                            <Setter Property="Source" Value="{StaticResource IconImageOver}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -69,7 +69,7 @@
             <ToggleButton VerticalAlignment="Top" Height="16" IsThreeState="False" IsChecked="{Binding LoggerConfig.Visible}">Logger</ToggleButton>
             <ToggleButton VerticalAlignment="Top" Height="16" IsThreeState="False" IsChecked="{Binding BenderConfig.Visible}">Bender</ToggleButton>
             <ToggleButton VerticalAlignment="Top" Height="16" IsThreeState="False" IsChecked="{Binding ProfilerConfig.Visible}">Profiler</ToggleButton>
-            <ListView VerticalAlignment="Top" Height="16" Name="buttonList" Background="Transparent" Margin="0" Padding="0">
+            <ListView VerticalAlignment="Top" Height="16" Name="ButtonList" Background="Transparent" Margin="0" Padding="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

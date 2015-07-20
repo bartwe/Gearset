@@ -6,5 +6,5 @@
     <UserControl.Resources>
     </UserControl.Resources>
 
-    <Button Name="editButton" Content="Edit in Bender" Width="100" Height="Auto" Margin="0 1 0 0" Click="editButton_Click"/>
+    <Button Name="EditButton" Content="Edit in Bender" Width="100" Height="Auto" Margin="0 1 0 0" Click="editButton_Click"/>
 </local:VisualItemBase>

@@ -1,41 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Gearset.Components;
-using Microsoft.Xna.Framework;
-using Gearset;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Gearset.UI;
+using Microsoft.Xna.Framework;
 
-namespace Gearset.Components.Data
-{
-    public class Plot : UI.Window
+namespace Gearset.Components.Data {
+    public class Plot : Window
 #if WINDOWS
-        , INotifyPropertyChanged
-    {
+        , INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(String name)
-        {
+
+        void OnPropertyChanged(String name) {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 #else
     {
 #endif
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Plot"/> is visible.
         /// </summary>
         /// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
-        public bool Visible
-        {
-            get
-            {
-                return visible;
-            }
-            set
-            {
-                visible = value;
+        public bool Visible {
+            get { return _visible; }
+            set {
+                _visible = value;
                 if (VisibleChanged != null)
                     VisibleChanged(this, EventArgs.Empty);
 #if WINDOWS
@@ -44,7 +35,8 @@ namespace Gearset.Components.Data
 #endif
             }
         }
-        private bool visible;
+
+        bool _visible;
 
         internal event EventHandler VisibleChanged;
 
@@ -59,8 +51,7 @@ namespace Gearset.Components.Data
         internal float Max;
 
         public Plot(DataSampler sampler, Vector2 position, Vector2 size)
-            : base(position, size)
-        {
+            : base(position, size) {
             TitleBarSize = 14;
             Sampler = sampler;
             Visible = true;
@@ -68,21 +59,19 @@ namespace Gearset.Components.Data
             MinLabelName = "lo" + TitleLabelName;
             MaxLabelName = "hi" + TitleLabelName;
         }
-
-        
     }
 
     /// <summary>
     /// Class that takes a DataSampler and plots its values to the screen.
     /// </summary>
-    public class Plotter : Gear
-    {
+    public class Plotter : Gear {
         /// <summary>
         /// Current plots.
         /// </summary>
 #if WINDOWS
-        private ObservableCollection<Plot> plots;
-        public ObservableCollection<Plot> Plots { get { return plots; } }
+        readonly ObservableCollection<Plot> _plots;
+
+        public ObservableCollection<Plot> Plots { get { return _plots; } }
 #else
         private List<Plot> plots;
         public List<Plot> Plots { get { return plots; } }
@@ -91,14 +80,16 @@ namespace Gearset.Components.Data
         /// <summary>
         /// Keep a reference to the last plot added so we can position the next one.
         /// </summary>
-        private Plot lastPlotAdded;
+        Plot _lastPlotAdded;
+
         /// <summary>
         /// If a plot is beign removed, the change of visibility to false will not
         /// imply that the plot should be added to the hidden list.
         /// </summary>
-        private Plot plotBeignRemoved;
-        private InternalLineDrawer lines;
-        private InternalLabeler labels;
+        Plot _plotBeignRemoved;
+
+        readonly InternalLineDrawer _lines;
+        readonly InternalLabeler _labels;
 
         /// <summary>
         /// Gets or sets the config object.
@@ -106,23 +97,21 @@ namespace Gearset.Components.Data
         public PlotterConfig Config { get { return GearsetResources.Console.Settings.PlotterConfig; } }
 
         public Plotter()
-            : base(GearsetResources.Console.Settings.PlotterConfig)
-        {
+            : base(GearsetResources.Console.Settings.PlotterConfig) {
 #if WINDOWS
-            plots = new ObservableCollection<Plot>();
+            _plots = new ObservableCollection<Plot>();
 #else
             plots = new List<Plot>();
 #endif
-            Config.Cleared += new EventHandler(Config_Cleared);
+            Config.Cleared += Config_Cleared;
             // Create the line drawer
-            lines = new InternalLineDrawer();
-            Children.Add(lines);
-            labels = new InternalLabeler();
-            Children.Add(labels);
+            _lines = new InternalLineDrawer();
+            Children.Add(_lines);
+            _labels = new InternalLabeler();
+            Children.Add(_labels);
         }
 
-        void Config_Cleared(object sender, EventArgs e)
-        {
+        void Config_Cleared(object sender, EventArgs e) {
             Clear();
         }
 
@@ -130,45 +119,40 @@ namespace Gearset.Components.Data
         /// Shows a plot of the sampler with the specified name if the sampler does
         /// not exist it is created.
         /// </summary>
-        public void ShowPlot(String samplerName)
-        {
+        public void ShowPlot(String samplerName) {
             // Check if the plot exist already.
-            foreach (var p in plots)
-            {
+            foreach (var p in _plots) {
                 if (p.Sampler.Name == samplerName)
                     return;
             }
-            DataSampler sampler = GearsetResources.Console.DataSamplerManager.GetSampler(samplerName);
+            var sampler = GearsetResources.Console.DataSamplerManager.GetSampler(samplerName);
             if (sampler == null)
                 return;
 
-            Vector2 position = GetNextPosition();
-            Plot plot = new Plot(sampler, position, Config.DefaultSize);
-            plots.Add(plot);
+            var position = GetNextPosition();
+            var plot = new Plot(sampler, position, Config.DefaultSize);
+            _plots.Add(plot);
 
             // Hide all plots that are beign hidden.
             plot.Visible = !Config.HiddenPlots.Contains(samplerName);
 
-            plot.VisibleChanged += new EventHandler(plot_VisibleChanged);
+            plot.VisibleChanged += plot_VisibleChanged;
 
-            lastPlotAdded = plot;
+            _lastPlotAdded = plot;
         }
 
-        void plot_VisibleChanged(object sender, EventArgs e)
-        {
-            Plot plot = sender as Plot;
+        void plot_VisibleChanged(object sender, EventArgs e) {
+            var plot = sender as Plot;
 
-            if (!plot.Visible)
-            {
+            if (!plot.Visible) {
                 // Disabled
-                labels.HideLabel(plot.TitleLabelName);
-                labels.HideLabel(plot.MinLabelName);
-                labels.HideLabel(plot.MaxLabelName);
-                if (!Config.HiddenPlots.Contains(plot.Sampler.Name) && plotBeignRemoved != plot)
+                _labels.HideLabel(plot.TitleLabelName);
+                _labels.HideLabel(plot.MinLabelName);
+                _labels.HideLabel(plot.MaxLabelName);
+                if (!Config.HiddenPlots.Contains(plot.Sampler.Name) && _plotBeignRemoved != plot)
                     Config.HiddenPlots.Add(plot.Sampler.Name);
             }
-            else
-            { 
+            else {
                 // Enabled
                 if (Config.HiddenPlots.Contains(plot.Sampler.Name))
                     Config.HiddenPlots.Remove(plot.Sampler.Name);
@@ -178,43 +162,35 @@ namespace Gearset.Components.Data
         /// <summary>
         /// Calculates a position for a new plot.
         /// </summary>
-        private Vector2 GetNextPosition()
-        {
-            Vector2 padding = new Vector2(3, 15);
-            Vector2 screenSize = new Vector2(GearsetResources.Device.Viewport.Width, GearsetResources.Device.Viewport.Height);
+        Vector2 GetNextPosition() {
+            var padding = new Vector2(3, 15);
+            var screenSize = new Vector2(GearsetResources.Device.Viewport.Width, GearsetResources.Device.Viewport.Height);
 
             Plot lastPlotAdded;
-            if (plots.Count == 0)
+            if (_plots.Count == 0)
                 return new Vector2(padding.X, screenSize.Y - padding.Y - Config.DefaultSize.Y);
-            else
-                lastPlotAdded = plots[plots.Count - 1];
+            lastPlotAdded = _plots[_plots.Count - 1];
 
-            Vector2 result = lastPlotAdded.Position + (padding + lastPlotAdded.Size) * Vector2.UnitX;
-            if (result.X + Config.DefaultSize.X > GearsetResources.Device.Viewport.Width)
-            {
+            var result = lastPlotAdded.Position + (padding + lastPlotAdded.Size) * Vector2.UnitX;
+            if (result.X + Config.DefaultSize.X > GearsetResources.Device.Viewport.Width) {
                 result = new Vector2(padding.X, lastPlotAdded.Position.Y - padding.Y - Config.DefaultSize.Y);
             }
             return result;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            
-        }
+        public override void Update(GameTime gameTime) {}
 
-        public override void Draw(GameTime gameTime)
-        {
+        public override void Draw(GameTime gameTime) {
             // Just to make sure we're only doing this one per frame.
             if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass)
                 return;
 
-            foreach (Plot plot in plots)
-            {
+            foreach (var plot in _plots) {
                 if (!plot.Visible) continue;
-                int count = plot.Sampler.Values.Capacity;
+                var count = plot.Sampler.Values.Capacity;
                 float max, min, actualmin, actualmax;
-                Vector2 position = plot.Position;
-                Vector2 size = plot.Size;
+                var position = plot.Position;
+                var size = plot.Size;
                 GetLimits(plot, out actualmin, out actualmax);
 
 
@@ -225,39 +201,34 @@ namespace Gearset.Components.Data
                 GearsetResources.Console.SolidBoxDrawer.ShowGradientBoxOnce(position, position + size, new Color(56, 56, 56, 150), new Color(16, 16, 16, 127));
 
                 // Draw the border
-                plot.DrawBorderLines(Color.Gray, lines);
+                plot.DrawBorderLines(Color.Gray, _lines);
                 //if (plot.TitleBar.IsMouseOver)
                 //    plot.TitleBar.DrawBorderLines(Color.White, lines);
                 if (plot.ScaleNob.IsMouseOver)
-                    plot.ScaleNob.DrawBorderLines(Color.White, lines);
-                labels.ShowLabel(plot.TitleLabelName, position + new Vector2(0, -12), plot.Sampler.Name);
+                    plot.ScaleNob.DrawBorderLines(Color.White, _lines);
+                _labels.ShowLabel(plot.TitleLabelName, position + new Vector2(0, -12), plot.Sampler.Name);
 
-                if (min != max)
-                {
+                if (min != max) {
                     // Draw zero
-                    if (min < 0 && max > 0)
-                    {
-                        float normalValue = (0 - min) / (max - min);
-                        Vector2 yoffset = new Vector2 { X = 0, Y = size.Y * (1 - normalValue) };
-                        lines.ShowLineOnce(position + yoffset, position + new Vector2(size.X, 0) + yoffset, new Color(230, 0, 0, 220));
+                    if (min < 0 && max > 0) {
+                        var normalValue = (0 - min) / (max - min);
+                        var yoffset = new Vector2 { X = 0, Y = size.Y * (1 - normalValue) };
+                        _lines.ShowLineOnce(position + yoffset, position + new Vector2(size.X, 0) + yoffset, new Color(230, 0, 0, 220));
                     }
 
-                    Vector2 previousPoint = Vector2.Zero;
-                    Vector2 pixelOffset = Vector2.UnitY;
-                    int i = 0;
-                    foreach (float value in plot.Sampler.Values)
-                    {
-                        float normalValue = (value - min) / (max - min);
-                        Vector2 point = new Vector2
-                        {
+                    var previousPoint = Vector2.Zero;
+                    var pixelOffset = Vector2.UnitY;
+                    var i = 0;
+                    foreach (var value in plot.Sampler.Values) {
+                        var normalValue = (value - min) / (max - min);
+                        var point = new Vector2 {
                             X = position.X + i / ((float)count - 1) * size.X,
                             Y = position.Y + (size.Y - 1f) * MathHelper.Clamp((1 - normalValue), 0, 1)
                         };
 
-                        if (i != 0)
-                        {
-                            lines.ShowLineOnce(previousPoint, point, new Color(138, 198, 49));
-                            lines.ShowLineOnce(previousPoint + pixelOffset, point + pixelOffset, new Color(138, 198, 49));
+                        if (i != 0) {
+                            _lines.ShowLineOnce(previousPoint, point, new Color(138, 198, 49));
+                            _lines.ShowLineOnce(previousPoint + pixelOffset, point + pixelOffset, new Color(138, 198, 49));
                         }
 
                         i++;
@@ -265,29 +236,25 @@ namespace Gearset.Components.Data
                     }
 
                     // Show the min/max labels.
-                    labels.ShowLabel(plot.MinLabelName, position + new Vector2(2, size.Y - 12), actualmin.ToString(), Color.White);
-                    labels.ShowLabel(plot.MaxLabelName, position + new Vector2(2, 0), actualmax.ToString(), Color.White);
+                    _labels.ShowLabel(plot.MinLabelName, position + new Vector2(2, size.Y - 12), actualmin.ToString(), Color.White);
+                    _labels.ShowLabel(plot.MaxLabelName, position + new Vector2(2, 0), actualmax.ToString(), Color.White);
                 }
-                else if (plot.Sampler.Values.Count > 0)
-                {
-                    lines.ShowLineOnce(new Vector2(position.X, position.Y + size.Y * .5f), new Vector2(position.X + size.X, position.Y + size.Y * .5f), new Color(138, 198, 49));
-                    lines.ShowLineOnce(new Vector2(position.X, position.Y + size.Y * .5f + 1), new Vector2(position.X + size.X, position.Y + size.Y * .5f + 1), new Color(138, 198, 49));
-                    labels.ShowLabel(plot.MinLabelName, position + new Vector2(2, size.Y * .5f - 12), actualmin.ToString(), Color.White);
+                else if (plot.Sampler.Values.Count > 0) {
+                    _lines.ShowLineOnce(new Vector2(position.X, position.Y + size.Y * .5f), new Vector2(position.X + size.X, position.Y + size.Y * .5f), new Color(138, 198, 49));
+                    _lines.ShowLineOnce(new Vector2(position.X, position.Y + size.Y * .5f + 1), new Vector2(position.X + size.X, position.Y + size.Y * .5f + 1), new Color(138, 198, 49));
+                    _labels.ShowLabel(plot.MinLabelName, position + new Vector2(2, size.Y * .5f - 12), actualmin.ToString(), Color.White);
                 }
-                else
-                {
+                else {
                     plot.DrawCrossLines(Color.Gray);
                 }
             }
         }
 
         // TODO: move this to the DataSampler class.
-        private static void GetLimits(Plot plot, out float min, out float max)
-        {
+        static void GetLimits(Plot plot, out float min, out float max) {
             max = float.MinValue;
             min = float.MaxValue;
-            foreach (float value in plot.Sampler.Values)
-            {
+            foreach (var value in plot.Sampler.Values) {
                 if (value > max)
                     max = value;
                 if (value < min)
@@ -302,22 +269,18 @@ namespace Gearset.Components.Data
         /// again
         /// </summary>
         /// <param name="name">Name of the plot to remove.</param>
-        public void RemovePlot(String name)
-        {
-            plotBeignRemoved = null;
-            foreach (var plot in plots)
-            {
-                if (plot.Sampler.Name == name)
-                {
-                    plotBeignRemoved = plot;
+        public void RemovePlot(String name) {
+            _plotBeignRemoved = null;
+            foreach (var plot in _plots) {
+                if (plot.Sampler.Name == name) {
+                    _plotBeignRemoved = plot;
                     break;
                 }
             }
-            if (plotBeignRemoved != null)
-            {
-                plotBeignRemoved.Visible = false;
-                plots.Remove(plotBeignRemoved);
-                plotBeignRemoved = null;
+            if (_plotBeignRemoved != null) {
+                _plotBeignRemoved.Visible = false;
+                _plots.Remove(_plotBeignRemoved);
+                _plotBeignRemoved = null;
             }
         }
 
@@ -325,19 +288,16 @@ namespace Gearset.Components.Data
         /// Removes all plots, if ShowPlot is called again, plots will be shown
         /// again.
         /// </summary>
-        public void Clear()
-        {
+        public void Clear() {
             HideAll();
-            plots.Clear();
+            _plots.Clear();
         }
 
         /// <summary>
         /// Hides all plots, data will still be captured.
         /// </summary>
-        public void HideAll()
-        {
-            foreach (Plot plot in plots)
-            {
+        public void HideAll() {
+            foreach (var plot in _plots) {
                 plot.Visible = false;
             }
         }
@@ -345,10 +305,8 @@ namespace Gearset.Components.Data
         /// <summary>
         /// Hides all plots, data will still be captured.
         /// </summary>
-        public void ShowAll()
-        {
-            foreach (Plot plot in plots)
-            {
+        public void ShowAll() {
+            foreach (var plot in _plots) {
                 plot.Visible = true;
             }
         }
@@ -356,17 +314,15 @@ namespace Gearset.Components.Data
         /// <summary>
         /// Resets the positions of all overlaid plots.
         /// </summary>
-        public void ResetPositions()
-        {
-            List<Plot> plotsAux = new List<Plot>();
-            foreach (var plot in plots)
+        public void ResetPositions() {
+            var plotsAux = new List<Plot>();
+            foreach (var plot in _plots)
                 plotsAux.Add(plot);
-            plots.Clear();
-            foreach (var plot in plotsAux)
-            {
+            _plots.Clear();
+            foreach (var plot in plotsAux) {
                 plot.Position = GetNextPosition();
                 plot.Size = Config.DefaultSize;
-                plots.Add(plot);
+                _plots.Add(plot);
             }
             plotsAux.Clear();
         }

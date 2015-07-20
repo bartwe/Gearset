@@ -9,8 +9,8 @@
     Height="238"
     Width="330"
     FontSize="11"
-    Background="{DynamicResource background1}"
-    Foreground="{DynamicResource normalText1}"
+    Background="{DynamicResource Background1}"
+    Foreground="{DynamicResource NormalText1}"
     WindowStyle="None"
     UseLayoutRounding="True"
     Icon="..\..\Cog.ico"
@@ -24,7 +24,7 @@
                 <ResourceDictionary Source="..\Common\ScrollViewerStyle.xaml"/>
                 <ResourceDictionary>
                     <!--Levels-->
-                    <DataTemplate x:Key="levelTemplate" DataType="profiler:LevelItem">
+                    <DataTemplate x:Key="LevelTemplate" DataType="profiler:LevelItem">
                         <DockPanel>
                             <CheckBox DockPanel.Dock="Left" IsChecked="{Binding Path=Enabled}" Margin="0 0 5 0"/>
                             <TextBlock Text="{Binding Name}" />
@@ -43,7 +43,7 @@
 
 
         <!--Tool Bar-->
-        <Border Margin="0" BorderBrush="{DynamicResource border1}" BorderThickness="1">
+        <Border Margin="0" BorderBrush="{DynamicResource Border1}" BorderThickness="1">
         <DockPanel Grid.Row="0" Grid.ColumnSpan="3">
             <Button DockPanel.Dock="Right" Name="CloseButton" Width="16" Height="16" Click="CloseClick">
                 <Image Width="7" Height="7">
@@ -92,14 +92,14 @@
                         <!-- Performance Graph -->
                         <DockPanel Grid.Column="0" Grid.Row="1">
                             <!-- Action Buttons -->
-                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource border1}">
+                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource Border1}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Width="Auto" Name="pgEnableAllButton" Click="pgEnableAllButton_Click">Show All</Button>
-                                    <Button Width="Auto" Name="pgDisableAllButton" Click="pgDisableAllButton_Click">Hide All</Button>
+                                    <Button Width="Auto" Name="PgEnableAllButton" Click="pgEnableAllButton_Click">Show All</Button>
+                                    <Button Width="Auto" Name="PgDisableAllButton" Click="pgDisableAllButton_Click">Hide All</Button>
                                 </StackPanel>
                             </Border>
                             <!-- Levels ListView -->
-                            <ListView Name="pgLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource levelTemplate}" Background="Transparent" BorderThickness="0
+                            <ListView Name="PgLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource LevelTemplate}" Background="Transparent" BorderThickness="0
                                       " />
                         </DockPanel>
 
@@ -115,14 +115,14 @@
                         <!-- Performance Graph -->
                         <DockPanel Grid.Column="0" Grid.Row="1">
                             <!-- Action Buttons -->
-                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource border1}">
+                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource Border1}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Width="Auto" Name="trEnableAllButton" Click="trEnableAllButton_Click">Show All</Button>
-                                    <Button Width="Auto" Name="trDisableAllButton" Click="trDisableAllButton_Click">Hide All</Button>
+                                    <Button Width="Auto" Name="TrEnableAllButton" Click="trEnableAllButton_Click">Show All</Button>
+                                    <Button Width="Auto" Name="TrDisableAllButton" Click="trDisableAllButton_Click">Hide All</Button>
                                 </StackPanel>
                             </Border>
                             <!-- Levels ListView -->
-                            <ListView Name="trLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource levelTemplate}" Background="Transparent" BorderThickness="0" />
+                            <ListView Name="TrLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource LevelTemplate}" Background="Transparent" BorderThickness="0" />
                         </DockPanel>
 
                     </Grid>
@@ -137,14 +137,14 @@
                         <!-- Profiler Summary -->
                         <DockPanel Grid.Column="0" Grid.Row="1">
                             <!-- Action Buttons -->
-                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource border1}">
+                            <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource Border1}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Width="Auto" Name="psEnableAllButton" Click="psEnableAllButton_Click">Show All</Button>
-                                    <Button Width="Auto" Name="psDisableAllButton" Click="psDisableAllButton_Click">Hide All</Button>
+                                    <Button Width="Auto" Name="PsEnableAllButton" Click="psEnableAllButton_Click">Show All</Button>
+                                    <Button Width="Auto" Name="PsDisableAllButton" Click="psDisableAllButton_Click">Hide All</Button>
                                 </StackPanel>
                             </Border>
                             <!-- Levels ListView -->
-                            <ListView Name="psLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource levelTemplate}" Background="Transparent" BorderThickness="0" />
+                            <ListView Name="PsLevelsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource LevelTemplate}" Background="Transparent" BorderThickness="0" />
                         </DockPanel>
 
                     </Grid>

@@ -1,60 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 
-namespace Gearset.Components.CurveEditorControl
-{
+namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Selects the provided set of keys.
     /// </summary>
-    public class DeleteKeysCommand : CurveEditorCommand
-    {
-        private List<KeyWrapper> deletedKeys;
-
-        public override bool CanUndo
-        {
-            get { return deletedKeys != null; }
-        }
+    public class DeleteKeysCommand : CurveEditorCommand {
+        List<KeyWrapper> _deletedKeys;
 
         /// <summary>
         /// Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public DeleteKeysCommand(CurveEditorControl2 control)
-            : base(control)
-        {
-        }
+            : base(control) {}
 
-        public override void Do()
-        {
+        public override bool CanUndo { get { return _deletedKeys != null; } }
+
+        public override void Do() {
             // Store the keys to be removed
-            if (deletedKeys == null)
-            {
-                deletedKeys = new List<KeyWrapper>();
-                foreach (KeyWrapper key in Control.Selection)
-                {
-                    deletedKeys.Add(key);
+            if (_deletedKeys == null) {
+                _deletedKeys = new List<KeyWrapper>();
+                foreach (var key in Control.Selection) {
+                    _deletedKeys.Add(key);
                 }
             }
             // Delete them.
-            foreach (KeyWrapper key in deletedKeys)
-            {
+            foreach (var key in _deletedKeys) {
                 key.Curve.RemoveKey(key.Id);
             }
             // Remove the reference from the selection
             Control.Selection.Clear();
         }
 
-        public override void Undo()
-        {
+        public override void Undo() {
             // Restore the keys removed.
-            foreach (KeyWrapper key in deletedKeys)
-            {
+            foreach (var key in _deletedKeys) {
                 key.Curve.RestoreKey(key);
                 Control.Selection.Add(key);
             }
         }
-
     }
 }

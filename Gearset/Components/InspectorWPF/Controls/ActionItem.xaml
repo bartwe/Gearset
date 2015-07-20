@@ -3,5 +3,5 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Gearset.Components.InspectorWPF"
     Height="Auto" Width="Auto">
-    <Button Name="Button1"></Button >
+    <Button Name="Button1" />
 </local:VisualItemBase>

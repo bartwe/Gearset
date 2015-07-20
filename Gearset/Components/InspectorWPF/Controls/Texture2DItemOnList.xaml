@@ -4,10 +4,10 @@
     xmlns:local="clr-namespace:Gearset.Components.InspectorWPF"
     Height="Auto" Width="Auto">
     <StackPanel Orientation="Horizontal">
-        <Image Height="25" Width="25" Name="image"/>
+        <Image Height="25" Width="25" Name="Image"/>
         <StackPanel>
-            <TextBlock Name="nameLabel"/>
-            <TextBlock Name="stringLabel"/>
+            <TextBlock Name="NameLabel"/>
+            <TextBlock Name="StringLabel"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -1,48 +1,33 @@
 using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows;
-using System.ComponentModel;
-using System.Windows.Forms.Integration;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
-using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
 
-namespace Gearset.Components.InspectorWPF
-{
-    public class GenericMethodCaller : MethodCaller
-    {
+namespace Gearset.Components.InspectorWPF {
+    public class GenericMethodCaller : MethodCaller {
         /// <summary>
         /// TargetObject for instance methods.
         /// </summary>
-        private Object invocationTarget;
-
-        /// <summary>
-        /// True if the method is an instance method.
-        /// </summary>
-        private bool IsStatic { get { return methodInfo.IsStatic; } }
+        readonly Object _invocationTarget;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="methodInfo"></param>
         public GenericMethodCaller(MethodInfo methodInfo, Object target)
-            : base(methodInfo)
-        {
-            this.invocationTarget = target;
+            : base(methodInfo) {
+            _invocationTarget = target;
         }
+
+        /// <summary>
+        /// True if the method is an instance method.
+        /// </summary>
+        bool IsStatic { get { return MethodInfo.IsStatic; } }
 
         /// <summary>
         /// Calls the method with the established parameters.
         /// </summary>
-        public override void CallMethod()
-        {
-            methodInfo.Invoke(invocationTarget, (from i in Parameters select ((InspectorNode)i.Parameter).Property as Object).ToArray());
+        public override void CallMethod() {
+            MethodInfo.Invoke(_invocationTarget, (from i in Parameters select i.Parameter.Property).ToArray());
         }
     }
 }

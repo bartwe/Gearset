@@ -20,10 +20,10 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Name="TextBlock1" Width="Auto" TextTrimming="CharacterEllipsis" Text="{Binding Name}"/>
-        <Button Name="Button1" Grid.Column="1" Style="{StaticResource spinner2DButtonStyle}" Content="XY"/>
-        <Button Name="Button2" Grid.Column="2" Style="{StaticResource spinner2DButtonStyle}" Content="XZ"/>
-        <Button Name="Button3" Grid.Column="3" Style="{StaticResource spinner2DButtonStyle}" Content="YZ"/>
-        <Button Name="Button4" Grid.Column="4" Style="{StaticResource spinner2DButtonStyle}" Content="Length"/>
+        <Button Name="Button1" Grid.Column="1" Style="{StaticResource Spinner2DButtonStyle}" Content="XY"/>
+        <Button Name="Button2" Grid.Column="2" Style="{StaticResource Spinner2DButtonStyle}" Content="XZ"/>
+        <Button Name="Button3" Grid.Column="3" Style="{StaticResource Spinner2DButtonStyle}" Content="YZ"/>
+        <Button Name="Button4" Grid.Column="4" Style="{StaticResource Spinner2DButtonStyle}" Content="Length"/>
     </Grid>
 
 </local:VisualItemBase>

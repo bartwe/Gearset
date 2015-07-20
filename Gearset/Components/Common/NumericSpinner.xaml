@@ -5,7 +5,7 @@
     Height="Auto" Width="Auto">
     <UserControl.Resources>
         <!-- Style for SpinnerButtons -->
-        <Style x:Key="spinnerButtonStyle" TargetType="{x:Type Button}">
+        <Style x:Key="SpinnerButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Width" Value="10"/>
             <Setter Property="Height" Value="17"/>
             <Setter Property="Margin" Value="0 0 0 0"/>
@@ -59,7 +59,7 @@
             </Image>
         </ToggleButton>-->
         <TextBox Name="TextBox1" Grid.Column="1" Width="80" Height="Auto" TextAlignment="Right"/>
-        <Button Name="Button1" Grid.Column="2" Style="{StaticResource spinnerButtonStyle}" Cursor="SizeNS"/>
+        <Button Name="Button1" Grid.Column="2" Style="{StaticResource SpinnerButtonStyle}" Cursor="SizeNS"/>
       
     </Grid>
 

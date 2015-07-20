@@ -7,7 +7,7 @@
     Title="Inspector"
     Width="420"
     Height="600"
-    Background="{DynamicResource background1}"
+    Background="{DynamicResource Background1}"
     FontSize="11"
     WindowStyle="None"
     UseLayoutRounding="True"
@@ -23,13 +23,13 @@
                 <ResourceDictionary Source="Resources\InspectorStyle.xaml"/>
                 <ResourceDictionary>
                     <!--Template selectors-->
-                    <local:NodeTemplateSelector x:Key="nodeTemplateSelector"/>
-                    <local:MethodCallerTemplateSelector x:Key="methodCallerTemplateSelector"/>
-                    <local:TypeToSpinnerModeConverter x:Key="typeToSpinnerModeConverter"/>
-                    <local:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
+                    <local:NodeTemplateSelector x:Key="NodeTemplateSelector"/>
+                    <local:MethodCallerTemplateSelector x:Key="MethodCallerTemplateSelector"/>
+                    <local:TypeToSpinnerModeConverter x:Key="TypeToSpinnerModeConverter"/>
+                    <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
                     <!--Context Menu for Inspector items-->
-                    <ContextMenu x:Key="itemMenu">
+                    <ContextMenu x:Key="ItemMenu">
                         <MenuItem Header="Inspect" Click="Inspect_Click"/>
                         <MenuItem Header="Show Private Members" Click="ShowPrivate_Click"/>
                         <MenuItem Header="Make Null" Click="Clear_Click"/>
@@ -38,17 +38,17 @@
                     </ContextMenu>
 
                     <!--NUMERIC-->
-                    <HierarchicalDataTemplate x:Key="floatFieldTemplate" DataType="InspectorNode">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="FloatFieldTemplate" DataType="InspectorNode">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
-                                <local:NumericItem TreeNode="{Binding Mode=OneTime}" Mode="{Binding Path=Type, Converter={StaticResource typeToSpinnerModeConverter}}" HorizontalAlignment="Right"/>
+                                <local:NumericItem TreeNode="{Binding Mode=OneTime}" Mode="{Binding Path=Type, Converter={StaticResource TypeToSpinnerModeConverter}}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
                         </local:VisualItemWrapper>
                     </HierarchicalDataTemplate>
 
                     <!--BOOLEAN-->
-                    <HierarchicalDataTemplate x:Key="boolFieldTemplate" DataType="InspectorNode">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="BoolFieldTemplate" DataType="InspectorNode">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:BoolButton TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -56,8 +56,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--STRING-->
-                    <HierarchicalDataTemplate x:Key="stringFieldTemplate" DataType="InspectorNode">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="StringFieldTemplate" DataType="InspectorNode">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:StringItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -66,8 +66,8 @@
 
 
                     <!--ENUMS-->
-                    <HierarchicalDataTemplate x:Key="enumFieldTemplate" DataType="InspectorNode">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="EnumFieldTemplate" DataType="InspectorNode">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:EnumItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -75,8 +75,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Vector2-->
-                    <HierarchicalDataTemplate x:Key="vector2FieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="Vector2FieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:Vector2Spinner TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -84,8 +84,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Vector3-->
-                    <HierarchicalDataTemplate x:Key="vector3FieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="Vector3FieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:Vector3Spinner TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -93,8 +93,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Quaternion-->
-                    <HierarchicalDataTemplate x:Key="quaternionFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="QuaternionFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:QuaternionSpinner TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -102,8 +102,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Texture2D-->
-                    <HierarchicalDataTemplate x:Key="texture2DFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="Texture2DFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:Texture2DItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -111,8 +111,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Color-->
-                    <HierarchicalDataTemplate x:Key="colorFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="ColorFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:ColorItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -120,8 +120,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--Curve-->
-                    <HierarchicalDataTemplate x:Key="curveFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                      <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="CurveFieldTemplate" DataType="InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                      <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                         <local:VisualItemWrapper.VisualItem>
                           <local:CurveItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                         </local:VisualItemWrapper.VisualItem>
@@ -129,8 +129,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--GearConfig-->
-                    <HierarchicalDataTemplate x:Key="gearConfigTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="GearConfigTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:GearConfigItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -138,8 +138,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--GearConfig-->
-                    <HierarchicalDataTemplate x:Key="clearableGearConfigTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="ClearableGearConfigTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:ClearableGearConfigItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -147,8 +147,8 @@
                     </HierarchicalDataTemplate>
 
                     <!--GENERIC, for types we don't know how to handle.-->
-                    <HierarchicalDataTemplate x:Key="genericFieldTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="GenericFieldTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <local:VisualItemWrapper Text="{Binding Path=FriendlyName}" ContextMenu="{StaticResource ItemMenu}">
                             <local:VisualItemWrapper.VisualItem>
                                 <local:GenericItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Right"/>
                             </local:VisualItemWrapper.VisualItem>
@@ -156,33 +156,33 @@
                     </HierarchicalDataTemplate>
 
                     <!--Collection marker (especial child object added to collections).-->
-                    <HierarchicalDataTemplate x:Key="collectionFieldTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                    <HierarchicalDataTemplate x:Key="CollectionFieldTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
                         <Expander Header="Items" MouseDown="Expander_MouseDown">
                             <local:CollectionMarkerItem TreeNode="{Binding Mode=OneTime}"/>
                         </Expander>
                     </HierarchicalDataTemplate>
 
                     <!--Texture2D marker (especial child object added to Texture2D).-->
-                    <DataTemplate x:Key="texture2DMarkerTemplate" DataType="InspectorManager.InspectorNode">
+                    <DataTemplate x:Key="Texture2DMarkerTemplate" DataType="InspectorManager.InspectorNode">
                         <local:Texture2DMarkerItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Stretch"/>
                     </DataTemplate>
 
                     <!--ROOT-->
-                    <HierarchicalDataTemplate x:Key="rootTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
-                        <DockPanel HorizontalAlignment="Stretch" ContextMenu="{StaticResource itemMenu}">
+                    <HierarchicalDataTemplate x:Key="RootTemplate" DataType="InspectorManager.InspectorNode" ItemsSource="{Binding ChildrenView.View}">
+                        <DockPanel HorizontalAlignment="Stretch" ContextMenu="{StaticResource ItemMenu}">
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" />
                         </DockPanel>
                     </HierarchicalDataTemplate>
 
                     <!--ACTIONS-->
-                    <HierarchicalDataTemplate x:Key="actionFieldTemplate" DataType="InspectorManager.InspectorNode">
+                    <HierarchicalDataTemplate x:Key="ActionFieldTemplate" DataType="InspectorManager.InspectorNode">
                         <DockPanel HorizontalAlignment="Stretch">
                             <local:ActionItem TreeNode="{Binding Mode=OneTime}" HorizontalAlignment="Stretch" />
                         </DockPanel>
                     </HierarchicalDataTemplate>
 
                     <!--METHOD CALLERS-->
-                    <HierarchicalDataTemplate x:Key="methodCallerItemTemplate" DataType="MethodCaller" ItemsSource="{Binding Path=Parameters}">
+                    <HierarchicalDataTemplate x:Key="MethodCallerItemTemplate" DataType="MethodCaller" ItemsSource="{Binding Path=Parameters}">
                         <DockPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" />
                             <Button Name="InvokeButton" Click="InvokeButton_Click" DockPanel.Dock="Right" IsEnabled="{Binding Path=IsReady}">Invoke</Button>
@@ -191,7 +191,7 @@
                     </HierarchicalDataTemplate>
 
                     <!--METHOD PARAM-->
-                    <HierarchicalDataTemplate x:Key="methodParamItemTemplate" DataType="MethodParamContainer">
+                    <HierarchicalDataTemplate x:Key="MethodParamItemTemplate" DataType="MethodParamContainer">
                         <Grid AllowDrop="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -204,7 +204,7 @@
                         </Grid>
                     </HierarchicalDataTemplate>
 
-                    <DataTemplate x:Key="overlaidPlotTemplate" DataType="OverlaidPlot">
+                    <DataTemplate x:Key="OverlaidPlotTemplate" DataType="OverlaidPlot">
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding Path=Visible}"  Margin="0 0 5 0"/>
                             <TextBlock Text="{Binding Path=Sampler.Name}" Foreground="#999"/>
@@ -212,39 +212,39 @@
                     </DataTemplate>
 
                     <!--SEARCHBOX STYLE-->
-                    <Style x:Key="searchBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Style x:Key="SearchBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                         <Style.Resources>
-                            <TextBlock x:Key="placeholder" Text="Search by name or type" FontSize="11" Foreground="#999"/>
+                            <TextBlock x:Key="Placeholder" Text="Search by name or type" FontSize="11" Foreground="#999"/>
                         </Style.Resources>
                         <Setter Property="Width" Value="200"/>
                         <Setter Property="TextAlignment" Value="Left"/>
                         <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Background" Value="{DynamicResource normal1}"/>
-                        <Setter Property="Foreground" Value="{DynamicResource normalText1}"/>
+                        <Setter Property="Background" Value="{DynamicResource Normal1}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource NormalText1}"/>
                         <Setter Property="BorderThickness" Value="1 0 0 0"/>
-                        <Setter Property="BorderBrush" Value="{DynamicResource border1}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource Border1}"/>
                         <Style.Triggers>
                             <Trigger Property="Text" Value="">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <VisualBrush Stretch="None" Viewport="5 5 200 16" ViewportUnits="Absolute" AlignmentX="Left" AlignmentY="Top" Visual="{StaticResource placeholder}"/>
+                                        <VisualBrush Stretch="None" Viewport="5 5 200 16" ViewportUnits="Absolute" AlignmentX="Left" AlignmentY="Top" Visual="{StaticResource Placeholder}"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="Text" Value="{x:Null}">
                                 <Setter Property="Background">
                                     <Setter.Value>
-                                        <VisualBrush Stretch="None" AlignmentX="Left" Visual="{StaticResource placeholder}"/>
+                                        <VisualBrush Stretch="None" AlignmentX="Left" Visual="{StaticResource Placeholder}"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource normal1}"/>
+                                <Setter Property="Background" Value="{DynamicResource Normal1}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
 
-                    <Style x:Key="methodsListBoxStyle" TargetType="ListBox">
+                    <Style x:Key="MethodsListBoxStyle" TargetType="ListBox">
                         <Setter Property="Background" Value="Transparent"/>
                         <Style.Triggers>
                             <Trigger Property="HasItems" Value="False">
@@ -261,7 +261,7 @@
                         </Style.Triggers>
                     </Style>
 
-                    <Style x:Key="plotsListBoxStyle" TargetType="ListBox">
+                    <Style x:Key="PlotsListBoxStyle" TargetType="ListBox">
                         <Setter Property="Background" Value="Transparent"/>
                         <Style.Triggers>
                             <Trigger Property="HasItems" Value="False">
@@ -338,7 +338,7 @@
                 </Image>
             </Button>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0 0 5 0">
-                <TextBox Name="SearchTextBox" Style="{StaticResource searchBoxStyle}" Text="{Binding Config.SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="SearchTextBox" Style="{StaticResource SearchBoxStyle}" Text="{Binding Config.SearchText, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Click="Button_Click">Clear</Button>
             </StackPanel>
             <ToggleButton DockPanel.Dock="Right" Name="ShowModifiedButton" 
@@ -359,7 +359,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0" Name="GreenBar" HorizontalAlignment="Stretch" Width="6" Fill="{DynamicResource alert1}">
+            <Rectangle Grid.Column="0" Name="GreenBar" HorizontalAlignment="Stretch" Width="6" Fill="{DynamicResource Alert1}">
                 <Rectangle.Triggers>
                     <!-- Animates the rectangle's opacity. -->
                     <EventTrigger RoutedEvent="Border.Loaded">
@@ -396,9 +396,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="3 0 0 0" Foreground="{DynamicResource normalText1}" Opacity="0.8" Text="{Binding NoticeText}" Visibility="{Binding NoticeText, Converter={StaticResource nullToVisibilityConverter}}"/>
-                            <TextBlock Grid.Column="1" Visibility="{Binding NoticeHyperlinkText, Converter={StaticResource nullToVisibilityConverter}}" Margin="6 0 0 0">
-                                    <Hyperlink Foreground="{DynamicResource hyperlink1}" NavigateUri="{Binding NoticeHyperlinkUrl}" RequestNavigate="Notice_RequestNavigate">
+                            <TextBlock Grid.Column="0" Margin="3 0 0 0" Foreground="{DynamicResource NormalText1}" Opacity="0.8" Text="{Binding NoticeText}" Visibility="{Binding NoticeText, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <TextBlock Grid.Column="1" Visibility="{Binding NoticeHyperlinkText, Converter={StaticResource NullToVisibilityConverter}}" Margin="6 0 0 0">
+                                    <Hyperlink Foreground="{DynamicResource Hyperlink1}" NavigateUri="{Binding NoticeHyperlinkUrl}" RequestNavigate="Notice_RequestNavigate">
                                         <Run Text="{Binding NoticeHyperlinkText}"/>
                                     </Hyperlink>
                             </TextBlock>
@@ -412,17 +412,17 @@
 
         <!--Inspector-->
       <TreeView Grid.Row="2" Name="TreeView1"
-                          ItemTemplateSelector="{StaticResource nodeTemplateSelector}"
+                          ItemTemplateSelector="{StaticResource NodeTemplateSelector}"
                           SelectedItemChanged="Tree_SelectedItemChanged"
                           HorizontalContentAlignment="Stretch"
-                          ItemContainerStyle="{StaticResource inspectorTreeViewItem}"
+                          ItemContainerStyle="{StaticResource InspectorTreeViewItem}"
                           VerticalAlignment="Stretch"
                           local:VisualItemWrapper.TextMouseDown="Item_MouseDown"
                           local:VisualItemWrapper.TextMouseMove="Item_MouseMove"
                           DragOver="TreeView1_DragOver"
                           Drop="TreeView1_Drop" PreviewMouseRightButtonDown="TreeView1_PreviewMouseRightButtonDown"/>
                           
-        <GridSplitter ResizeDirection="Rows" Grid.Row="3" Background="{DynamicResource highlight1}" HorizontalAlignment="Stretch" Height="4"/>
+        <GridSplitter ResizeDirection="Rows" Grid.Row="3" Background="{DynamicResource Highlight1}" HorizontalAlignment="Stretch" Height="4"/>
         <TabControl Grid.Row="4">
             <TabItem Header="Plots">
                 <Grid>
@@ -431,18 +431,18 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource border1}">
+                    <Border DockPanel.Dock="Top" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource Border1}">
                         <DockPanel Grid.Row="0" LastChildFill="False">
                             <Button DockPanel.Dock="Left" Name="ShowPlotsButton" ToolTip="Shows all plots." Click="ShowPlotsButton_Click">Show All</Button>
                             <Button DockPanel.Dock="Left" Name="HidePlotsButton" ToolTip="Hides all plots, data will still be captured." Click="HidePlotsButton_Click">Hide All</Button>
                             <Button DockPanel.Dock="Left" Name="ResetPlotsPositionsButton" ToolTip="Resets all plots to their original positions and sizes" Click="ResetPlotsPositionsButton_Click">Reset Positions</Button>
                         </DockPanel>
                     </Border>
-                    <ListBox Grid.Row="1" Name="plots" Style="{StaticResource plotsListBoxStyle}" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource overlaidPlotTemplate}"/>
+                    <ListBox Grid.Row="1" Name="Plots" Style="{StaticResource PlotsListBoxStyle}" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource OverlaidPlotTemplate}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Methods">
-                <ListBox Name="methods" Style="{StaticResource methodsListBoxStyle}" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource actionFieldTemplate}"/>
+                <ListBox Name="Methods" Style="{StaticResource MethodsListBoxStyle}" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource ActionFieldTemplate}"/>
             </TabItem>
         </TabControl>
     </Grid>

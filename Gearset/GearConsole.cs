@@ -1,39 +1,33 @@
 #region Using Statements
 
-using Gearset.Components.Profiler;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
+using Gearset.About;
 using Gearset.Components;
-using Gearset.Components.Persistor;
-#if WINDOWS
-using Gearset.Components.InspectorWPF;
-using Microsoft.CSharp;
-using Gearset.Components.Logger;
-#endif
+using Gearset.Components.Data;
+using Gearset.Components.Profiler;
+using Gearset.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Gearset;
-using System.ComponentModel;
-using Microsoft.Xna.Framework.Input;
-using Gearset.Components.Data;
-using System.Reflection;
-using System.Threading;
-using System.IO;
-using System.Runtime.InteropServices;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using TreeView = Gearset.Components.TreeView;
+#if WINDOWS
+using Gearset.Components.InspectorWPF;
+using Gearset.Components.Logger;
+#endif
 #if WINDOWS
 using System.Net;
-using System.Windows;
-using System.Windows.Interop;
+
 #endif
-
-
 
 #endregion
 
-namespace Gearset
-{
+namespace Gearset {
     /// <summary>
     /// This is the main Gearset class. Provides wrapper methods for
     /// easily accessing the its components functionality.
@@ -46,11 +40,9 @@ namespace Gearset
     /// For 3D games, the Gearset camera matrices must be updated using
     /// the SetMatrices method.
     /// </remarks>
-    public class GearConsole
-    {
-        internal bool Enabled { get { return Settings.Enabled; } }
-
-        private Game game;
+    public class GearConsole {
+        public static float LiteVersionNoticeAlpha;
+        readonly Game _game;
 
         /// <summary>
         /// Collection of DebugComponents
@@ -68,12 +60,38 @@ namespace Gearset
         /// </summary>
         internal int UpdateCount;
 
-        internal Object manager;
-
         /// <summary>
         /// Time in ticks when the last update was made.
         /// </summary>
-        private int lastSaveTime;
+        int _lastSaveTime;
+
+        bool _initialized;
+
+        #region Constructor
+
+        /// <summary>
+        /// Creates the GearConsole. if you want the console
+        /// to draw 3D debug stuff you need to update the World/View/Projection
+        /// matrices using the <c>SetMatrices</c> or setting them manually.
+        /// </summary>
+        /// <param name="game"></param>
+        public GearConsole(Game game) {
+            _game = game;
+            game.Exiting += OnExit;
+            Components = new List<Gear>();
+
+            GearsetResources.Game = game;
+            GearsetResources.World = Matrix.Identity;
+            GearsetResources.View = Matrix.Identity;
+            GearsetResources.Projection = Matrix.Identity;
+            GearsetResources.Transform2D = Matrix.Identity;
+
+            GearsetResources.Console = this;
+        }
+
+        #endregion
+
+        internal bool Enabled { get { return Settings.Enabled; } }
 
         /// <summary>
         /// The World Matrix of the game. The prefered method to 
@@ -177,6 +195,83 @@ namespace Gearset
         /// </summary>
         internal SolidBoxDrawer SolidBoxDrawer { get; private set; }
 
+        /// <summary>
+        /// Code profiler.
+        /// </summary>
+        public Components.Profiler.Profiler Profiler { get; private set; }
+
+        /// <summary>
+        /// Gearset settings
+        /// </summary>
+        internal GearsetSettings Settings { get { return GearsetSettings.Instance; } }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Gearset's overlays will be visible.
+        /// A shortcut for Settings.Visible;
+        /// </summary>
+        public bool VisibleOverlays { get { return Settings.ShowOverlays; } set { Settings.ShowOverlays = value; } }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Gearset's Initialize method has been called.
+        /// </summary>
+        public bool Initialized {
+            get { return _initialized; }
+            private set {
+                Settings.Enabled = true;
+                _initialized = true;
+            }
+        }
+
+        #region Initialize (Xbox)
+
+        static void InitializeForXbox() {
+#if XBOX
+            GearsetResources.Font = XdtkResources.Content.Load<SpriteFont>("Default_Xbox360");
+            GearsetResources.FontTiny = XdtkResources.Content.Load<SpriteFont>("Tiny_Xbox360");
+            GearsetResources.FontAlert = XdtkResources.Content.Load<SpriteFont>("Alert_Xbox360");
+
+            this.Alerter = new Alerter();
+            this.Components.Add(Alerter);
+#endif
+        }
+
+        #endregion
+
+        #region Initialize (WINDOWS_PHONE)
+
+        static void InitializeForWindowsPhone() {
+#if WINDOWS_PHONE
+            GearsetResources.Font = GearsetResources.Content.Load<SpriteFont>("Default_wp");
+            GearsetResources.FontTiny = GearsetResources.Content.Load<SpriteFont>("Tiny_wp");
+            GearsetResources.FontAlert = GearsetResources.Content.Load<SpriteFont>("Alert_wp");
+
+            GearsetResources.Console.Alerter = new Alerter();
+            GearsetResources.Console.Components.Add(GearsetResources.Console.Alerter);
+#endif
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
+        /// </summary>
+        public void ClearAll() {
+            Settings.TreeViewConfig.Clear();
+            Settings.LabelerConfig.Clear();
+            Settings.LineDrawerConfig.Clear();
+            Settings.PlotterConfig.Clear();
+        }
+
+        void OnExit(Object sender, EventArgs args) {
+#if WINDOWS
+            GearsetSettings.Save();
+#endif
+        }
+
+        void BackgroundSave(Object state) {
+            GearsetSettings.Save();
+        }
+
 #if WINDOWS
         /// <summary>
         /// Components that keeps a list of pickable game elements and
@@ -190,7 +285,6 @@ namespace Gearset
         /// that can be later retreived.
         /// </summary>
         //internal Persistor Persistor { get; private set; }
-
         /// <summary>
         /// Component that let the game developer inspect game objects
         /// in real time, showing the value of public fields. The inspector
@@ -212,85 +306,28 @@ namespace Gearset
         /// Component used to edit XNA curves.
         /// </summary>
         internal Bender Bender { get; private set; }
-        
+
         /// <summary>
         /// Provides UI to find a Game Object.
         /// </summary>
         internal Finder Finder { get; private set; }
 #endif
 
-        /// <summary>
-        /// Code profiler.
-        /// </summary>
-        public Gearset.Components.Profiler.Profiler Profiler { get; private set; }
-
-        /// <summary>
-        /// Gearset settings
-        /// </summary>
-        internal GearsetSettings Settings { get { return GearsetSettings.Instance; } }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the Gearset's overlays will be visible.
-        /// A shortcut for Settings.Visible;
-        /// </summary>
-        public bool VisibleOverlays { get { return Settings.ShowOverlays; } set { Settings.ShowOverlays = value; } }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the Gearset's Initialize method has been called.
-        /// </summary>
-        public bool Initialized
-        {
-            get { return initialized; }
-            private set
-            {
-                Settings.Enabled = true;
-                initialized = true;
-            }
-        }
-        private bool initialized;
-
-        public static float LiteVersionNoticeAlpha;
-
-        #region Constructor
-        /// <summary>
-        /// Creates the GearConsole. if you want the console
-        /// to draw 3D debug stuff you need to update the World/View/Projection
-        /// matrices using the <c>SetMatrices</c> or setting them manually.
-        /// </summary>
-        /// <param name="game"></param>
-        public GearConsole(Game game)
-        {
-            this.game = game;
-            game.Exiting += OnExit;
-            this.Components = new List<Gear>();
-
-            GearsetResources.Game = game;
-            GearsetResources.World = Matrix.Identity;
-            GearsetResources.View = Matrix.Identity;
-            GearsetResources.Projection = Matrix.Identity;
-            GearsetResources.Transform2D = Matrix.Identity;
-            
-            GearsetResources.Console = this;
-
-        }
-        #endregion
-
         #region Initialize
+
         /// <summary>
         /// Initialize Gearset, this method should be called from your Game's Initialize
         /// and before any other Gearset method.
         /// </summary>
-        public void Initialize()
-        {
+        public void Initialize() {
 #if WINDOWS
-            String versionFull = typeof(GearConsole).Assembly.GetName().Version.ToString();
-            String version = typeof(GearConsole).Assembly.GetName().Version.Major.ToString();
+            var versionFull = typeof(GearConsole).Assembly.GetName().Version.ToString();
+            var version = typeof(GearConsole).Assembly.GetName().Version.Major.ToString();
 
-            String productName = String.Empty;
-            String copyright = String.Empty;
+            var productName = String.Empty;
+            var copyright = String.Empty;
             var attributes = typeof(GearConsole).Assembly.GetCustomAttributes(false);
-            foreach (var attribute in attributes)
-            {
+            foreach (var attribute in attributes) {
                 var assemblyProduct = attribute as AssemblyProductAttribute;
                 if (assemblyProduct != null)
                     productName = assemblyProduct.Product;
@@ -298,7 +335,7 @@ namespace Gearset
                 if (assemblyCopyright != null)
                     copyright = assemblyCopyright.Copyright;
             }
-            GearsetResources.AboutViewModel = new About.AboutViewModel(
+            GearsetResources.AboutViewModel = new AboutViewModel(
                 productName + " v" + versionFull, copyright);
 #endif
 
@@ -314,147 +351,143 @@ namespace Gearset
             if (Logger != null)
                 Log("Gearset", "Gearset {0}. Go to www.thecomplot.com/gearset.html for more info.", typeof(GearConsole).Assembly.GetName().Version);
 #endif
-            
         }
 
-        void manager_Reset(object sender, EventArgs e)
-        {
-        }
+        void manager_Reset(object sender, EventArgs e) {}
+
         #endregion
 
         #region Initialize (All platforms)
+
         /// <summary>
         /// Initializes componenets that work in all platforms.
         /// </summary>
-        private void InitializeForAllPlatforms()
-        {
+        void InitializeForAllPlatforms() {
             GearsetResources.Content = new ResourceContentManager(GearsetResources.Game.Services, Resource1.ResourceManager);
 
             // Graphics device stuff.
             GearsetResources.Effect = new BasicEffect(GearsetResources.Device);
             GearsetResources.Effect2D = new BasicEffect(GearsetResources.Device);
             GearsetResources.SpriteBatch = new SpriteBatch(GearsetResources.Device);
-            
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 0, 0, 1);
-            Matrix halfScreenOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+
+            var projection = Matrix.CreateOrthographicOffCenter(0, _game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height, 0, 0, 1);
+            var halfScreenOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
             GearsetResources.Effect2D.View = halfScreenOffset * projection;
             GearsetResources.Effect2D.Projection = Matrix.Identity;
             GearsetResources.Effect2D.World = Matrix.Identity;
             GearsetResources.Effect2D.VertexColorEnabled = true;
 
-            
+
             GearsetResources.Keyboard = new KeyboardComponent();
             BoundingBoxHelper.Initialize();
 
-            this.Vector3Drawer = new Vector3Drawer();
-            this.Components.Add(this.Vector3Drawer);
+            Vector3Drawer = new Vector3Drawer();
+            Components.Add(Vector3Drawer);
 
-            this.Vector2Drawer = new Vector2Drawer();
-            this.Components.Add(this.Vector2Drawer);
+            Vector2Drawer = new Vector2Drawer();
+            Components.Add(Vector2Drawer);
 
-            this.Transform3Drawer = new Transform3Drawer();
-            this.Components.Add(this.Transform3Drawer);
+            Transform3Drawer = new Transform3Drawer();
+            Components.Add(Transform3Drawer);
 
-            this.SphereDrawer = new SphereDrawer();
-            this.Components.Add(this.SphereDrawer);
+            SphereDrawer = new SphereDrawer();
+            Components.Add(SphereDrawer);
 
-            this.BoxDrawer = new BoxDrawer();
-            this.Components.Add(this.BoxDrawer);
+            BoxDrawer = new BoxDrawer();
+            Components.Add(BoxDrawer);
 
-            this.SolidBoxDrawer = new SolidBoxDrawer();
-            this.Components.Add(this.SolidBoxDrawer);
+            SolidBoxDrawer = new SolidBoxDrawer();
+            Components.Add(SolidBoxDrawer);
 
-            this.TreeView = new TreeView();
-            this.Components.Add(TreeView);
+            TreeView = new TreeView();
+            Components.Add(TreeView);
 
-            this.Marker = new Marker();
-            this.Components.Add(Marker);
+            Marker = new Marker();
+            Components.Add(Marker);
 
-            this.LineDrawer = new LineDrawer();
-            this.Components.Add(LineDrawer);
+            LineDrawer = new LineDrawer();
+            Components.Add(LineDrawer);
 
-            this.Labeler = new Labeler();
-            this.Components.Add(Labeler);
+            Labeler = new Labeler();
+            Components.Add(Labeler);
 
 #if WINDOWS
-            this.Profiler = new WindowsProfiler();
+            Profiler = new WindowsProfiler();
 #else
             this.Profiler = new Profiler();
 #endif
-            this.Components.Add(Profiler);
+            Components.Add(Profiler);
 
-            game.GraphicsDevice.DeviceReset += new EventHandler<EventArgs>(GraphicsDevice_DeviceReset);
+            _game.GraphicsDevice.DeviceReset += GraphicsDevice_DeviceReset;
         }
 
-        void RecreateGraphicResources()
-        {
+        void RecreateGraphicResources() {
             GearsetResources.Effect = new BasicEffect(GearsetResources.Device);
             GearsetResources.Effect2D = new BasicEffect(GearsetResources.Device);
             GearsetResources.SpriteBatch = new SpriteBatch(GearsetResources.Device);
         }
 
-        void GraphicsDevice_DeviceReset(object sender, EventArgs e)
-        {
+        void GraphicsDevice_DeviceReset(object sender, EventArgs e) {
             RecreateGraphicResources();
 
-            foreach (var component in Components)
-            {
+            foreach (var component in Components) {
                 component.OnResolutionChanged();
             }
         }
+
         #endregion
 
         #region Initialize (Windows)
+
         /// <summary>
         /// Initialize components that work on Windows.
         /// </summary>
-        private void InitializeForWindows()
-        {
+        void InitializeForWindows() {
 #if WINDOWS
             GearsetResources.Font = GearsetResources.Content.Load<SpriteFont>("Default");
             GearsetResources.FontTiny = GearsetResources.Content.Load<SpriteFont>("Tiny");
             GearsetResources.FontAlert = GearsetResources.Content.Load<SpriteFont>("Alert");
 
-            GearsetResources.GameWindow = (System.Windows.Forms.Form)System.Windows.Forms.Form.FromHandle(game.Window.Handle);
+            GearsetResources.GameWindow = (Form)Control.FromHandle(_game.Window.Handle);
             GearsetResources.Mouse = new MouseComponent();
 
             // Add the game assembly to the compiler references.
             ReflectionHelper.CompilerParameters.ReferencedAssemblies.Add(GearsetResources.Game.GetType().Assembly.Location);
 
             DataSamplerManager = new DataSamplerManager();
-            this.Components.Add(DataSamplerManager);
+            Components.Add(DataSamplerManager);
 
-            this.Alerter = new Alerter();
-            this.Components.Add(Alerter);
+            Alerter = new Alerter();
+            Components.Add(Alerter);
 
             var plotter = new Plotter();
             Plotter = plotter;
-            this.Components.Add(plotter);
+            Components.Add(plotter);
 
             // Create the components of the console.
-            this.Picker = new Picker();
-            this.Components.Add(Picker);
+            Picker = new Picker();
+            Components.Add(Picker);
 
             GearsetResources.AboutWindow = new AboutWindow();
             GearsetResources.AboutWindow.DataContext = GearsetResources.AboutViewModel;
 
-            this.Widget = new Widget();
-            this.Components.Add(Widget);
+            Widget = new Widget();
+            Components.Add(Widget);
 
-            this.Inspector = new InspectorManager();
-            this.Components.Add(Inspector);
+            Inspector = new InspectorManager();
+            Components.Add(Inspector);
 
             // Asynchronously check if there's a new version available
             ThreadPool.QueueUserWorkItem(CheckNewVersion);
-            
-            this.Finder = new Finder();
-            this.Components.Add(Finder);
 
-            this.Logger = new LoggerManager();
-            this.Components.Add(Logger);
+            Finder = new Finder();
+            Components.Add(Finder);
 
-            this.Bender = new Bender();
-            this.Components.Add(Bender);
+            Logger = new LoggerManager();
+            Components.Add(Logger);
+
+            Bender = new Bender();
+            Components.Add(Bender);
 
             //this.Persistor = new Persistor();
             //this.Components.Add(persistor);
@@ -462,14 +495,13 @@ namespace Gearset
             Inspector.Inspect("Gearset Settings", Settings, false);
             Inspector.Inspect("Game", GearsetResources.Game, false);
 
-            GearsetResources.GameWindow.Resize += new EventHandler(GameWindow_Resize);
-            GearsetResources.GameWindow.GotFocus += new EventHandler(GameWindow_GotFocus);
-            GearsetResources.GameWindow.Activated += new EventHandler(GameWindow_Activated);
+            GearsetResources.GameWindow.Resize += GameWindow_Resize;
+            GearsetResources.GameWindow.GotFocus += GameWindow_GotFocus;
+            GearsetResources.GameWindow.Activated += GameWindow_Activated;
 #endif
         }
 
-        void GameWindow_Activated(object sender, EventArgs e)
-        {
+        void GameWindow_Activated(object sender, EventArgs e) {
             //if (Inspector.Window.IsVisible)
             //{
             //    //Inspector.Window.WindowState = WindowState.Minimized;
@@ -481,35 +513,30 @@ namespace Gearset
             //    Logger.Window.Show();
         }
 
-        void GameWindow_GotFocus(object sender, EventArgs e)
-        {
+        void GameWindow_GotFocus(object sender, EventArgs e) {
 #if WINDOWS
-            if (Inspector.Window.IsVisible)
-            {
+            if (Inspector.Window.IsVisible) {
                 Inspector.Window.Topmost = true;
                 Inspector.Window.Topmost = false;
             }
             if (Inspector.Window.WasHiddenByGameMinimize && !Inspector.Window.IsVisible)
                 Inspector.Window.Show();
 
-            if (Logger.Window.IsVisible)
-            {
+            if (Logger.Window.IsVisible) {
                 Logger.Window.Topmost = true;
                 Logger.Window.Topmost = false;
             }
             if (Logger.Window.WasHiddenByGameMinimize && !Logger.Window.IsVisible)
                 Logger.Window.Show();
 
-            if (Finder.Window.IsVisible)
-            {
+            if (Finder.Window.IsVisible) {
                 Finder.Window.Topmost = true;
                 Finder.Window.Topmost = false;
             }
             if (Finder.Window.WasHiddenByGameMinimize && !Finder.Window.IsVisible)
                 Finder.Window.Show();
 
-            if (Bender.Window.IsVisible)
-            {
+            if (Bender.Window.IsVisible) {
                 Bender.Window.Topmost = true;
                 Bender.Window.Topmost = false;
             }
@@ -528,28 +555,22 @@ namespace Gearset
 #endif
         }
 
-        void GameWindow_Resize(object sender, EventArgs e)
-        {
+        void GameWindow_Resize(object sender, EventArgs e) {
 #if WINDOWS
-            if (GearsetResources.GameWindow.WindowState == System.Windows.Forms.FormWindowState.Minimized)
-            {
-                if (Inspector.Window.IsVisible)
-                {
+            if (GearsetResources.GameWindow.WindowState == FormWindowState.Minimized) {
+                if (Inspector.Window.IsVisible) {
                     Inspector.Window.Hide();
                     Inspector.Window.WasHiddenByGameMinimize = true;
                 }
-                if (Logger.Window.IsVisible)
-                {
+                if (Logger.Window.IsVisible) {
                     Logger.Window.Hide();
                     Logger.Window.WasHiddenByGameMinimize = true;
                 }
-                if (Finder.Window.IsVisible)
-                {
+                if (Finder.Window.IsVisible) {
                     Finder.Window.Hide();
                     Finder.Window.WasHiddenByGameMinimize = true;
                 }
-                if (Bender.Window.IsVisible)
-                {
+                if (Bender.Window.IsVisible) {
                     Bender.Window.Hide();
                     Bender.Window.WasHiddenByGameMinimize = true;
                 }
@@ -561,129 +582,90 @@ namespace Gearset
         /// Check if the latest version posted on The Complot site is different
         /// from our current version.
         /// </summary>
-        private void CheckNewVersion(Object state)
-        {
+        void CheckNewVersion(Object state) {
 #if WINDOWS
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create("http://www.thecomplot.com/latestversion");
+            var webRequest = (HttpWebRequest)WebRequest.Create("http://www.thecomplot.com/latestversion");
             webRequest.UserAgent = typeof(GearConsole).Assembly.GetName().Version.ToString();
             webRequest.Method = "GET";
             webRequest.Proxy = WebRequest.GetSystemWebProxy();
             webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
             webRequest.Credentials = CredentialCache.DefaultCredentials;
 
-            try
-            {
-                WebResponse response = webRequest.GetResponse();
-                using (TextReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    String latestVersion = reader.ReadLine();
+            try {
+                var response = webRequest.GetResponse();
+                using (TextReader reader = new StreamReader(response.GetResponseStream())) {
+                    var latestVersion = reader.ReadLine();
                     var latestVersionNumbers = latestVersion.Split('.');
                     var currentVersionNumbers = typeof(GearConsole).Assembly.GetName().Version.ToString().Split('.');
                     // WARNING: 2 bools to represent 3 states. Both true is invalid.
-                    bool newVersionAvailable = false;
-                    bool currentVersionIsDev = false;
-                    for (int i = 0; i < latestVersionNumbers.Length; i++)
-                    {
+                    var newVersionAvailable = false;
+                    var currentVersionIsDev = false;
+                    for (var i = 0; i < latestVersionNumbers.Length; i++) {
                         int current, latest;
-                        if (int.TryParse(currentVersionNumbers[i], out current) && int.TryParse(latestVersionNumbers[i], out latest))
-                        {
-                            if (latest > current)
-                            {
+                        if (int.TryParse(currentVersionNumbers[i], out current) && int.TryParse(latestVersionNumbers[i], out latest)) {
+                            if (latest > current) {
                                 newVersionAvailable = true;
                                 break;
                             }
-                            else if (latest < current)
-                            {
+                            if (latest < current) {
                                 currentVersionIsDev = true;
                                 break;
                             }
                         }
-             
                     }
-                    if (newVersionAvailable)
-                    {
+                    if (newVersionAvailable) {
                         Inspector.AddNotice("New Gearset version available", "http://www.thecomplot.com/gearsetdownload.html", "Get it now");
-                        
                     }
-                    else if (currentVersionIsDev)
-                    {
+                    else if (currentVersionIsDev) {
                         Inspector.AddNotice("Unreleased version, do not distribute", "http://www.thecomplot.com/gearsetdownload.html", "Get latest release");
                     }
                 }
             }
-            catch { }
-            
+            catch {}
+
 #endif
         }
 
-        #endregion
-
-        #region Initialize (Xbox)
-        private static void InitializeForXbox()
-        {
-#if XBOX
-            GearsetResources.Font = XdtkResources.Content.Load<SpriteFont>("Default_Xbox360");
-            GearsetResources.FontTiny = XdtkResources.Content.Load<SpriteFont>("Tiny_Xbox360");
-            GearsetResources.FontAlert = XdtkResources.Content.Load<SpriteFont>("Alert_Xbox360");
-
-            this.Alerter = new Alerter();
-            this.Components.Add(Alerter);
-#endif
-        }
-        #endregion
-
-        #region Initialize (WINDOWS_PHONE)
-        private static void InitializeForWindowsPhone()
-        {
-#if WINDOWS_PHONE
-            GearsetResources.Font = GearsetResources.Content.Load<SpriteFont>("Default_wp");
-            GearsetResources.FontTiny = GearsetResources.Content.Load<SpriteFont>("Tiny_wp");
-            GearsetResources.FontAlert = GearsetResources.Content.Load<SpriteFont>("Alert_wp");
-
-            GearsetResources.Console.Alerter = new Alerter();
-            GearsetResources.Console.Components.Add(GearsetResources.Console.Alerter);
-#endif
-        }
         #endregion
 
         #region Set matrices
+
         /// <summary>
         /// Use this method after every Update of your game to update the camera
         /// matrices so 3D overlays can be drawn correctly.
         /// </summary>
-        public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection)
-        {
+        public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection) {
             GearsetResources.World = world;
             GearsetResources.View = view;
             GearsetResources.Projection = projection;
-            
         }
+
         /// <summary>
         /// Use this method after every Update of your game to update the camera
         /// matrices so 3D overlays can be drawn correctly.
         /// </summary>
-        public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection, ref Matrix transform2D)
-        {
+        public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection, ref Matrix transform2D) {
             GearsetResources.World = world;
             GearsetResources.View = view;
             GearsetResources.Projection = projection;
             GearsetResources.Transform2D = transform2D;
         }
+
         #endregion
 
-        
         #region Wrapper functions
+
         // Do not delete the WRAPPER FUNCTION comment below.
         // It's a mark for the function extractor
         // WRAPPER FUNCTIONS BEGIN
 
         #region Tree View
+
         /// <summary>
         /// Adds or modifiy a key without value on the overlaid tree view.
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
-        public void Show(String key)
-        {
+        public void Show(String key) {
             if (!Enabled) return;
             TreeView.Set(key, null);
         }
@@ -693,36 +675,37 @@ namespace Gearset
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
         /// <param name="value">The value to show.</param>
-        public void Show(String key, object value)
-        {
+        public void Show(String key, object value) {
             if (!Enabled) return;
             TreeView.Set(key, value);
-        } 
+        }
+
         #endregion
 
         #region Actions
+
         /// <summary>
         /// Adds an action button to the bottom of the game window.
         /// </summary>
         /// <param name="name">Name of the action as it will appear on the button.</param>
         /// <param name="action">Action to perform when the button is clicked.</param>
-        public void AddQuickAction(String name, Action action)
-        {
+        public void AddQuickAction(String name, Action action) {
 #if WINDOWS
             if (!Enabled) return;
             Widget.AddAction(name, action);
 #endif
-        } 
+        }
+
         #endregion
 
         #region Plots
+
         /// <summary>
         /// Adds the provided value to the plot with the provided plotName.
         /// </summary>
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
-        public void Plot(String plotName, float value)
-        {
+        public void Plot(String plotName, float value) {
             if (!Enabled) return;
             DataSamplerManager.AddSample(plotName, value);
             Plotter.ShowPlot(plotName);
@@ -735,22 +718,22 @@ namespace Gearset
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
         /// <param name="historyLength">The number of samples that the sampler will remember at any given time.</param>
-        public void Plot(String plotName, float value, int historyLength)
-        {
+        public void Plot(String plotName, float value, int historyLength) {
             if (!Enabled) return;
             DataSamplerManager.AddSample(plotName, value, historyLength);
             Plotter.ShowPlot(plotName);
-        } 
+        }
+
         #endregion
 
         #region Logger
+
         /// <summary>
         /// Los a message to the specified stream.
         /// </summary>
         /// <param name="streamName">Name of the Stream to log the message to</param>
         /// <param name="message">Message to log</param>
-        public void Log(String streamName, String content)
-        {
+        public void Log(String streamName, String content) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(streamName, content);
@@ -761,8 +744,7 @@ namespace Gearset
         /// Logs the specified message in the default stream.
         /// </summary>
         /// <param name="content">The message to log.</param>
-        public void Log(String content)
-        {
+        public void Log(String content) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(content);
@@ -775,13 +757,13 @@ namespace Gearset
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
         /// <param name="arg0">The first format parameter</param>
-        public void Log(String streamName, String format, Object arg0) 
-        {
+        public void Log(String streamName, String format, Object arg0) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(streamName, format, arg0);
 #endif
         }
+
         /// <summary>
         /// Logs a formatted string to the specified stream.
         /// </summary>
@@ -789,13 +771,13 @@ namespace Gearset
         /// <param name="format">The format string</param>
         /// <param name="arg0">The first format parameter</param>
         /// <param name="arg1">The second format parameter</param>
-        public void Log(String streamName, String format, Object arg0, Object arg1) 
-        {
+        public void Log(String streamName, String format, Object arg0, Object arg1) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(streamName, format, arg0, arg1);
 #endif
         }
+
         /// <summary>
         /// Logs a formatted string to the specified stream.
         /// </summary>
@@ -804,21 +786,20 @@ namespace Gearset
         /// <param name="arg0">The first format parameter</param>
         /// <param name="arg1">The second format parameter</param>
         /// <param name="arg2">The third format parameter</param>
-        public void Log(String streamName, String format, Object arg0, Object arg1, Object arg2)
-        {
+        public void Log(String streamName, String format, Object arg0, Object arg1, Object arg2) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(streamName, format, arg0, arg1, arg2);
 #endif
         }
+
         /// <summary>
         /// Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
         /// <param name="arg0">The format parameters</param>
-        public void Log(String streamName, String format, params Object[] args)
-        {
+        public void Log(String streamName, String format, params Object[] args) {
 #if WINDOWS
             if (!Enabled) return;
             Logger.Log(streamName, format, args);
@@ -828,8 +809,7 @@ namespace Gearset
         /// <summary>
         /// Shows a dialog asking for a filename and saves the log to the specified file.
         /// </summary>
-        public void SaveLogToFile()
-        {
+        public void SaveLogToFile() {
 #if WINDOWS
             Logger.SaveLogToFile();
 #endif
@@ -839,67 +819,69 @@ namespace Gearset
         /// Saves the log to the specified file.
         /// </summary>
         /// <param name="filename">Name of the file to save the log (usually ending in .log)</param>
-        public void SaveLogToFile(string filename)
-        {
+        public void SaveLogToFile(string filename) {
 #if WINDOWS
             Logger.SaveLogToFile(filename);
-#endif 
+#endif
         }
+
         #endregion
 
         #region Marks
+
         /// <summary>
         /// This is an experimental feature.
         /// </summary>
-        public void ShowMark(String key, Vector3 position, Color color)
-        {
+        public void ShowMark(String key, Vector3 position, Color color) {
             if (!Enabled) return;
-            this.Marker.ShowMark(key, position, color);
+            Marker.ShowMark(key, position, color);
         }
+
         /// <summary>
         /// This is an experimental feature.
         /// </summary>
-        public void ShowMark(String key, Vector3 position)
-        {
+        public void ShowMark(String key, Vector3 position) {
             if (!Enabled) return;
-            this.Marker.ShowMark(key, position);
+            Marker.ShowMark(key, position);
         }
+
         /// <summary>
         /// This is an experimental feature.
         /// </summary>
-        public void ShowMark(String key, Vector2 position, Color color)
-        {
+        public void ShowMark(String key, Vector2 position, Color color) {
             if (!Enabled) return;
-            this.Marker.ShowMark(key, position, color);
+            Marker.ShowMark(key, position, color);
         }
+
         /// <summary>
         /// This is an experimental feature.
         /// </summary>
-        public void ShowMark(String key, Vector2 position)
-        {
+        public void ShowMark(String key, Vector2 position) {
             if (!Enabled) return;
-            this.Marker.ShowMark(key, position);
-        } 
+            Marker.ShowMark(key, position);
+        }
+
         #endregion
 
         #region Alert
+
         /// <summary>
         /// Shows huge text on the center of the screen which fades
         /// out quickly.
         /// </summary>
-        public void Alert(String message)
-        {
+        public void Alert(String message) {
             if (!Enabled) return;
-            this.Alerter.Alert(message);
-        } 
+            Alerter.Alert(message);
+        }
+
         #endregion
 
         #region Line Drawing
+
         /// <summary>
         /// Draws a line between two points.
         /// </summary>
-        public void ShowLine(String key, Vector3 v1, Vector3 v2)
-        {
+        public void ShowLine(String key, Vector3 v1, Vector3 v2) {
             if (!Enabled) return;
             LineDrawer.ShowLine(key, v1, v2, Color.White);
         }
@@ -907,8 +889,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points.
         /// </summary>
-        public void ShowLine(String key, Vector3 v1, Vector3 v2, Color color)
-        {
+        public void ShowLine(String key, Vector3 v1, Vector3 v2, Color color) {
             if (!Enabled) return;
             LineDrawer.ShowLine(key, v1, v2, color);
         }
@@ -916,8 +897,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points for one frame.
         /// </summary>
-        public void ShowLineOnce(Vector3 v1, Vector3 v2)
-        {
+        public void ShowLineOnce(Vector3 v1, Vector3 v2) {
             if (!Enabled) return;
             LineDrawer.ShowLineOnce(v1, v2, Color.White);
         }
@@ -925,8 +905,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points for one frame.
         /// </summary>
-        public void ShowLineOnce(Vector3 v1, Vector3 v2, Color color)
-        {
+        public void ShowLineOnce(Vector3 v1, Vector3 v2, Color color) {
             if (!Enabled) return;
             LineDrawer.ShowLineOnce(v1, v2, color);
         }
@@ -934,8 +913,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points.
         /// </summary>
-        public void ShowLine(String key, Vector2 v1, Vector2 v2)
-        {
+        public void ShowLine(String key, Vector2 v1, Vector2 v2) {
             if (!Enabled) return;
             LineDrawer.ShowLine(key, v1, v2, Color.White);
         }
@@ -943,8 +921,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points.
         /// </summary>
-        public void ShowLine(String key, Vector2 v1, Vector2 v2, Color color)
-        {
+        public void ShowLine(String key, Vector2 v1, Vector2 v2, Color color) {
             if (!Enabled) return;
             LineDrawer.ShowLine(key, v1, v2, color);
         }
@@ -952,8 +929,7 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points for one frame.
         /// </summary>
-        public void ShowLineOnce(Vector2 v1, Vector2 v2)
-        {
+        public void ShowLineOnce(Vector2 v1, Vector2 v2) {
             if (!Enabled) return;
             LineDrawer.ShowLineOnce(v1, v2, Color.White);
         }
@@ -961,21 +937,21 @@ namespace Gearset
         /// <summary>
         /// Draws a line between two points for one frame.
         /// </summary>
-        public void ShowLineOnce(Vector2 v1, Vector2 v2, Color color)
-        {
+        public void ShowLineOnce(Vector2 v1, Vector2 v2, Color color) {
             if (!Enabled) return;
             LineDrawer.ShowLineOnce(v1, v2, color);
         }
+
         #endregion
 
         #region Box Drawing
+
         /// <summary>
         /// Shows an axis aligned bounding box.
         /// <param name="key">Name of the persistent box</param>
         /// <param name="box">The box to draw</param>
         /// </summary>
-        public void ShowBox(String key, BoundingBox box)
-        {
+        public void ShowBox(String key, BoundingBox box) {
             if (!Enabled) return;
             BoxDrawer.ShowBox(key, box);
         }
@@ -985,8 +961,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowBox(String key, Vector3 min, Vector3 max)
-        {
+        public void ShowBox(String key, Vector3 min, Vector3 max) {
             if (!Enabled) return;
             BoxDrawer.ShowBox(key, min, max);
         }
@@ -997,8 +972,7 @@ namespace Gearset
         /// <param name="box">The box to draw</param>
         /// <param name="color">The color that will be used to draw the box</param>
         /// </summary>
-        public void ShowBox(String key, BoundingBox box, Color color)
-        {
+        public void ShowBox(String key, BoundingBox box, Color color) {
             if (!Enabled) return;
             BoxDrawer.ShowBox(key, box, color);
         }
@@ -1008,8 +982,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowBox(String key, Vector3 min, Vector3 max, Color color)
-        {
+        public void ShowBox(String key, Vector3 min, Vector3 max, Color color) {
             if (!Enabled) return;
             BoxDrawer.ShowBox(key, min, max, color);
         }
@@ -1018,8 +991,7 @@ namespace Gearset
         /// Shows an axis aligned bounding box for one frame.
         /// <param name="box">The BoundingBox to draw</param>
         /// </summary>
-        public void ShowBoxOnce(BoundingBox box)
-        {
+        public void ShowBoxOnce(BoundingBox box) {
             if (!Enabled) return;
             BoxDrawer.ShowBoxOnce(box);
         }
@@ -1029,8 +1001,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowBoxOnce(Vector3 min, Vector3 max)
-        {
+        public void ShowBoxOnce(Vector3 min, Vector3 max) {
             if (!Enabled) return;
             BoxDrawer.ShowBoxOnce(min, max);
         }
@@ -1040,8 +1011,7 @@ namespace Gearset
         /// <param name="box">The BoundingBox to draw</param>
         /// <param name="color">The color that will be used to draw the box</param>
         /// </summary>
-        public void ShowBoxOnce(BoundingBox box, Color color)
-        {
+        public void ShowBoxOnce(BoundingBox box, Color color) {
             if (!Enabled) return;
             BoxDrawer.ShowBoxOnce(box, color);
         }
@@ -1052,21 +1022,21 @@ namespace Gearset
         /// <param name="max">Maximum values of the box in each axis</param>
         /// <param name="color">The color that will be used to draw the box</param>
         /// </summary>
-        public void ShowBoxOnce(Vector3 min, Vector3 max, Color color)
-        {
+        public void ShowBoxOnce(Vector3 min, Vector3 max, Color color) {
             if (!Enabled) return;
             BoxDrawer.ShowBoxOnce(min, max, color);
         }
+
         #endregion
 
         #region Sphere Drawing
+
         /// <summary>
         /// Shows a sphere on the screen.
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphere(String key, BoundingSphere sphere)
-        {
+        public void ShowSphere(String key, BoundingSphere sphere) {
             if (!Enabled) return;
             SphereDrawer.ShowSphere(key, sphere);
         }
@@ -1076,8 +1046,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphere(String key, Vector3 center, float radius)
-        {
+        public void ShowSphere(String key, Vector3 center, float radius) {
             if (!Enabled) return;
             SphereDrawer.ShowSphere(key, center, radius);
         }
@@ -1087,8 +1056,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphere(String key, BoundingSphere sphere, Color color)
-        {
+        public void ShowSphere(String key, BoundingSphere sphere, Color color) {
             if (!Enabled) return;
             SphereDrawer.ShowSphere(key, sphere, color);
         }
@@ -1098,8 +1066,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphere(String key, Vector3 center, float radius, Color color)
-        {
+        public void ShowSphere(String key, Vector3 center, float radius, Color color) {
             if (!Enabled) return;
             SphereDrawer.ShowSphere(key, center, radius, color);
         }
@@ -1109,8 +1076,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphereOnce(BoundingSphere sphere)
-        {
+        public void ShowSphereOnce(BoundingSphere sphere) {
             if (!Enabled) return;
             SphereDrawer.ShowSphereOnce(sphere);
         }
@@ -1120,8 +1086,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphereOnce(Vector3 center, float radius)
-        {
+        public void ShowSphereOnce(Vector3 center, float radius) {
             if (!Enabled) return;
             SphereDrawer.ShowSphereOnce(center, radius);
         }
@@ -1131,8 +1096,7 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphereOnce(BoundingSphere sphere, Color color)
-        {
+        public void ShowSphereOnce(BoundingSphere sphere, Color color) {
             if (!Enabled) return;
             SphereDrawer.ShowSphereOnce(sphere, color);
         }
@@ -1142,21 +1106,21 @@ namespace Gearset
         /// <param name="min">Minimum values of the box in each axis</param>
         /// <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
-        public void ShowSphereOnce(Vector3 center, float radius, Color color)
-        {
+        public void ShowSphereOnce(Vector3 center, float radius, Color color) {
             if (!Enabled) return;
             SphereDrawer.ShowSphereOnce(center, radius, color);
         }
+
         #endregion
 
         #region Label Drawing
+
         /// <summary>
         /// Shows a label at the specified position (the text will be the label's name).
         /// </summary>
         /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position where the label will be shown</param>
-        public void ShowLabel(String name, Vector2 position)
-        {
+        public void ShowLabel(String name, Vector2 position) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position);
         }
@@ -1167,8 +1131,7 @@ namespace Gearset
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
-        public void ShowLabel(String name, Vector2 position, String text)
-        {
+        public void ShowLabel(String name, Vector2 position, String text) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position, text);
         }
@@ -1180,8 +1143,7 @@ namespace Gearset
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         /// <param name="color">Color of the text</param>
-        public void ShowLabel(String name, Vector2 position, String text, Color color)
-        {
+        public void ShowLabel(String name, Vector2 position, String text, Color color) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position, text, color);
         }
@@ -1191,8 +1153,7 @@ namespace Gearset
         /// </summary>
         /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position where the label will be shown</param>
-        public void ShowLabel(String name, Vector3 position)
-        {
+        public void ShowLabel(String name, Vector3 position) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position);
         }
@@ -1203,8 +1164,7 @@ namespace Gearset
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
-        public void ShowLabel(String name, Vector3 position, String text)
-        {
+        public void ShowLabel(String name, Vector3 position, String text) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position, text);
         }
@@ -1216,19 +1176,19 @@ namespace Gearset
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         /// <param name="color">Color of the text</param>
-        public void ShowLabel(String name, Vector3 position, String text, Color color)
-        {
+        public void ShowLabel(String name, Vector3 position, String text, Color color) {
             if (!Enabled) return;
             Labeler.ShowLabel(name, position, text, color);
-        } 
+        }
+
         #endregion
 
         #region Inspector
+
         /// <summary>
         /// Sends an object to the Inspector window.
         /// </summary>
-        public void Inspect(String name, Object o)
-        {
+        public void Inspect(String name, Object o) {
 #if WINDOWS
             if (!Enabled) return;
             Inspector.Inspect(name, o);
@@ -1238,8 +1198,7 @@ namespace Gearset
         /// <summary>
         /// Sends an object to the Inspector window.
         /// </summary>
-        public void Inspect(String name, Object o, bool autoExpand)
-        {
+        public void Inspect(String name, Object o, bool autoExpand) {
 #if WINDOWS
             if (!Enabled) return;
             Inspector.Inspect(name, o, autoExpand);
@@ -1249,8 +1208,7 @@ namespace Gearset
         /// <summary>
         /// Removes an object from the Inspector window.
         /// </summary>
-        public void RemoveInspect(Object o)
-        {
+        public void RemoveInspect(Object o) {
 #if WINDOWS
             if (!Enabled) return;
             Inspector.RemoveInspect(o);
@@ -1260,40 +1218,41 @@ namespace Gearset
         /// <summary>
         /// Clears the Inspector Window.
         /// </summary>
-        public void ClearInspector()
-        {
+        public void ClearInspector() {
 #if WINDOWS
             if (!Enabled) return;
             Inspector.ClearInspectedObjects();
 #endif
         }
+
         #endregion
 
         #region Finder
+
         /// <summary>
         /// Sets the function that is used by Gearset when a query is written to the
         /// Finder by the user. It usually searches through your game objects and returns
         /// a collection of the ones whose name or Type matches the query.
         /// A search function receives a String and return IEnumerable (e.g. a List)
         /// </summary>
-        public void SetFinderSearchFunction(SearchFunction searchFunction)
-        {
+        public void SetFinderSearchFunction(SearchFunction searchFunction) {
 #if WINDOWS
             if (!Enabled) return;
             Finder.Config.SearchFunction = searchFunction;
 #endif
         }
+
         #endregion
 
         #region Transform
+
         /// <summary>
         /// Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
-        public void ShowTransform(String name, Matrix transform, float axisScale)
-        {
+        public void ShowTransform(String name, Matrix transform, float axisScale) {
             if (!Enabled) return;
             Transform3Drawer.ShowTransform(name, transform, axisScale);
         }
@@ -1303,8 +1262,7 @@ namespace Gearset
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
-        public void ShowTransform(String name, Matrix transform)
-        {
+        public void ShowTransform(String name, Matrix transform) {
             if (!Enabled) return;
             Transform3Drawer.ShowTransform(name, transform);
         }
@@ -1313,8 +1271,7 @@ namespace Gearset
         /// Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="transform">Transform to draw</param>
-        public void ShowTransformOnce(Matrix transform)
-        {
+        public void ShowTransformOnce(Matrix transform) {
             if (!Enabled) return;
             Transform3Drawer.ShowTransformOnce(transform);
         }
@@ -1324,14 +1281,15 @@ namespace Gearset
         /// </summary>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
-        public void ShowTransformOnce(Matrix transform, float axisScale)
-        {
+        public void ShowTransformOnce(Matrix transform, float axisScale) {
             if (!Enabled) return;
             Transform3Drawer.ShowTransformOnce(transform, axisScale);
         }
+
         #endregion
 
         #region Vector3
+
         /// <summary>
         /// Shows a persistent Vector3 on the screen as an arrow.
         /// </summary>
@@ -1339,8 +1297,7 @@ namespace Gearset
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
-        public void ShowVector3(String name, Vector3 location, Vector3 vector, Color color)
-        {
+        public void ShowVector3(String name, Vector3 location, Vector3 vector, Color color) {
             if (!Enabled) return;
             Vector3Drawer.ShowVector3(name, location, vector, color);
         }
@@ -1351,8 +1308,7 @@ namespace Gearset
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
-        public void ShowVector3(String name, Vector3 location, Vector3 vector)
-        {
+        public void ShowVector3(String name, Vector3 location, Vector3 vector) {
             if (!Enabled) return;
             Vector3Drawer.ShowVector3(name, location, vector);
         }
@@ -1362,8 +1318,7 @@ namespace Gearset
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
-        public void ShowVector3Once(Vector3 location, Vector3 vector)
-        {
+        public void ShowVector3Once(Vector3 location, Vector3 vector) {
             if (!Enabled) return;
             Vector3Drawer.ShowVector3Once(location, vector);
         }
@@ -1374,14 +1329,15 @@ namespace Gearset
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
-        public void ShowVector3Once(Vector3 location, Vector3 vector, Color color)
-        {
+        public void ShowVector3Once(Vector3 location, Vector3 vector, Color color) {
             if (!Enabled) return;
             Vector3Drawer.ShowVector3Once(location, vector, color);
-        } 
+        }
+
         #endregion
 
         #region Vector2
+
         /// <summary>
         /// Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
         /// </summary>
@@ -1389,8 +1345,7 @@ namespace Gearset
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
-        public void ShowVector2(String name, Vector2 location, Vector2 vector, Color color)
-        {
+        public void ShowVector2(String name, Vector2 location, Vector2 vector, Color color) {
             if (!Enabled) return;
             Vector2Drawer.ShowVector2(name, location, vector, color);
         }
@@ -1401,8 +1356,7 @@ namespace Gearset
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
-        public void ShowVector2(String name, Vector2 location, Vector2 vector)
-        {
+        public void ShowVector2(String name, Vector2 location, Vector2 vector) {
             if (!Enabled) return;
             Vector2Drawer.ShowVector2(name, location, vector);
         }
@@ -1412,8 +1366,7 @@ namespace Gearset
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
-        public void ShowVector2Once(Vector2 location, Vector2 vector)
-        {
+        public void ShowVector2Once(Vector2 location, Vector2 vector) {
             if (!Enabled) return;
             Vector2Drawer.ShowVector2Once(location, vector);
         }
@@ -1424,47 +1377,47 @@ namespace Gearset
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
-        public void ShowVector2Once(Vector2 location, Vector2 vector, Color color)
-        {
+        public void ShowVector2Once(Vector2 location, Vector2 vector, Color color) {
             if (!Enabled) return;
             Vector2Drawer.ShowVector2Once(location, vector, color);
-        } 
+        }
+
         #endregion
 
         #region Bender
+
         /// <summary>
         /// Adds a curve for editing in Bender
         /// </summary>
         /// <param name="name">Name of the curve to add. Group using dot separators.</param>
         /// <param name="curve">Curve to edit in Bender.</param>
-        public void AddCurve(String name, Curve curve)
-        {
+        public void AddCurve(String name, Curve curve) {
             if (!Enabled) return;
             Bender.AddCurve(name, curve);
         }
+
         /// <summary>
         /// Removes the provided curve from Bender.
         /// </summary>
-        public void RemoveCurve(Curve curve)
-        {
+        public void RemoveCurve(Curve curve) {
             if (!Enabled) return;
             Bender.RemoveCurve(curve);
         }
+
         /// <summary>
         /// Removes a Curve or a Group by name. The complete dot-separated
         /// path to the curve or group must be given.
         /// </summary>
-        public void RemoveCurveOrGroup(String name)
-        {
+        public void RemoveCurveOrGroup(String name) {
             if (!Enabled) return;
             Bender.RemoveCurveOrGroup(name);
         }
+
         #endregion
 
-
         #region Profiler
-        public void StartFrame()
-        {
+
+        public void StartFrame() {
             if (!Enabled) return;
             Profiler.StartFrame();
         }
@@ -1475,8 +1428,7 @@ namespace Gearset
         /// <param name="barIndex">index of bar</param>
         /// <param name="markerName">name of marker.</param>
         /// <param name="color">color</param>
-        public void BeginMark(string markerName, Color color)
-        {
+        public void BeginMark(string markerName, Color color) {
             if (!Enabled) return;
             Profiler.BeginMark(markerName, color);
         }
@@ -1485,62 +1437,47 @@ namespace Gearset
         /// End measuring.
         /// </summary>
         /// <param name="markerName">Name of marker.</param>
-        public void EndMark(string markerName)
-        {
+        public void EndMark(string markerName) {
             if (!Enabled) return;
             Profiler.EndMark(markerName);
         }
-        #endregion
 
         #endregion
 
-        /// <summary>
-        /// Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
-        /// </summary>
-        public void ClearAll()
-        {
-            Settings.TreeViewConfig.Clear();
-            Settings.LabelerConfig.Clear();
-            Settings.LineDrawerConfig.Clear();
-            Settings.PlotterConfig.Clear();
-        }
+        #endregion
 
         // WRAPPER FUNCTIONS END
 
         #region Update
+
         /// <summary>
         /// Call this method at the end of your game's Update method.
         /// </summary>
-        public void Update(GameTime gameTime)
-        {
+        public void Update(GameTime gameTime) {
             if (!Initialized)
                 Console.WriteLine("Gearset has not being initialized. Call the Initialize method from your game's Initialize.");
 
             // Check if we have to save now.
-            if ((Environment.TickCount - lastSaveTime) / 1000f >= Settings.SaveFrequency)
-            {
+            if ((Environment.TickCount - _lastSaveTime) / 1000f >= Settings.SaveFrequency) {
                 ThreadPool.QueueUserWorkItem(BackgroundSave);
-                lastSaveTime = Environment.TickCount;
+                _lastSaveTime = Environment.TickCount;
             }
             UpdateCount++;
             if (!Enabled) return;
-            this.Show("Gearset.Update Count", UpdateCount);
-            this.Show("Gearset.Draw Count", DrawCount);
+            Show("Gearset.Update Count", UpdateCount);
+            Show("Gearset.Draw Count", DrawCount);
 
-            UI.UIManager.Update(gameTime);
+            UiManager.Update(gameTime);
 
             // Update the global visibility.
-            if (GearsetResources.Keyboard.IsKeyJustDown(Keys.Space) && GearsetResources.Keyboard.IsKeyDown(Keys.LeftControl))
-            {
+            if (GearsetResources.Keyboard.IsKeyJustDown(Keys.Space) && GearsetResources.Keyboard.IsKeyDown(Keys.LeftControl)) {
                 VisibleOverlays = !VisibleOverlays;
             }
-            if (VisibleOverlays && GearsetResources.GlobalAlpha < 1)
-            {
+            if (VisibleOverlays && GearsetResources.GlobalAlpha < 1) {
                 GearsetResources.GlobalAlpha += 0.24f;
                 GearsetResources.GlobalAlpha = MathHelper.Clamp(GearsetResources.GlobalAlpha, 0, 1);
             }
-            else if (!VisibleOverlays && GearsetResources.GlobalAlpha > 0)
-            {
+            else if (!VisibleOverlays && GearsetResources.GlobalAlpha > 0) {
                 GearsetResources.GlobalAlpha -= 0.24f;
                 GearsetResources.GlobalAlpha = MathHelper.Clamp(GearsetResources.GlobalAlpha, 0, 1);
             }
@@ -1549,31 +1486,28 @@ namespace Gearset
 #if WINDOWS
             GearsetResources.Mouse.Update(gameTime);
 #endif
-            foreach (Gear gear in Components)
-            {
+            foreach (var gear in Components) {
                 UpdateRecursively(gear, gameTime);
             }
         }
 
-        private void UpdateRecursively(Gear gear, GameTime gameTime)
-        {
-            if (gear.Enabled)
-            {
-                foreach (var child in gear.Children)
-                {
+        void UpdateRecursively(Gear gear, GameTime gameTime) {
+            if (gear.Enabled) {
+                foreach (var child in gear.Children) {
                     UpdateRecursively(child, gameTime);
                 }
                 gear.Update(gameTime);
             }
         }
+
         #endregion
 
         #region Draw
+
         /// <summary>
         /// Call this method at the end of your game's Draw method.
         /// </summary>
-        public void Draw(GameTime gameTime)
-        {
+        public void Draw(GameTime gameTime) {
             DrawCount++;
 
             if (!Settings.Enabled || GearsetResources.GlobalAlpha <= 0) return;
@@ -1581,16 +1515,16 @@ namespace Gearset
             if (GearsetResources.Effect.GraphicsDevice.IsDisposed)
                 RecreateGraphicResources();
 
-            if (GearsetResources.Game.IsMouseVisible == false)
-            {
-                Vector2 pos = GearsetResources.Mouse.Position;
+            if (GearsetResources.Game.IsMouseVisible == false) {
+                var pos = GearsetResources.Mouse.Position;
                 Show("Position", pos);
-                Matrix t = Matrix.Invert(GearsetResources.Transform2D);
+                var t = Matrix.Invert(GearsetResources.Transform2D);
                 LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitY * 2, t), Vector2.Transform(pos - Vector2.UnitY * 3, t), Color.White);
                 LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitX * 2, t), Vector2.Transform(pos - Vector2.UnitX * 3, t), Color.White);
             }
 
             #region Basic Effect 3D/2D Pass
+
             // Set up the effect parameters.
             GearsetResources.Effect.View = GearsetResources.View;
             GearsetResources.Effect.Projection = GearsetResources.Projection;
@@ -1609,13 +1543,13 @@ namespace Gearset
             // 3D
             GearsetResources.Effect.Techniques[0].Passes[0].Apply();
             GearsetResources.CurrentRenderPass = RenderPass.BasicEffectPass;
-            foreach (Gear component in Components)
+            foreach (var component in Components)
                 if (component.Visible)
                     DrawRecursively(component, gameTime);
 
             // 2D (Screen Space)
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 0, 0, 1);
-            Matrix halfScreenOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+            var projection = Matrix.CreateOrthographicOffCenter(0, _game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height, 0, 0, 1);
+            var halfScreenOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
             GearsetResources.Effect2D.View = halfScreenOffset * projection;
             GearsetResources.Effect2D.Projection = Matrix.Identity;
             GearsetResources.Effect2D.World = Matrix.Identity;
@@ -1623,7 +1557,7 @@ namespace Gearset
             GearsetResources.Effect2D.Alpha = GearsetResources.GlobalAlpha;
             GearsetResources.Effect2D.Techniques[0].Passes[0].Apply();
             GearsetResources.CurrentRenderPass = RenderPass.ScreenSpacePass;
-            foreach (Gear component in Components)
+            foreach (var component in Components)
                 if (component.Visible)
                     DrawRecursively(component, gameTime);
 
@@ -1632,54 +1566,42 @@ namespace Gearset
             GearsetResources.Effect2D.World = GearsetResources.Transform2D;
             GearsetResources.Effect2D.Techniques[0].Passes[0].Apply();
             GearsetResources.CurrentRenderPass = RenderPass.GameSpacePass;
-            foreach (Gear component in Components)
+            foreach (var component in Components)
                 if (component.Visible)
                     DrawRecursively(component, gameTime);
 
             #endregion
 
             #region Sprite Batch Pass
+
             GearsetResources.SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.Identity);
             GearsetResources.CurrentRenderPass = RenderPass.SpriteBatchPass;
-            foreach (Gear component in Components)
+            foreach (var component in Components)
                 if (component.Visible)
                     DrawRecursively(component, gameTime);
-            GearsetResources.SpriteBatch.End(); 
+            GearsetResources.SpriteBatch.End();
+
             #endregion
 
             #region Custom Pass
+
             GearsetResources.CurrentRenderPass = RenderPass.CustomPass;
-            foreach (Gear component in Components)
+            foreach (var component in Components)
                 if (component.Visible)
                     DrawRecursively(component, gameTime);
-            #endregion
 
+            #endregion
         }
 
-        private void DrawRecursively(Gear gear, GameTime gameTime)
-        {
-            if (gear.Visible)
-            {
+        void DrawRecursively(Gear gear, GameTime gameTime) {
+            if (gear.Visible) {
                 gear.Draw(gameTime);
-                foreach (var child in gear.Children)
-                {
+                foreach (var child in gear.Children) {
                     DrawRecursively(child, gameTime);
                 }
             }
         }
+
         #endregion
-
-        private void OnExit(Object sender, EventArgs args)
-        {
-#if WINDOWS
-            GearsetSettings.Save();
-#endif
-        }
-
-        private void BackgroundSave(Object state)
-        {
-            GearsetSettings.Save();
-        }
     }
 }
-

@@ -1,75 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace Gearset.Components.CurveEditorControl
-{
+namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Changes the tangent value of a given key.
     /// </summary>
-    public class ChangeTangentModeCommand : CurveEditorCommand
-    {
-        private KeyTangentMode? newTangentInMode;
-        private KeyTangentMode? newTangentOutMode;
-        
+    public class ChangeTangentModeCommand : CurveEditorCommand {
         // Saved state.
-        private long[] affectedKeys;
-        private KeyTangentMode[] prevTangentInMode;
-        private KeyTangentMode[] prevTangentOutMode;
-
-        public override bool CanUndo
-        {
-            get { return true; }
-        }
+        readonly long[] _affectedKeys;
+        KeyTangentMode? _newTangentInMode;
+        KeyTangentMode? _newTangentOutMode;
+        KeyTangentMode[] _prevTangentInMode;
+        KeyTangentMode[] _prevTangentOutMode;
 
         /// <summary>
         /// Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public ChangeTangentModeCommand(CurveEditorControl2 control, KeyTangentMode? newTangentInMode, KeyTangentMode? newTangentOutMode)
-            : base(control)
-        {
+            : base(control) {
             // Store the parameters.
-            this.newTangentInMode = newTangentInMode;
-            this.newTangentOutMode = newTangentOutMode;
+            _newTangentInMode = newTangentInMode;
+            _newTangentOutMode = newTangentOutMode;
 
             // Store the current selection, if any.
-            affectedKeys = new long[control.Selection.Count];
-            int i = 0;
-            foreach (KeyWrapper key in control.Selection)
-            {
-                affectedKeys[i++] = key.Id;
+            _affectedKeys = new long[control.Selection.Count];
+            var i = 0;
+            foreach (var key in control.Selection) {
+                _affectedKeys[i++] = key.Id;
             }
         }
 
-        public override void Do()
-        {
+        public override bool CanUndo { get { return true; } }
+
+        public override void Do() {
             // Do we need to save prev values?
-            if (prevTangentInMode == null)
-            {
-                System.Diagnostics.Debug.Assert(prevTangentOutMode == null);
-                prevTangentInMode = new KeyTangentMode[affectedKeys.Length];
-                prevTangentOutMode = new KeyTangentMode[affectedKeys.Length];
+            if (_prevTangentInMode == null) {
+                Debug.Assert(_prevTangentOutMode == null);
+                _prevTangentInMode = new KeyTangentMode[_affectedKeys.Length];
+                _prevTangentOutMode = new KeyTangentMode[_affectedKeys.Length];
 
                 // Save the prev values.
-                for (int i = 0; i < affectedKeys.Length; i++)
-                {
-                    prevTangentInMode[i] = Control.Keys[affectedKeys[i]].TangentInMode;
-                    prevTangentInMode[i] = Control.Keys[affectedKeys[i]].TangentOutMode;
+                for (var i = 0; i < _affectedKeys.Length; i++) {
+                    _prevTangentInMode[i] = Control.Keys[_affectedKeys[i]].TangentInMode;
+                    _prevTangentInMode[i] = Control.Keys[_affectedKeys[i]].TangentOutMode;
                 }
             }
 
-            HashSet<CurveWrapper> affectedCurves = new HashSet<CurveWrapper>();
+            var affectedCurves = new HashSet<CurveWrapper>();
 
             // Change the tangent modes.
-            for (int i = 0; i < affectedKeys.Length; i++)
-            {
-                if (newTangentInMode.HasValue)
-                    Control.Keys[affectedKeys[i]].TangentInMode = newTangentInMode.Value;
-                if (newTangentOutMode.HasValue)
-                    Control.Keys[affectedKeys[i]].TangentOutMode = newTangentOutMode.Value;
-                affectedCurves.Add(Control.Keys[affectedKeys[i]].Curve);
+            for (var i = 0; i < _affectedKeys.Length; i++) {
+                if (_newTangentInMode.HasValue)
+                    Control.Keys[_affectedKeys[i]].TangentInMode = _newTangentInMode.Value;
+                if (_newTangentOutMode.HasValue)
+                    Control.Keys[_affectedKeys[i]].TangentOutMode = _newTangentOutMode.Value;
+                affectedCurves.Add(Control.Keys[_affectedKeys[i]].Curve);
             }
 
             // Recalc tangents on affected curves.
@@ -80,18 +65,16 @@ namespace Gearset.Components.CurveEditorControl
             Control.InvalidateVisual();
         }
 
-        public override void Undo()
-        {
-            HashSet<CurveWrapper> affectedCurves = new HashSet<CurveWrapper>();
+        public override void Undo() {
+            var affectedCurves = new HashSet<CurveWrapper>();
 
             // Revert to previous values.
-            for (int i = 0; i < affectedKeys.Length; i++)
-            {
-                if (newTangentInMode.HasValue)
-                    Control.Keys[affectedKeys[i]].TangentInMode = prevTangentInMode[i];
-                if (newTangentOutMode.HasValue)
-                    Control.Keys[affectedKeys[i]].TangentOutMode = prevTangentOutMode[i];
-                affectedCurves.Add(Control.Keys[affectedKeys[i]].Curve);
+            for (var i = 0; i < _affectedKeys.Length; i++) {
+                if (_newTangentInMode.HasValue)
+                    Control.Keys[_affectedKeys[i]].TangentInMode = _prevTangentInMode[i];
+                if (_newTangentOutMode.HasValue)
+                    Control.Keys[_affectedKeys[i]].TangentOutMode = _prevTangentOutMode[i];
+                affectedCurves.Add(Control.Keys[_affectedKeys[i]].Curve);
             }
 
             // Recalc tangents on affected curves.

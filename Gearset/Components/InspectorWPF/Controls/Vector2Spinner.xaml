@@ -17,8 +17,8 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Name="TextBlock1" MaxWidth="200" Width="Auto" TextTrimming="CharacterEllipsis"/>
-        <Button Name="Button1" Grid.Column="1" Style="{StaticResource spinner2DButtonStyle}" Content="XY"/>
-        <Button Name="Button2" Grid.Column="2" Style="{StaticResource spinner2DButtonStyle}" Content="Length"/>
+        <Button Name="Button1" Grid.Column="1" Style="{StaticResource Spinner2DButtonStyle}" Content="XY"/>
+        <Button Name="Button2" Grid.Column="2" Style="{StaticResource Spinner2DButtonStyle}" Content="Length"/>
     </Grid>
 
 </local:VisualItemBase>

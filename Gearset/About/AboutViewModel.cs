@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-namespace Gearset.About
-{
-    public class AboutViewModel : INotifyPropertyChanged
-    {
-        public string CopyrightNotice { get; set; }
-        public string ProductNameAndVersion { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(String propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+namespace Gearset.About {
+    public class AboutViewModel : INotifyPropertyChanged {
+        public AboutViewModel(String productNameAndVersion, string copyrightNotice) {
+            ProductNameAndVersion = productNameAndVersion;
+            CopyrightNotice = copyrightNotice;
         }
 
+        public string CopyrightNotice { get; set; }
+        public string ProductNameAndVersion { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public AboutViewModel(String productNameAndVersion, string copyrightNotice)
-        {
-            this.ProductNameAndVersion = productNameAndVersion;
-            this.CopyrightNotice = copyrightNotice;
+        void OnPropertyChanged(String propertyName) {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

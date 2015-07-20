@@ -1,32 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Windows.Controls;
 using System.Windows;
-using System.ComponentModel;
-using System.Windows.Forms.Integration;
+using System.Windows.Controls;
 using Microsoft.Xna.Framework;
-using System.Collections;
 using Microsoft.Xna.Framework.Graphics;
-using Gearset.Components;
 
-namespace Gearset.Components.InspectorWPF
-{
-
-    public class NodeTemplateSelector : DataTemplateSelector
-    {
-        private static Dictionary<Type, CachedTemplate> TypeTemplateMap;
-        private static CachedTemplate genericTemplateCache = new CachedTemplate("genericFieldTemplate");
-        private static CachedTemplate gearConfigTemplateCache = new CachedTemplate("gearConfigTemplate");
-        private static CachedTemplate rootTemplateCache = new CachedTemplate("rootTemplate");
+namespace Gearset.Components.InspectorWPF {
+    public class NodeTemplateSelector : DataTemplateSelector {
+        static readonly Dictionary<Type, CachedTemplate> TypeTemplateMap;
+        static readonly CachedTemplate GenericTemplateCache = new CachedTemplate("genericFieldTemplate");
+        static readonly CachedTemplate GearConfigTemplateCache = new CachedTemplate("gearConfigTemplate");
+        static CachedTemplate _rootTemplateCache = new CachedTemplate("rootTemplate");
 
         /// <summary>
         /// Static constructor
         /// </summary>
-        static NodeTemplateSelector()
-        {
+        static NodeTemplateSelector() {
             TypeTemplateMap = new Dictionary<Type, CachedTemplate>();
 
             // Primitive types
@@ -64,18 +53,15 @@ namespace Gearset.Components.InspectorWPF
             TypeTemplateMap.Add(typeof(LabelerConfig), new CachedTemplate("clearableGearConfigTemplate"));
             TypeTemplateMap.Add(typeof(TreeViewConfig), new CachedTemplate("clearableGearConfigTemplate"));
             TypeTemplateMap.Add(typeof(PlotterConfig), new CachedTemplate("clearableGearConfigTemplate"));
-
         }
-        
-        public override DataTemplate SelectTemplate(Object item, DependencyObject container)
-        {
-            FrameworkElement element = container as FrameworkElement;
 
-            if (element != null && item != null)
-            {
+        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+            var element = container as FrameworkElement;
+
+            if (element != null && item != null) {
                 element.DataContext = item;
-                InspectorNode node = item as InspectorNode;
-                Type nodeType = node.Type;
+                var node = item as InspectorNode;
+                var nodeType = node.Type;
 
                 // Enums are handled differently
                 if (nodeType.IsEnum)
@@ -89,26 +75,21 @@ namespace Gearset.Components.InspectorWPF
                 //    return rootTemplateCache.DataTemplate;
                 //}
 
-                
-                if (TypeTemplateMap.ContainsKey(nodeType))
-                {
-                    CachedTemplate cache = TypeTemplateMap[nodeType];
+
+                if (TypeTemplateMap.ContainsKey(nodeType)) {
+                    var cache = TypeTemplateMap[nodeType];
                     if (cache.DataTemplate == null)
                         cache.DataTemplate = element.FindResource(cache.Name) as DataTemplate;
                     return cache.DataTemplate;
                 }
-                else if (typeof(GearConfig).IsAssignableFrom(nodeType))
-                {
-                    if (gearConfigTemplateCache.DataTemplate == null)
-                        gearConfigTemplateCache.DataTemplate = element.FindResource(gearConfigTemplateCache.Name) as DataTemplate;
-                    return gearConfigTemplateCache.DataTemplate;
+                if (typeof(GearConfig).IsAssignableFrom(nodeType)) {
+                    if (GearConfigTemplateCache.DataTemplate == null)
+                        GearConfigTemplateCache.DataTemplate = element.FindResource(GearConfigTemplateCache.Name) as DataTemplate;
+                    return GearConfigTemplateCache.DataTemplate;
                 }
-                else
-                {
-                    if (genericTemplateCache.DataTemplate == null)
-                        genericTemplateCache.DataTemplate = element.FindResource(genericTemplateCache.Name) as DataTemplate;
-                    return genericTemplateCache.DataTemplate;
-                }
+                if (GenericTemplateCache.DataTemplate == null)
+                    GenericTemplateCache.DataTemplate = element.FindResource(GenericTemplateCache.Name) as DataTemplate;
+                return GenericTemplateCache.DataTemplate;
             }
 
             return null;

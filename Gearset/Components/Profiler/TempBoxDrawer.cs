@@ -1,25 +1,19 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
-namespace Gearset.Components.Profiler
-{
+namespace Gearset.Components.Profiler {
     //TODO: Added this with a much bigger buffer and no noise texture - think we need a better solution going forward.
-    internal class TempBoxDrawer : Gear
-    {
-        private const int MaxBoxes = 6000;
-        private readonly VertexPositionColor[] Vertices;
-        private int boxCount;
-        public Texture2D noiseTexture;
+    class TempBoxDrawer : Gear {
+        const int MaxBoxes = 6000;
+        readonly VertexPositionColor[] _vertices;
+        int _boxCount;
 
-        public TempBoxDrawer() : base (new GearConfig())
-        {
-            Vertices = new VertexPositionColor[MaxBoxes * 6];
+        public TempBoxDrawer() : base(new GearConfig()) {
+            _vertices = new VertexPositionColor[MaxBoxes * 6];
         }
 
-        public void ShowBoxOnce(Vector2 min, Vector2 max)
-        {
-            if (boxCount >= MaxBoxes)
+        public void ShowBoxOnce(Vector2 min, Vector2 max) {
+            if (_boxCount >= MaxBoxes)
                 return;
 
             var tl = new Vector3(min, 0);
@@ -29,20 +23,19 @@ namespace Gearset.Components.Profiler
 
             var color = new Color(32, 32, 32, 127);
 
-            var i = boxCount * 6;
-            Vertices[i + 0] = new VertexPositionColor(tl, color);
-            Vertices[i + 1] = new VertexPositionColor(tr, color);
-            Vertices[i + 2] = new VertexPositionColor(br, color);
-            Vertices[i + 3] = new VertexPositionColor(tl, color);
-            Vertices[i + 4] = new VertexPositionColor(br, color);
-            Vertices[i + 5] = new VertexPositionColor(bl, color);
+            var i = _boxCount * 6;
+            _vertices[i + 0] = new VertexPositionColor(tl, color);
+            _vertices[i + 1] = new VertexPositionColor(tr, color);
+            _vertices[i + 2] = new VertexPositionColor(br, color);
+            _vertices[i + 3] = new VertexPositionColor(tl, color);
+            _vertices[i + 4] = new VertexPositionColor(br, color);
+            _vertices[i + 5] = new VertexPositionColor(bl, color);
 
-            boxCount += 6;
+            _boxCount += 6;
         }
 
-        public void ShowGradientBoxOnce(Vector2 min, Vector2 max, Color top, Color bottom)
-        {
-            if (boxCount >= MaxBoxes)
+        public void ShowGradientBoxOnce(Vector2 min, Vector2 max, Color top, Color bottom) {
+            if (_boxCount >= MaxBoxes)
                 return;
 
             var tl = new Vector3(min, 0);
@@ -50,28 +43,27 @@ namespace Gearset.Components.Profiler
             var br = new Vector3(max, 0);
             var bl = new Vector3(min.X, max.Y, 0);
 
-            var i = boxCount * 6;
+            var i = _boxCount * 6;
 
-            Vertices[i + 0] = new VertexPositionColor(tl, top);;
-            Vertices[i + 1] = new VertexPositionColor(tr, top);
-            Vertices[i + 2] = new VertexPositionColor(br, bottom);
-            Vertices[i + 3] = new VertexPositionColor(tl, top);
-            Vertices[i + 4] = new VertexPositionColor(br, bottom);
-            Vertices[i + 5] = new VertexPositionColor(bl, bottom);
+            _vertices[i + 0] = new VertexPositionColor(tl, top);
+            ;
+            _vertices[i + 1] = new VertexPositionColor(tr, top);
+            _vertices[i + 2] = new VertexPositionColor(br, bottom);
+            _vertices[i + 3] = new VertexPositionColor(tl, top);
+            _vertices[i + 4] = new VertexPositionColor(br, bottom);
+            _vertices[i + 5] = new VertexPositionColor(bl, bottom);
 
-            boxCount += 6;
+            _boxCount += 6;
         }
 
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && boxCount > 0)
-            {
+        public override void Draw(GameTime gameTime) {
+            if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && _boxCount > 0) {
                 GearsetResources.Effect2D.Texture = null;
                 GearsetResources.Effect2D.TextureEnabled = false;
                 GearsetResources.Effect2D.Techniques[0].Passes[0].Apply();
-                GearsetResources.Device.DrawUserPrimitives(PrimitiveType.TriangleList, Vertices, 0, boxCount * 2);
+                GearsetResources.Device.DrawUserPrimitives(PrimitiveType.TriangleList, _vertices, 0, _boxCount * 2);
 
-                boxCount = 0;
+                _boxCount = 0;
             }
         }
     }

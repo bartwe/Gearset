@@ -1,49 +1,55 @@
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Rectangle = System.Drawing.Rectangle;
 
-
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class MouseComponent : Gear
-    {
-        MouseState state;
-        MouseState prevState;
+    public class MouseComponent : Gear {
+        MouseState _state;
+        MouseState _prevState;
 
         /// <summary>
         /// Can last only one frame true
         /// </summary>
-        private bool justClicked;
+        bool _justClicked;
+
         /// <summary>
         /// Can last only one frame true
         /// </summary>
-        private bool justDragging;
+        bool _justDragging;
 
         /// <summary>
         /// Remains true while the left mouse button is pressed.
         /// </summary>
-        private bool mouseDown;
+        bool _mouseDown;
 
         /// <summary>
         /// How long the mouse was down.
         /// </summary>
-        private int mouseDownTime;
+        int _mouseDownTime;
 
         /// <summary>
         /// The position where the left button became pressed.
         /// </summary>
-        private Vector2 mouseDownPosition;
+        Vector2 _mouseDownPosition;
 
-        private bool dragging;
+        bool _dragging;
 
-        public Vector2 Position
-        {
-            get { return new Vector2(state.X, state.Y); }
+        #region Constructor
+
+        public MouseComponent()
+            : base(new GearConfig()) {
+            _state = Mouse.GetState();
         }
 
-        private bool HaveFocus { get { return Game.IsActive; } }
+        #endregion
+
+        public Vector2 Position { get { return new Vector2(_state.X, _state.Y); } }
+        bool HaveFocus { get { return Game.IsActive; } }
 
         /// <summary>
         /// The distance the (down left) mouse can move without being
@@ -62,71 +68,52 @@ namespace Gearset.Components
         /// Get the movement the mouse have made since it started dragging.
         /// If the mouse is not dragging it will return Vector2.Zero.
         /// </summary>
-        public Vector2 DragOffset
-        {
-            get
-            {
-                if (dragging)
-                    return Position - mouseDownPosition;
-                else
-                    return Vector2.Zero;
+        public Vector2 DragOffset {
+            get {
+                if (_dragging)
+                    return Position - _mouseDownPosition;
+                return Vector2.Zero;
             }
-
         }
 
-        #region Constructor
-        public MouseComponent()
-            : base(new GearConfig())
-        {
-            state = Mouse.GetState();
-        } 
-        #endregion
-
-
         #region Update
-        public override void Update(GameTime gameTime)
-        {
-            prevState = state;
-            state = Mouse.GetState();
-            justClicked = false;
-            justDragging = false;
-            if (mouseDown)
-            {
-                if (Vector2.Distance(Position, mouseDownPosition) > ClickThreshold && !dragging)
-                {
-                    justDragging = true;
-                    dragging = true;
+
+        public override void Update(GameTime gameTime) {
+            _prevState = _state;
+            _state = Mouse.GetState();
+            _justClicked = false;
+            _justDragging = false;
+            if (_mouseDown) {
+                if (Vector2.Distance(Position, _mouseDownPosition) > ClickThreshold && !_dragging) {
+                    _justDragging = true;
+                    _dragging = true;
                 }
-                mouseDownTime += gameTime.ElapsedGameTime.Milliseconds;
+                _mouseDownTime += gameTime.ElapsedGameTime.Milliseconds;
             }
 
-            if (IsLeftJustUp())
-            {
-                if (!dragging)
-                    justClicked = true;
-                dragging = false;
-                mouseDown = false;
+            if (IsLeftJustUp()) {
+                if (!_dragging)
+                    _justClicked = true;
+                _dragging = false;
+                _mouseDown = false;
             }
 
-            if (IsLeftJustDown())
-            {
-                mouseDownPosition = Position;
-                mouseDown = true;
-                mouseDownTime = 0;
+            if (IsLeftJustDown()) {
+                _mouseDownPosition = Position;
+                _mouseDown = true;
+                _mouseDownTime = 0;
             }
 
             // Keep the mouse inside
-            if (KeepMouseInWindow)
-            {
-                Rectangle rect = Game.Window.ClientBounds; // Rectangle to clip (in screen coordinates)
+            if (KeepMouseInWindow) {
+                var rect = Game.Window.ClientBounds; // Rectangle to clip (in screen coordinates)
 #if WINDOWS
-                System.Windows.Forms.Cursor.Clip = new System.Drawing.Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+                Cursor.Clip = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
 #endif
             }
-            else
-            {
+            else {
 #if WINDOWS
-                System.Windows.Forms.Cursor.Clip = new System.Drawing.Rectangle(int.MinValue / 2, int.MinValue / 2, int.MaxValue, int.MaxValue);
+                Cursor.Clip = new Rectangle(int.MinValue / 2, int.MinValue / 2, int.MaxValue, int.MaxValue);
 #endif
             }
             base.Update(gameTime);
@@ -135,72 +122,67 @@ namespace Gearset.Components
         #endregion
 
         #region Is Left Just Up/Down/Click
+
         /// <summary>
         /// True if the mouse was just pressed, last one frame true.
         /// </summary>
-        public bool IsLeftJustDown()
-        {
-            return (state.LeftButton == ButtonState.Pressed && prevState.LeftButton == ButtonState.Released && HaveFocus);
+        public bool IsLeftJustDown() {
+            return (_state.LeftButton == ButtonState.Pressed && _prevState.LeftButton == ButtonState.Released && HaveFocus);
         }
 
         /// <summary>
         /// True if the mouse was just released, last one frame true.
         /// </summary>
-        public bool IsLeftJustUp()
-        {
-            return (state.LeftButton == ButtonState.Released && prevState.LeftButton == ButtonState.Pressed && HaveFocus);
+        public bool IsLeftJustUp() {
+            return (_state.LeftButton == ButtonState.Released && _prevState.LeftButton == ButtonState.Pressed && HaveFocus);
         }
 
         /// <summary>
         /// True if mouse did a released-pressed-released cycle
         /// without moving the ClickThreshold.
         /// </summary>
-        public bool IsLeftClick()
-        {
-            return justClicked && HaveFocus;
-        } 
+        public bool IsLeftClick() {
+            return _justClicked && HaveFocus;
+        }
+
         #endregion
 
         #region Is Right Just Up/Down/Click
+
         /// <summary>
         /// True if the mouse was just pressed, last one frame true.
         /// </summary>
-        public bool IsRightJustDown()
-        {
-            return (state.RightButton == ButtonState.Pressed && prevState.RightButton == ButtonState.Released && HaveFocus);
+        public bool IsRightJustDown() {
+            return (_state.RightButton == ButtonState.Pressed && _prevState.RightButton == ButtonState.Released && HaveFocus);
         }
 
         /// <summary>
         /// True if the mouse was just released, last one frame true.
         /// </summary>
-        public bool IsRightJustUp()
-        {
-            return (state.RightButton == ButtonState.Released && prevState.RightButton == ButtonState.Pressed && HaveFocus);
+        public bool IsRightJustUp() {
+            return (_state.RightButton == ButtonState.Released && _prevState.RightButton == ButtonState.Pressed && HaveFocus);
         }
+
         #endregion
 
-
         #region Dragging
+
         /// <summary>
         /// The mouse mave moved the ClickThreshold since it was pressed.
         /// </summary>
         /// <returns></returns>
-        public bool IsDragging()
-        {
-            return dragging && HaveFocus;
+        public bool IsDragging() {
+            return _dragging && HaveFocus;
         }
 
         /// <summary>
         /// The mouse just moved the threshold, this will only be true
         /// for one frame.
         /// </summary>
-        public bool IsJustDragging()
-        {
-            return justDragging && HaveFocus;
-        } 
+        public bool IsJustDragging() {
+            return _justDragging && HaveFocus;
+        }
+
         #endregion
-
-
-
     }
 }

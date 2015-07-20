@@ -9,14 +9,12 @@ using System;
 using System.Globalization;
 using System.Text;
 
-namespace Gearset.Profiler.Extensions
-{
+namespace Gearset.Profiler.Extensions {
     /// <summary>
     /// Options for StringBuilder extension methods.
     /// </summary>
     [Flags]
-    public enum AppendNumberOptions
-    {
+    public enum AppendNumberOptions {
         // Normal format.
         None = 0,
 
@@ -25,7 +23,7 @@ namespace Gearset.Profiler.Extensions
 
         // Insert Number group separation characters.
         // In Use, added "," for every 3 digits.
-        NumberGroup = 2,
+        NumberGroup = 2
     }
 
     /// <summary>
@@ -45,23 +43,21 @@ namespace Gearset.Profiler.Extensions
     /// stringBuilder.AppendNumber(12345);
     /// 
     /// </remarks>
-    public static class StringBuilderExtensions
-    {
+    public static class StringBuilderExtensions {
         /// <summary>
         /// Cache for NumberGroupSizes of NumberFormat class.
         /// </summary>
-        private static readonly int[] NumberGroupSizes = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes;
+        static readonly int[] NumberGroupSizes = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes;
 
         /// <summary>
         /// string buffer.
         /// </summary>
-        private static readonly char[] NumberString = new char[32];
+        static readonly char[] NumberString = new char[32];
 
         /// <summary>
         /// Convert integer to string and add to string builder.
         /// </summary>
-        public static void AppendNumber(this StringBuilder builder, int number)
-        {
+        public static void AppendNumber(this StringBuilder builder, int number) {
             AppendNumberInternal(builder, number, 0, AppendNumberOptions.None);
         }
 
@@ -71,8 +67,7 @@ namespace Gearset.Profiler.Extensions
         /// <param name="builder"></param>
         /// <param name="number"></param>
         /// <param name="options">Format options</param>
-        public static void AppendNumber(this StringBuilder builder, int number, AppendNumberOptions options)
-        {
+        public static void AppendNumber(this StringBuilder builder, int number, AppendNumberOptions options) {
             AppendNumberInternal(builder, number, 0, options);
         }
 
@@ -80,8 +75,7 @@ namespace Gearset.Profiler.Extensions
         /// Convert float to string and add to string builder.
         /// </summary>
         /// <remarks>It shows 2 decimal digits.</remarks>
-        public static void AppendNumber(this StringBuilder builder, float number)
-        {
+        public static void AppendNumber(this StringBuilder builder, float number) {
             AppendNumber(builder, number, 2, AppendNumberOptions.None);
         }
 
@@ -89,39 +83,32 @@ namespace Gearset.Profiler.Extensions
         /// Convert float to string and add to string builder.
         /// </summary>
         /// <remarks>It shows 2 decimal digits.</remarks>
-        public static void AppendNumber(this StringBuilder builder, float number, AppendNumberOptions options)
-        {
+        public static void AppendNumber(this StringBuilder builder, float number, AppendNumberOptions options) {
             AppendNumber(builder, number, 2, options);
         }
 
         /// <summary>
         /// Convert float to string and add to string builder.
         /// </summary>
-        public static void AppendNumber(this StringBuilder builder, float number, int decimalCount, AppendNumberOptions options)
-        {
+        public static void AppendNumber(this StringBuilder builder, float number, int decimalCount, AppendNumberOptions options) {
             // Handle NaN, Infinity cases.
-            if (float.IsNaN(number))
-            {
+            if (float.IsNaN(number)) {
                 builder.Append("NaN");
             }
-            else if (float.IsNegativeInfinity(number))
-            {
+            else if (float.IsNegativeInfinity(number)) {
                 builder.Append("-Infinity");
             }
-            else if (float.IsPositiveInfinity(number))
-            {
+            else if (float.IsPositiveInfinity(number)) {
                 builder.Append("+Infinity");
             }
-            else
-            {
+            else {
                 var intNumber = (int)(number * (float)Math.Pow(10, decimalCount) + 0.5f);
 
                 AppendNumberInternal(builder, intNumber, decimalCount, options);
             }
         }
 
-        static void AppendNumberInternal(StringBuilder builder, int number, int decimalCount, AppendNumberOptions options)
-        {
+        static void AppendNumberInternal(StringBuilder builder, int number, int decimalCount, AppendNumberOptions options) {
             var nfi = CultureInfo.CurrentCulture.NumberFormat;
 
             var idx = NumberString.Length;
@@ -142,17 +129,14 @@ namespace Gearset.Profiler.Extensions
                 number = Math.Abs(number);
 
             // Converting from smallest digit.
-            do
-            {
+            do {
                 // Add decimal separator ("." in US).
-                if (idx == decimalPos)
-                {
+                if (idx == decimalPos) {
                     NumberString[--idx] = nfi.NumberDecimalSeparator[0];
                 }
 
                 // Added number group separator ("," in US).
-                if (--numberGroupCount < 0 && showNumberGroup)
-                {
+                if (--numberGroupCount < 0 && showNumberGroup) {
                     NumberString[--idx] = nfi.NumberGroupSeparator[0];
 
                     if (numberGroupIdx < NumberGroupSizes.Length - 1)
@@ -164,23 +148,19 @@ namespace Gearset.Profiler.Extensions
                 // Convert current digit to character and add to buffer.
                 NumberString[--idx] = (char)('0' + (number % 10));
                 number /= 10;
-
             } while (number > 0 || decimalPos <= idx);
 
 
             // Added sign character if needed.
-            if (isNegative)
-            {
+            if (isNegative) {
                 NumberString[--idx] = nfi.NegativeSign[0];
             }
-            else if (showPositiveSign)
-            {
+            else if (showPositiveSign) {
                 NumberString[--idx] = nfi.PositiveSign[0];
             }
 
             // Added converted string to StringBuilder.
             builder.Append(NumberString, idx, NumberString.Length - idx);
         }
-
     }
 }

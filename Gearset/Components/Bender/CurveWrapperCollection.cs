@@ -1,94 +1,66 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 
-namespace Gearset.Components.CurveEditorControl
-{
+namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// A collection of Curve Wrappers. It can be accessed as a dictionary
     /// using the [] semantic either by name or index.
     /// </summary>
-    public class CurveWrapperCollection : ICollection<CurveWrapper>
-    {
-        private Dictionary<long, CurveWrapper> curves;
-        public event EventHandler<ItemAddedEventArgs<CurveWrapper>> ItemAdded;
-        public event EventHandler<ItemRemovedEventArgs<CurveWrapper>> ItemRemoved;
-        public CurveWrapperCollection()
-        {
-            curves = new Dictionary<long, CurveWrapper>();
+    public class CurveWrapperCollection : ICollection<CurveWrapper> {
+        readonly Dictionary<long, CurveWrapper> _curves;
+
+        public CurveWrapperCollection() {
+            _curves = new Dictionary<long, CurveWrapper>();
         }
 
-        public CurveWrapper this[long index]
-        {
-            get
-            {
-                return curves[index];
-            }
-            set
-            {
-                curves[index] = value;
-            }
-            
-        }
+        public CurveWrapper this[long index] { get { return _curves[index]; } set { _curves[index] = value; } }
 
-        public void Add(CurveWrapper item)
-        {
-            if (curves.ContainsKey(item.Id))
-            {
+        public void Add(CurveWrapper item) {
+            if (_curves.ContainsKey(item.Id)) {
                 throw new InvalidOperationException("The same Curve was added twice.");
             }
-            curves.Add(item.Id, item);
+            _curves.Add(item.Id, item);
             if (ItemAdded != null)
                 ItemAdded(this, new ItemAddedEventArgs<CurveWrapper>(item));
         }
 
-        public void Clear()
-        {
-            curves.Clear();
+        public void Clear() {
+            _curves.Clear();
         }
 
-        public bool Contains(CurveWrapper item)
-        {
-            bool result = curves.ContainsKey(item.Id);
+        public bool Contains(CurveWrapper item) {
+            var result = _curves.ContainsKey(item.Id);
             // Check for inconsistencies.
-            System.Diagnostics.Debug.Assert(curves[item.Id] == item, "Inconsistency found in CurveCollection");
+            Debug.Assert(_curves[item.Id] == item, "Inconsistency found in CurveCollection");
             return result;
         }
 
-        public void CopyTo(CurveWrapper[] array, int arrayIndex)
-        {
+        public void CopyTo(CurveWrapper[] array, int arrayIndex) {
             throw new NotImplementedException();
         }
 
-        public int Count
-        {
-            get { return curves.Count; }
-        }
+        public int Count { get { return _curves.Count; } }
+        public bool IsReadOnly { get { return false; } }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public bool Remove(CurveWrapper item)
-        {
+        public bool Remove(CurveWrapper item) {
             if (ItemRemoved != null)
                 ItemRemoved(this, new ItemRemovedEventArgs<CurveWrapper>(item));
-            return curves.Remove(item.Id);
+            return _curves.Remove(item.Id);
         }
 
-        public IEnumerator<CurveWrapper> GetEnumerator()
-        {
-            foreach (var item in curves)
-            {
+        public IEnumerator<CurveWrapper> GetEnumerator() {
+            foreach (var item in _curves) {
                 yield return item.Value;
             }
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return curves.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() {
+            return _curves.GetEnumerator();
         }
+
+        public event EventHandler<ItemAddedEventArgs<CurveWrapper>> ItemAdded;
+        public event EventHandler<ItemRemovedEventArgs<CurveWrapper>> ItemRemoved;
     }
 }

@@ -1,47 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     [Serializable]
-    public class InspectorConfig : GearConfig
-    {
-        [InspectorIgnoreAttribute]
+    public class InspectorConfig : GearConfig {
+        String _searchText;
+        [NonSerialized] bool _modifiedOnly;
+
+        public InspectorConfig() {
+            // Defaults
+            Width = 430;
+            Height = 600;
+            _searchText = String.Empty;
+        }
+
+        [InspectorIgnore]
         public double Top { get; internal set; }
-        [InspectorIgnoreAttribute]
+
+        [InspectorIgnore]
         public double Left { get; internal set; }
-        [InspectorIgnoreAttribute]
+
+        [InspectorIgnore]
         public double Width { get; internal set; }
-        [InspectorIgnoreAttribute]
+
+        [InspectorIgnore]
         public double Height { get; internal set; }
 
-        [InspectorIgnoreAttribute]
-        public String SearchText
-        {
-            get { return searchText; }
-            set { if (value == null) return; searchText = value; OnPropertyChanged("SearchText"); if (SearchTextChanged != null) SearchTextChanged(this, EventArgs.Empty); }
+        [InspectorIgnore]
+        public String SearchText {
+            get { return _searchText; }
+            set {
+                if (value == null) return;
+                _searchText = value;
+                OnPropertyChanged("SearchText");
+                if (SearchTextChanged != null) SearchTextChanged(this, EventArgs.Empty);
+            }
         }
-        private String searchText;
 
-        [InspectorIgnoreAttribute]
-        public bool ModifiedOnly { get { return modifiedOnly; } set { modifiedOnly = value; if (ModifiedOnlyChanged != null) ModifiedOnlyChanged(this, EventArgs.Empty); } }
-        [NonSerialized]
-        private bool modifiedOnly;
+        [InspectorIgnore]
+        public bool ModifiedOnly {
+            get { return _modifiedOnly; }
+            set {
+                _modifiedOnly = value;
+                if (ModifiedOnlyChanged != null) ModifiedOnlyChanged(this, EventArgs.Empty);
+            }
+        }
 
-        [field:NonSerialized]
+        [field: NonSerialized]
         public event EventHandler ModifiedOnlyChanged;
 
         [field: NonSerialized]
         public event EventHandler SearchTextChanged;
-
-        public InspectorConfig()
-        {
-            // Defaults
-            Width = 430;
-            Height = 600;
-            searchText = String.Empty;
-        }
     }
 }

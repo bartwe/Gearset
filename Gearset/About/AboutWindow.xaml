@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         
         
-        Background="{DynamicResource background1}"
-        Foreground="{DynamicResource normalText1}"
+        Background="{DynamicResource Background1}"
+        Foreground="{DynamicResource NormalText1}"
         FontSize="12"
         WindowStyle="ToolWindow"
         Title="License Manager"
@@ -18,7 +18,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Components\Common\CommonStyle.xaml"/>
                 <ResourceDictionary>
-                    <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

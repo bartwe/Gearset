@@ -19,9 +19,9 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Name="TextBlock1" MaxWidth="200" Width="Auto" TextTrimming="CharacterEllipsis"/>
-        <Button Name="Button1" MinWidth="30" Grid.Column="1" HorizontalContentAlignment="Center" Style="{StaticResource spinner2DButtonStyle}" Content="X"/>
-        <Button Name="Button2" MinWidth="30" Grid.Column="2" HorizontalContentAlignment="Center" Style="{StaticResource spinner2DButtonStyle}" Content="Y"/>
-        <Button Name="Button3" MinWidth="30" Grid.Column="3" HorizontalContentAlignment="Center" Style="{StaticResource spinner2DButtonStyle}" Content="Z"/>
+        <Button Name="Button1" MinWidth="30" Grid.Column="1" HorizontalContentAlignment="Center" Style="{StaticResource Spinner2DButtonStyle}" Content="X"/>
+        <Button Name="Button2" MinWidth="30" Grid.Column="2" HorizontalContentAlignment="Center" Style="{StaticResource Spinner2DButtonStyle}" Content="Y"/>
+        <Button Name="Button3" MinWidth="30" Grid.Column="3" HorizontalContentAlignment="Center" Style="{StaticResource Spinner2DButtonStyle}" Content="Z"/>
     </Grid>
 
 </local:VisualItemBase>

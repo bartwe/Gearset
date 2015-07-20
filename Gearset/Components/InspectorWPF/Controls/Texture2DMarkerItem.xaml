@@ -5,7 +5,7 @@
     Height="Auto" Width="Auto">
     <Grid Width="Auto" Height="Auto">
         <Border BorderThickness="1" BorderBrush="{DynamicResource normal1}">
-            <Image Height="250" Name="image"/>
+            <Image Height="250" Name="Image"/>
         </Border>
         <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto" Background="#2000" Click="Button_Click">Refresh</Button>
     </Grid>

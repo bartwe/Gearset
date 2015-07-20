@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-//using Microsoft.Research.DynamicDataDisplay.DataSources;
-using System.Windows;
+﻿//using Microsoft.Research.DynamicDataDisplay.DataSources;
 
-namespace Gearset
-{
+namespace Gearset {
     /// <summary>
     /// This class is used to bind data to a DynamicDataDisplay 
     /// ChartPlotter from a FixedLengthQueue

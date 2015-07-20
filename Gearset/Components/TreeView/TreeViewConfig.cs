@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Gearset.Components
-{
+namespace Gearset.Components {
     [Serializable]
-    public class TreeViewConfig : GearConfig
-    {
-        [Inspector(FriendlyName="Filter (Items that match will be shown)")]
-        public string Filter { get { return filter; } set { filter = value.ToLower(); } }
-        private string filter;
+    public class TreeViewConfig : GearConfig {
+        string _filter;
+
+        [Inspector(FriendlyName = "Filter (Items that match will be shown)")]
+        public string Filter { get { return _filter; } set { _filter = value.ToLower(); } }
 
         /// <summary>
         /// Raised when the user request lines to be cleared.
@@ -21,8 +17,7 @@ namespace Gearset.Components
         /// <summary>
         /// Clears all lines
         /// </summary>
-        public void Clear()
-        {
+        public void Clear() {
             if (Cleared != null)
                 Cleared(this, EventArgs.Empty);
         }

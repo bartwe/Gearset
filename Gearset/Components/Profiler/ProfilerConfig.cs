@@ -2,17 +2,50 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Gearset.Components.Profiler
-{
+namespace Gearset.Components.Profiler {
     [Serializable]
-    public class ProfilerConfig : GearConfig
-    {
+    public class ProfilerConfig : GearConfig {
+        public ProfilerConfig() {
+            // Defaults
+            Top = 300;
+            Left = 40;
+            Width = 700;
+            Height = 340;
+
+            HiddenStreams = new List<string>();
+
+            TimeRulerConfig = new TimeRulerUiViewConfig {
+                Position = new Vector2(3, 3),
+                Size = new Vector2(400, 16),
+                Visible = true,
+                VisibleLevelsFlags = 1
+            };
+
+            PerformanceGraphConfig = new PerformanceGraphUiViewConfig {
+                Position = new Vector2(3, 20),
+                Size = new Vector2(100, 60),
+                Visible = true,
+                SkipFrames = 0,
+                VisibleLevelsFlags = 1 | 2 | 4
+            };
+
+            ProfilerSummaryConfig = new ProfilerSummaryUiViewConfig {
+                Position = new Vector2(3, 150),
+                Size = new Vector2(100, 60),
+                Visible = true,
+                VisibleLevelsFlags = 1 | 2 | 4
+            };
+        }
+
         [InspectorIgnore]
         public double Top { get; internal set; }
+
         [InspectorIgnore]
         public double Left { get; internal set; }
+
         [InspectorIgnore]
         public double Width { get; internal set; }
+
         [InspectorIgnore]
         public double Height { get; internal set; }
 
@@ -20,17 +53,21 @@ namespace Gearset.Components.Profiler
         public List<String> HiddenStreams { get; internal set; }
 
         [InspectorIgnore]
-        public TimeRulerUIViewConfig TimeRulerConfig { get; internal set; }
+        public TimeRulerUiViewConfig TimeRulerConfig { get; internal set; }
 
         [InspectorIgnore]
-        public PerformanceGraphUIViewConfig PerformanceGraphConfig { get; internal set; }
+        public PerformanceGraphUiViewConfig PerformanceGraphConfig { get; internal set; }
 
         [InspectorIgnore]
-        public ProfilerSummaryUIViewConfig ProfilerSummaryConfig { get; internal set; }
+        public ProfilerSummaryUiViewConfig ProfilerSummaryConfig { get; internal set; }
 
         [Serializable]
-        public class UIViewConfig
-        {
+        public class UiViewConfig {
+            public UiViewConfig() {
+                Visible = true;
+                VisibleLevelsFlags = 1;
+            }
+
             [InspectorIgnore]
             public Vector2 Position { get; internal set; }
 
@@ -42,58 +79,18 @@ namespace Gearset.Components.Profiler
 
             [InspectorIgnore]
             public int VisibleLevelsFlags { get; internal set; }
-
-            public UIViewConfig()
-            {
-                Visible = true;
-                VisibleLevelsFlags = 1;
-            }
         }
 
         [Serializable]
-        public class TimeRulerUIViewConfig : UIViewConfig { }
+        public class TimeRulerUiViewConfig : UiViewConfig {}
 
         [Serializable]
-        public class PerformanceGraphUIViewConfig : UIViewConfig 
-        {
+        public class PerformanceGraphUiViewConfig : UiViewConfig {
             [InspectorIgnore]
             public uint SkipFrames { get; internal set; }
         }
 
         [Serializable]
-        public class ProfilerSummaryUIViewConfig : UIViewConfig { }
-
-        public ProfilerConfig()
-        {
-            // Defaults
-            Top = 300;
-            Left = 40;
-            Width = 700;
-            Height = 340;
-
-            HiddenStreams = new List<string>();
-
-            TimeRulerConfig = new TimeRulerUIViewConfig {
-                Position = new Vector2(3, 3), 
-                Size = new Vector2(400, 16), 
-                Visible = true,
-                VisibleLevelsFlags = 1
-            };
-
-            PerformanceGraphConfig = new PerformanceGraphUIViewConfig {
-                Position = new Vector2(3, 20), 
-                Size = new Vector2(100, 60), 
-                Visible = true,
-                SkipFrames = 0,
-                VisibleLevelsFlags = 1 | 2 | 4
-            };
-
-            ProfilerSummaryConfig = new ProfilerSummaryUIViewConfig {
-                Position = new Vector2(3, 150), 
-                Size = new Vector2(100, 60), 
-                Visible = true,
-                VisibleLevelsFlags = 1 | 2 | 4
-            };
-        }
+        public class ProfilerSummaryUiViewConfig : UiViewConfig {}
     }
 }

@@ -1,71 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace Gearset.Components.CurveEditorControl
-{
+namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Selects the provided set of keys.
     /// </summary>
-    public class SelectKeysCommand : CurveEditorCommand
-    {
-        private long[] previousSelection;
-        private long[] newSelection;
-
-        public override bool CanUndo
-        {
-            get { return previousSelection != null; }
-        }
+    public class SelectKeysCommand : CurveEditorCommand {
+        readonly long[] _newSelection;
+        long[] _previousSelection;
 
         /// <summary>
         /// Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public SelectKeysCommand(CurveEditorControl2 control, IList<long> keysToSelect)
-            : base(control)
-        {
-            int count = 0;
+            : base(control) {
+            var count = 0;
             // Store the new selection, if any.
             if (keysToSelect != null)
                 count = keysToSelect.Count;
-            newSelection = new long[count];
-            for (int i = 0; i < count; i++)
-            {
-                newSelection[i] = keysToSelect[i];
+            _newSelection = new long[count];
+            for (var i = 0; i < count; i++) {
+                _newSelection[i] = keysToSelect[i];
             }
         }
 
-        public override void Do()
-        {
+        public override bool CanUndo { get { return _previousSelection != null; } }
+
+        public override void Do() {
             // Save the previous selection before we make the change.
-            if (previousSelection == null)
-            {
-                previousSelection = new long[Control.Selection.Count];
-                for (int i = 0; i < Control.Selection.Count; i++)
-                {
-                    previousSelection[i] = Control.Selection[i].Id;
+            if (_previousSelection == null) {
+                _previousSelection = new long[Control.Selection.Count];
+                for (var i = 0; i < Control.Selection.Count; i++) {
+                    _previousSelection[i] = Control.Selection[i].Id;
                 }
             }
 
             // Change the selection
             Control.Selection.Clear();
-            for (int i = 0; i < newSelection.Length; i++)
-            {
-                Control.Selection.Add(Control.Keys[newSelection[i]]);
+            for (var i = 0; i < _newSelection.Length; i++) {
+                Control.Selection.Add(Control.Keys[_newSelection[i]]);
             }
         }
 
-        public override void Undo()
-        {
-            System.Diagnostics.Debug.Assert(previousSelection != null, "Inconsistent state.");
+        public override void Undo() {
+            Debug.Assert(_previousSelection != null, "Inconsistent state.");
 
             // Change the selection
             Control.Selection.Clear();
-            for (int i = 0; i < previousSelection.Length; i++)
-            {
-                Control.Selection.Add(Control.Keys[previousSelection[i]]);
+            for (var i = 0; i < _previousSelection.Length; i++) {
+                Control.Selection.Add(Control.Keys[_previousSelection[i]]);
             }
         }
-
     }
 }

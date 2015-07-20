@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace System
-{
+namespace System {
 #if WINDOWS_PHONE
     /// <summary>
     /// This is a placeholder class used in .NETCF because serializable
