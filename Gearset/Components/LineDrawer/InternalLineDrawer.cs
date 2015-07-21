@@ -78,8 +78,8 @@ namespace Gearset.Components {
 
         public override void Update(GameTime gameTime) {
             // Make space for new frame data.
-            _singleFrameLine2DCount = 0;
-            _singleFrameLine3DCount = 0;
+//            _singleFrameLine2DCount = 0;
+//            _singleFrameLine3DCount = 0;
 
             base.Update(gameTime);
         }
@@ -288,9 +288,10 @@ namespace Gearset.Components {
         public void ShowLineOnce(Vector3 v1, Vector3 v2, Color color) {
             if (!Visible || GearsetResources.GlobalAlpha <= 0)
                 return;
-            var index = (_singleFrameLine3DCount++) * 2;
+            var index = _singleFrameLine3DCount * 2;
             if (index + 1 >= _singleFrameVertices3D.Length)
                 return;
+            _singleFrameLine3DCount++;
             _singleFrameVertices3D[index + 0].Position = v1;
             _singleFrameVertices3D[index + 0].Color = color;
             _singleFrameVertices3D[index + 1].Position = v2;
@@ -303,9 +304,10 @@ namespace Gearset.Components {
         public void ShowLineOnce(Vector2 v1, Vector2 v2, Color color) {
             if (!Visible || GearsetResources.GlobalAlpha <= 0)
                 return;
-            var index = (_singleFrameLine2DCount++) * 2;
+            var index = _singleFrameLine2DCount * 2;
             if (index + 1 >= _singleFrameVertices2D.Length)
                 return;
+            _singleFrameLine2DCount++;
             _singleFrameVertices2D[index + 0].Position = new Vector3(v1, 0);
             _singleFrameVertices2D[index + 0].Color = color;
             _singleFrameVertices2D[index + 1].Position = new Vector3(v2, 0);
