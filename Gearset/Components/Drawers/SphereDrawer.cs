@@ -109,7 +109,7 @@ namespace Gearset.Components {
             for (var i = 0; i < CircleSteps; i++) {
                 var sin1 = (float)Math.Sin(i / (float)CircleSteps * MathHelper.TwoPi);
                 var cos1 = (float)Math.Cos(i / (float)CircleSteps * MathHelper.TwoPi);
-                var sin2 = (float)Math.Sin((i+1) / (float)CircleSteps * MathHelper.TwoPi);
+                var sin2 = (float)Math.Sin((i + 1) / (float)CircleSteps * MathHelper.TwoPi);
                 var cos2 = (float)Math.Cos((i + 1) / (float)CircleSteps * MathHelper.TwoPi);
 
                 _lines.ShowLineOnce(center + x2 * sin1 + z2 * cos1 - yp, center + x2 * sin1 + z2 * cos1 + yp, color);
