@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
     class SolidBoxDrawer : Gear {
-        const int MaxBoxes = 500;
+        const int MaxBoxes = 1500;
         readonly VertexPositionColorTexture[] _vertices;
         readonly SamplerState _wrapSamplerState;
         int _boxCount;
@@ -43,7 +43,7 @@ namespace Gearset.Components {
         }
 
         public void ShowBoxOnce(Vector2 min, Vector2 max) {
-            if (_boxCount >= MaxBoxes)
+            if ((_boxCount+ 6) > MaxBoxes)
                 return;
             var tl = new Vector3(min, 0);
             var tr = new Vector3(max.X, min.Y, 0);
@@ -64,7 +64,7 @@ namespace Gearset.Components {
         }
 
         public void ShowGradientBoxOnce(Vector2 min, Vector2 max, Color top, Color bottom) {
-            if (_boxCount >= MaxBoxes)
+            if ((_boxCount+6) > MaxBoxes)
                 return;
             var tl = new Vector3(min, 0);
             var tr = new Vector3(max.X, min.Y, 0);
