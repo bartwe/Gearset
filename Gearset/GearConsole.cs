@@ -1420,8 +1420,8 @@ namespace Gearset {
 
         #endregion
 
+        
         #region Profiler
-
         public void StartFrame() {
             if (!Enabled) return;
             Profiler.StartFrame();
@@ -1469,8 +1469,8 @@ namespace Gearset {
             }
             UpdateCount++;
             if (!Enabled) return;
-            Show("Gearset.Update Count", UpdateCount);
-            Show("Gearset.Draw Count", DrawCount);
+            //Show("Gearset.Update Count", UpdateCount);
+            //Show("Gearset.Draw Count", DrawCount);
 
             UiManager.Update(gameTime);
 
@@ -1520,15 +1520,15 @@ namespace Gearset {
             if (GearsetResources.Effect.GraphicsDevice.IsDisposed)
                 RecreateGraphicResources();
 
-            /*
-            if (GearsetResources.Game.IsMouseVisible == false) {
-                var pos = GearsetResources.Mouse.Position;
-                Show("Position", pos);
-                var t = Matrix.Invert(GearsetResources.Transform2D);
-                LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitY * 2, t), Vector2.Transform(pos - Vector2.UnitY * 3, t), Color.White);
-                LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitX * 2, t), Vector2.Transform(pos - Vector2.UnitX * 3, t), Color.White);
-            }
-            */
+            
+            //if (GearsetResources.Game.IsMouseVisible == false) {
+            //    var pos = GearsetResources.Mouse.Position;
+            //    Show("Position", pos);
+            //    var t = Matrix.Invert(GearsetResources.Transform2D);
+            //    LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitY * 2, t), Vector2.Transform(pos - Vector2.UnitY * 3, t), Color.White);
+            //    LineDrawer.ShowLineOnce(Vector2.Transform(pos + Vector2.UnitX * 2, t), Vector2.Transform(pos - Vector2.UnitX * 3, t), Color.White);
+            //}
+            
 
             #region Basic Effect 3D/2D Pass
 

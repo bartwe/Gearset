@@ -283,6 +283,7 @@
     <Compile Include="GearsetComponentBase.cs" />
     <Compile Include="FixedLengthQueue.cs" />
     <Compile Include="GearsetComponent.cs" />
+    <Compile Include="GS.cs" />
     <Compile Include="KeyboardComponent.cs" />
     <Compile Include="Helpers\BoundingBoxHelper.cs" />
     <Compile Include="CompileErrorException.cs" />
