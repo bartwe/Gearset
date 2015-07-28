@@ -29,7 +29,7 @@
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using Microsoft.Xna.Framework;
@@ -52,18 +52,12 @@ namespace Gearset {
         /// <summary>
         /// Actions that where queued because the thread that called them was not the owner thread.
         /// </summary>
-        static readonly Queue<Action> QueuedActions;
-
-        /// <summary>
-        /// An object to lock on for thread safety.
-        /// </summary>
-        static readonly Object SyncRoot;
+        static readonly ConcurrentQueue<Action> QueuedActions;
 
         static bool _initialized;
 
         static Gs() {
-            SyncRoot = new Object();
-            QueuedActions = new Queue<Action>(16);
+            QueuedActions = new ConcurrentQueue<Action>();
         }
 
         public static GearConsole Console { get; set; }
@@ -115,11 +109,9 @@ namespace Gearset {
             Debug.Assert(SameThread(), "The updating thread must be the same one that initialized this class");
 
             if (QueuedActions.Count > 0) {
-                lock (SyncRoot) {
-                    while (QueuedActions.Count > 0) {
-                        var action = QueuedActions.Dequeue();
-                        action();
-                    }
+                Action action;
+                while (QueuedActions.TryDequeue(out action)) {
+                    action();
                 }
             }
 
@@ -208,9 +200,7 @@ namespace Gearset {
         /// </summary>
         /// <param name="action"></param>
         static void EnqueueAction(Action action) {
-            lock (SyncRoot) {
-                QueuedActions.Enqueue(action);
-            }
+            QueuedActions.Enqueue(action);
         }
 
         #endregion
