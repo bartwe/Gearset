@@ -133,16 +133,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About\AboutViewModel.cs" />
-    <Compile Include="ComponentNamespace.cs" />
+    <Compile Include="GsComponent.cs" />
     <Compile Include="Components\Alerter\AlerterConfig.cs" />
+    <Compile Include="Components\Bender\CachedTemplate.cs" />
+    <Compile Include="Components\Bender\Commands\ScaleBoxHandle.cs" />
     <Compile Include="Components\Bender\CurveTreeContainerStyleSelector.cs" />
-    <Compile Include="Components\Common\EditableTextBlock.xaml.cs">
+    <Compile Include="Components\Bender\RulerOrientation.cs" />
+    <Compile Include="Components\Bender\TangentSelectionMode.cs" />
+    <Compile Include="Components\Bender\ToolMode.cs" />
+    <Compile Include="Components\Bender\Wrappers\KeyTangentMode.cs" />
+    <Compile Include="Components\BooleanChangedEventArgs.cs" />
+    <Compile Include="Components\Common\EditableTextBlock.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\Common\ItemAddedEventArgs.cs" />
     <Compile Include="Components\Common\ItemRemovedEventArgs.cs" />
-    <Compile Include="Components\Common\NumericSpinner.xaml.cs">
+    <Compile Include="Components\Common\NumericSpinner.cs">
       <DependentUpon>NumericSpinner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\Common\NumericSpinnerMode.cs" />
+    <Compile Include="Components\DataSampler\DataSamplerManager.cs" />
+    <Compile Include="Components\Finder\FinderResult.cs" />
+    <Compile Include="Components\Finder\SearchFunction.cs" />
+    <Compile Include="Components\InspectorWPF\Controls\CollectionMarkerListTemplateSelector.cs" />
+    <Compile Include="Components\InspectorWPF\Getter.cs" />
+    <Compile Include="Components\InspectorWPF\Setter.cs" />
+    <Compile Include="Components\InspectorWPF\ValueTypeWrapper.cs" />
+    <Compile Include="Components\LineDrawer\CoordinateSpace.cs" />
+    <Compile Include="Components\Logger\LoggerManager.cs" />
+    <Compile Include="Components\Logger\SoloRequestedEventArgs.cs" />
+    <Compile Include="Components\Logger\StreamItem.cs" />
+    <Compile Include="Components\Plotter\Plot.cs" />
+    <Compile Include="Components\Profiler\AppendNumberOptions.cs" />
     <Compile Include="Components\Profiler\ProfilerSummary.cs" />
     <Compile Include="Components\Profiler\StringBuilderExtensions.cs" />
     <Compile Include="Components\Profiler\WindowsProfiler.cs" />
@@ -153,7 +175,7 @@
     <Compile Include="Components\Profiler\TimeRuler.cs" />
     <Compile Include="Components\Profiler\Profiler.cs" />
     <Compile Include="Components\Profiler\ProfilerConfig.cs" />
-    <Compile Include="Components\Profiler\ProfilerWindow.xaml.cs">
+    <Compile Include="Components\Profiler\ProfilerWindow.cs">
       <DependentUpon>ProfilerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\CSExpressionParser\CSExpression.cs" />
@@ -175,7 +197,7 @@
     <Compile Include="Components\Bender\CurveTreeViewModel.cs" />
     <Compile Include="Components\Bender\CurveWrapperCollection.cs" />
     <Compile Include="Components\Bender\CurveEditorControl2.cs" />
-    <Compile Include="Components\Bender\CurveEditorWindow.xaml.cs">
+    <Compile Include="Components\Bender\CurveEditorWindow.cs">
       <DependentUpon>CurveEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Bender\KeySelection.cs" />
@@ -199,51 +221,51 @@
     <Compile Include="Components\Finder\ObjectDescription.cs" />
     <Compile Include="Components\InspectorWPF\Attributes\InspectorIgnoreAttribute.cs" />
     <Compile Include="Components\InspectorWPF\Attributes\InspectorMethodAttribute.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\ClearableGearConfigItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\ClearableGearConfigItem.cs">
       <DependentUpon>ClearableGearConfigItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\ColorItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\ColorItem.cs">
       <DependentUpon>ColorItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\CollectionMarkerItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\CollectionMarkerItem.cs">
       <DependentUpon>CollectionMarkerItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\CurveItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\CurveItem.cs">
       <DependentUpon>CurveItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\GenericItemOnList.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\GenericItemOnList.cs">
       <DependentUpon>GenericItemOnList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\Texture2DItemOnList.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\Texture2DItemOnList.cs">
       <DependentUpon>Texture2DItemOnList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\StringItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\StringItem.cs">
       <DependentUpon>StringItem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\TextBox.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\TextBox.cs">
       <DependentUpon>TextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\Vector3Spinner.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\Vector3Spinner.cs">
       <DependentUpon>Vector3Spinner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\Texture2DMarkerItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\Texture2DMarkerItem.cs">
       <DependentUpon>Texture2DMarkerItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\NodeTemplateSelector.cs" />
     <Compile Include="Components\InspectorWPF\NoticeViewModel.cs" />
     <Compile Include="Components\InspectorWPF\NullToVisibilityConverter.cs" />
     <Compile Include="Components\InspectorWPF\Markers\CollectionMarker.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\Texture2DItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\Texture2DItem.cs">
       <DependentUpon>Texture2DItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\GearConfigItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\GearConfigItem.cs">
       <DependentUpon>GearConfigItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\QuaternionSpinner.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\QuaternionSpinner.cs">
       <DependentUpon>QuaternionSpinner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\Vector2Spinner.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\Vector2Spinner.cs">
       <DependentUpon>Vector2Spinner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\Attributes\InspectorAttribute.cs" />
@@ -257,61 +279,64 @@
     <Compile Include="Components\LineDrawer\InternalLineDrawer.cs" />
     <Compile Include="Components\LineDrawer\LineDrawerConfig.cs" />
     <Compile Include="Components\Logger\LoggerConfig.cs" />
-    <Compile Include="Components\Logger\LoggerWindow.xaml.cs">
+    <Compile Include="Components\Logger\LoggerWindow.cs">
       <DependentUpon>LoggerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Plotter\Plotter.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\BoolButton.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\BoolButton.cs">
       <DependentUpon>BoolButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\CharSpinner.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\CharSpinner.cs">
       <DependentUpon>CharSpinner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\Controls\NumericItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\NumericItem.cs">
       <DependentUpon>NumericItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\Logger\Logger.cs" />
+    <Compile Include="Components\Logger\LogItem.cs" />
     <Compile Include="Components\GearConfig.cs" />
     <Compile Include="Components\Plotter\PlotterConfig.cs" />
     <Compile Include="Components\TreeView\TreeViewConfig.cs" />
-    <Compile Include="About\AboutWindow.xaml.cs">
+    <Compile Include="About\AboutWindow.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Undo\IUndoable.cs" />
     <Compile Include="Components\Undo\UndoEngine.cs" />
+    <Compile Include="Components\Widget\ActionItem.cs" />
     <Compile Include="Components\Widget\Widget.cs" />
     <Compile Include="GearsetComponentBase.cs" />
     <Compile Include="FixedLengthQueue.cs" />
     <Compile Include="GearsetComponent.cs" />
     <Compile Include="GS.cs" />
+    <Compile Include="Helpers\ReflectionExtensionMethods.cs" />
     <Compile Include="KeyboardComponent.cs" />
     <Compile Include="Helpers\BoundingBoxHelper.cs" />
     <Compile Include="CompileErrorException.cs" />
     <Compile Include="Components\Alerter\Alerter.cs" />
-    <Compile Include="Components\Alerter\DebugItem.cs" />
+    <Compile Include="Components\Alerter\AlertItem.cs" />
     <Compile Include="Components\Gear.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\ActionItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\ActionItem.cs">
       <DependentUpon>ActionItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\NegatedBoolToVisibilityConverter.cs" />
-    <Compile Include="Components\Finder\FinderWindow.xaml.cs">
+    <Compile Include="Components\Finder\FinderWindow.cs">
       <DependentUpon>FinderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\TypeToSpinnerModeConverter.cs" />
     <Compile Include="Components\InspectorWPF\MethodCallerTemplateSelector.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\EnumItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\EnumItem.cs">
       <DependentUpon>EnumItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\GenericMethodCaller.cs" />
     <Compile Include="Components\InspectorWPF\InspectorExtensionsMethods.cs" />
     <Compile Include="Components\InspectorWPF\MethodCaller.cs" />
     <Compile Include="Components\InspectorWPF\MethodParamContainer.cs" />
-    <Compile Include="Components\InspectorWPF\Controls\GenericItem.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Controls\GenericItem.cs">
       <DependentUpon>GenericItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="ObfuscationSettings.cs" />
     <Compile Include="ObservableFixedLengthQueue.cs" />
+    <Compile Include="RenderPass.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,15 +349,15 @@
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="UI\Window.cs" />
     <Compile Include="GearsetSettings.cs" />
-    <Compile Include="Components\Widget\WidgetWindow.xaml.cs">
+    <Compile Include="Components\Widget\WidgetWindow.cs">
       <DependentUpon>WidgetWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\InspectorWPF\VisualItemWrapper.xaml.cs">
+    <Compile Include="Components\InspectorWPF\VisualItemWrapper.cs">
       <DependentUpon>VisualItemWrapper.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Bender\CurveTreeTemplateSelector.cs" />
     <Compile Include="Components\InspectorWPF\InspectorManager.cs" />
-    <Compile Include="Components\InspectorWPF\Inspector.xaml.cs">
+    <Compile Include="Components\InspectorWPF\Inspector.cs">
       <DependentUpon>Inspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InspectorWPF\InspectorNode.cs" />
@@ -349,9 +374,9 @@
     <Compile Include="Components\Persistor\ValueCollection.cs" />
     <Compile Include="Components\Picker\IPickable.cs" />
     <Compile Include="Components\Picker\Picker.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="SettingsHelper.cs" />
     <Compile Include="GearConsole.cs" />
-    <Compile Include="DebugEnums.cs" />
+    <Compile Include="MarkType.cs" />
     <Compile Include="GearsetResources.cs" />
     <Compile Include="MouseComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

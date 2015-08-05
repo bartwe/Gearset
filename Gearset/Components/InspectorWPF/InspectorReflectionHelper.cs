@@ -7,16 +7,6 @@ using System.Text;
 using System.Threading;
 
 namespace Gearset.Components.InspectorWPF {
-    /// <summary>
-    /// Delegate used for methods that return the value of a variable.
-    /// </summary>
-    public delegate Object Getter(params Object[] o);
-
-    /// <summary>
-    /// Delegate used for methods that sets the value of a variable.
-    /// </summary>
-    public delegate void Setter(params Object[] o);
-
     static class InspectorReflectionHelper {
         /// <summary>
         /// Used to store the setters and getters for types we've

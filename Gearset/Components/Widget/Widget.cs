@@ -4,15 +4,6 @@ using System.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class ActionItem {
-        internal Action Action;
-        internal String Name;
-
-        public override string ToString() {
-            return Name;
-        }
-    }
-
     public class Widget : Gear {
         readonly ObservableCollection<ActionItem> _buttonActions;
         int _initialPositionSetDelay = 3;

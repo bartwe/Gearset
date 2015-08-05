@@ -1363,20 +1363,4 @@ namespace Gearset.Components.CurveEditorControl {
 
         #endregion
     }
-
-
-    public enum TangentSelectionMode {
-        In = -1,
-        Out = -2
-    }
-
-    public enum ToolMode {
-        /// <summary>
-        /// Default mode, select/move/etc.
-        /// </summary>
-        SelectMove,
-        AddKeys,
-        ZoomBox,
-        ScaleKeys
-    }
 }

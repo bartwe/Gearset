@@ -4,15 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Gearset.Components {
-    class CachedTemplate {
-        internal String Name;
-        internal DataTemplate DataTemplate;
-
-        internal CachedTemplate(String name) {
-            Name = name;
-        }
-    }
-
     public class CurveTreeTemplateSelector : DataTemplateSelector {
         static readonly Dictionary<Type, CachedTemplate> TypeTemplateMap;
 

@@ -313,9 +313,4 @@ namespace Gearset.Components.CurveEditorControl {
 
         #endregion
     }
-
-    public enum RulerOrientation {
-        Vertical,
-        Horizontal
-    }
 }

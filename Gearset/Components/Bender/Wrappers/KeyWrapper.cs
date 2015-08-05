@@ -224,14 +224,4 @@ namespace Gearset.Components.CurveEditorControl {
                 Curve.ComputeTangents();
         }
     }
-
-    public enum KeyTangentMode {
-        // Auto calc.
-        Flat = CurveTangent.Flat,
-        Linear = CurveTangent.Linear,
-        Smooth = CurveTangent.Smooth,
-
-        // No auto calc.
-        Custom = 3
-    }
 }

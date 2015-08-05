@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,56 +12,6 @@ using Microsoft.Xna.Framework.Input;
 using Color = System.Windows.Media.Color;
 
 namespace Gearset.Components.Logger {
-    public class LogItem {
-        /// <summary>
-        /// The background color to use for this Log, it is the same for 
-        /// items in the same update.
-        /// </summary>
-        /// <value>The color.</value>
-        public Brush Color { get; set; }
-
-        /// <summary>
-        /// The number of the update where this log was generated
-        /// </summary>
-        public int UpdateNumber { get; set; }
-
-        /// <summary>
-        /// The name of the string where this logItem belongs.
-        /// </summary>
-        public StreamItem Stream { get; set; }
-
-        /// <summary>
-        /// The actual contents of the log
-        /// </summary>
-        public String Content { get; set; }
-    }
-
-    public class StreamItem : IComparable<StreamItem>, INotifyPropertyChanged {
-        Boolean _enabled = true;
-        public String Name { get; set; }
-
-        public Boolean Enabled {
-            get { return _enabled; }
-            set {
-                _enabled = value;
-                OnPropertyChanged("Enabled");
-            }
-        }
-
-        public Brush Color { get; set; }
-
-        public int CompareTo(StreamItem other) {
-            return String.Compare(Name, other.Name, true, CultureInfo.InvariantCulture);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        void OnPropertyChanged(string p) {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(p));
-        }
-    }
-
     public class LoggerManager : Gear {
         readonly StreamItem _defaultStream;
 

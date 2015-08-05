@@ -284,19 +284,4 @@ namespace Gearset.Components {
 
         #endregion
     }
-
-    public enum NumericSpinnerMode {
-        Byte,
-        Char,
-        Decimal,
-        Double,
-        Float,
-        Int,
-        Long,
-        SByte,
-        Short,
-        UInt,
-        ULong,
-        UShort
-    }
 }

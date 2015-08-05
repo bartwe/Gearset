@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Gearset {
-    public delegate FinderResult SearchFunction(String queryString);
-
     public class ObjectDescription {
         readonly String _name;
 
@@ -38,6 +35,4 @@ namespace Gearset {
             return Object + " (" + Description + ")";
         }
     }
-
-    public class FinderResult : List<ObjectDescription> {}
 }

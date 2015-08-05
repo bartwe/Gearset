@@ -55,12 +55,4 @@ namespace Gearset.Components.Logger {
             GearsetResources.Console.Logger.EnableAllStreams();
         }
     }
-
-    class SoloRequestedEventArgs : EventArgs {
-        public SoloRequestedEventArgs(StreamItem item) {
-            StreamItem = item;
-        }
-
-        internal StreamItem StreamItem { get; private set; }
-    }
 }

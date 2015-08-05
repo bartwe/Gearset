@@ -477,12 +477,4 @@ namespace Gearset.Components.InspectorWPF {
             Window.Dispatcher.BeginInvoke((MethodInvoker)delegate { Notices.Add(notice); });
         }
     }
-
-    public class ValueTypeWrapper<T> where T : struct {
-        public T Value { get; set; }
-
-        public override string ToString() {
-            return Value + " [copy]";
-        }
-    }
 }
