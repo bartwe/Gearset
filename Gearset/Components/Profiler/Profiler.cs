@@ -71,8 +71,7 @@ namespace Gearset.Components.Profiler {
 
         public bool RefreshSummary { get; private set; }
         public TimeRuler TimeRuler { get; private set; }
-
-        public bool FrameStarted {get; private set;}
+        public bool FrameStarted { get; private set; }
         public PerformanceGraph PerformanceGraph { get; private set; }
         public ProfilerSummary ProfilerSummary { get; private set; }
         public ProfilerConfig Config { get { return GearsetSettings.Instance.ProfilerConfig; } }
@@ -149,7 +148,7 @@ namespace Gearset.Components.Profiler {
             ProfilerSummary.ScaleNob.Dragged += (object sender, ref Vector2 args) => { Config.ProfilerSummaryConfig.Size = ProfilerSummary.Size; };
         }
 
-        public void StartFrame(){
+        public void StartFrame() {
             FrameStarted = true; //lazy fix to stop crashing
             lock (_locker) {
                 RefreshSummary = false;
@@ -250,7 +249,7 @@ namespace Gearset.Components.Profiler {
 
             var level = _curLog.Levels[levelIndex];
 
-            if(level.MarkCount >= MaxSamples)
+            if (level.MarkCount >= MaxSamples)
                 //throw new OverflowException("Exceeded sample count.\n" + "Either set larger number to TimeRuler.MaxSmpale or" + "lower sample count.");
                 level.MarkCount = 0; //lazy fix to prevent crashing when minimized since the game runs at light speed when minimized.
 
