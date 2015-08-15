@@ -31,7 +31,7 @@ namespace Gearset.Components {
 
         #endregion
 
-        public sealed override void OnResolutionChanged() {
+        public override void OnResolutionChanged() {
             _alertPosition = new Vector2(GearsetResources.Device.Viewport.Width / 2, GearsetResources.Device.Viewport.Height / 2 - _textHeight * 1.5f);
         }
 
@@ -47,7 +47,7 @@ namespace Gearset.Components {
 
         #region Update
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             foreach (var i in _alerts) {
                 if (i.RemainingTime > 0) i.RemainingTime--;
                 else if (i.RemainingTime == 0) _toRemove.AddLast(i);
@@ -63,7 +63,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a spriteBatch passs
             if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass) return;
             foreach (var i in _alerts) {

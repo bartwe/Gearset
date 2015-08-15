@@ -20,7 +20,7 @@ namespace Gearset.Components.InspectorWPF {
             ListBox1.ItemsSource = _items;
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             if (_updateRequested) {
                 _items.Clear();
                 var enumerable = value as IEnumerable;

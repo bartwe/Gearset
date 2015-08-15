@@ -30,9 +30,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override bool CanUndo { get { return true; } }
+        public override bool CanUndo { get { return true; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             // Do we need to save prev values?
             if (_prevTangentInMode == null) {
                 Debug.Assert(_prevTangentOutMode == null);
@@ -65,7 +65,7 @@ namespace Gearset.Components.CurveEditorControl {
             Control.InvalidateVisual();
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             var affectedCurves = new HashSet<CurveWrapper>();
 
             // Revert to previous values.

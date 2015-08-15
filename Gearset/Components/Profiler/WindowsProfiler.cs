@@ -41,7 +41,7 @@ namespace Gearset.Components.Profiler {
             Config.Visible = Window.IsVisible;
         }
 
-        protected sealed override void OnVisibleChanged() {
+        protected override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -54,7 +54,7 @@ namespace Gearset.Components.Profiler {
             _prifilerWindowLocationChanged = true;
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             base.Update(gameTime);
 
             if (_prifilerWindowLocationChanged) {
@@ -66,7 +66,7 @@ namespace Gearset.Components.Profiler {
             }
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
 
             // Just to make sure we're only doing this one per frame.

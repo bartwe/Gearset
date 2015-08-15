@@ -46,7 +46,7 @@ namespace Gearset.Components {
             Config.Visible = Window.IsVisible;
         }
 
-        protected sealed override void OnVisibleChanged() {
+        protected override void OnVisibleChanged() {
             if (Window != null) {
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
                 Window.WasHiddenByGameMinimize = false;
@@ -65,7 +65,7 @@ namespace Gearset.Components {
             _searchDelay = .25f;
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             if (_searchDelay > 0) {
                 var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _searchDelay -= dt;

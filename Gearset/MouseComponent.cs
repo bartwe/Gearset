@@ -78,7 +78,7 @@ namespace Gearset.Components {
 
         #region Update
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             _prevState = _state;
             _state = Mouse.GetState();
             _justClicked = false;

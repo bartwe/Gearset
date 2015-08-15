@@ -55,7 +55,7 @@ namespace Gearset.Components.InspectorWPF {
             TypeTemplateMap.Add(typeof(PlotterConfig), new CachedTemplate("ClearableGearConfigTemplate"));
         }
 
-        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

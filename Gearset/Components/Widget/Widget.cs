@@ -23,7 +23,7 @@ namespace Gearset.Components {
 
         internal WidgetWindow Window { get; private set; }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             if (_initialPositionSetDelay > 0) {
                 _initialPositionSetDelay--;
                 GameWindow_Move(this, null);

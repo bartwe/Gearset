@@ -25,13 +25,13 @@ namespace Gearset.Components.InspectorWPF {
                 UpdateVariable();
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             _isEventFake = true;
             ToggleButton.IsChecked = (bool)value;
             _isEventFake = false;
         }
 
-        public sealed override void UpdateVariable() {
+        public override sealed void UpdateVariable() {
             TreeNode.Property = ToggleButton.IsChecked;
         }
     }

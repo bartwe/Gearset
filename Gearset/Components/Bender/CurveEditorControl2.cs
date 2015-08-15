@@ -434,7 +434,7 @@ namespace Gearset.Components.CurveEditorControl {
             OnSelectionChanged();
         }
 
-        protected sealed override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters) {
+        protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters) {
             // Instead of colliding with actual geometry, just collide with the whole box.
             return new PointHitTestResult(this, hitTestParameters.HitPoint);
             //return base.HitTestCore(hitTestParameters);
@@ -1027,7 +1027,7 @@ namespace Gearset.Components.CurveEditorControl {
 
         #region Rendering
 
-        protected sealed override void OnRender(DrawingContext dc) {
+        protected override void OnRender(DrawingContext dc) {
             //Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Background, new Action(() => { }));
             //watch.Reset();
             //watch.Start();

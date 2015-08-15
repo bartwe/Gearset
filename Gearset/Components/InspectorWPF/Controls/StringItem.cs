@@ -25,14 +25,14 @@ namespace Gearset.Components.InspectorWPF {
             TreeNode.Updating = false;
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             if (value == null) return;
             var text = value.ToString();
             TextBox1.Text = text;
             TextBox1.ToolTip = text;
         }
 
-        public sealed override void UpdateVariable() {
+        public override sealed void UpdateVariable() {
             TreeNode.Property = TextBox1.Text;
         }
 

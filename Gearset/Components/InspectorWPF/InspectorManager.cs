@@ -226,7 +226,7 @@ namespace Gearset.Components.InspectorWPF {
             Window.Top = GearsetResources.Game.Window.ClientBounds.Top;
         }
 
-        protected sealed override void OnVisibleChanged() {
+        protected override void OnVisibleChanged() {
             if (Window != null) {
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
                 Window.WasHiddenByGameMinimize = false;
@@ -236,7 +236,7 @@ namespace Gearset.Components.InspectorWPF {
         /// <summary>
         /// Updates each component on the inspector TreeView.
         /// </summary>
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             foreach (var obj in Window.TreeView1.Items) {
                 var o = (InspectorNode)obj;
                 o.Update();

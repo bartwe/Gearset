@@ -9,7 +9,7 @@ namespace Gearset.Components.InspectorWPF {
             InitializeComponent();
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             if (value != null) {
                 var text = value.ToString();
                 TextBlock1.Text = text;

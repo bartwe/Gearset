@@ -142,7 +142,7 @@ namespace Gearset {
                 UpdateOrder = int.MaxValue - 2;
             }
 
-            public sealed override void Update(GameTime gameTime) {
+            public override void Update(GameTime gameTime) {
                 // If you rename this file. Update this:
                 Gs.Update(gameTime);
             }

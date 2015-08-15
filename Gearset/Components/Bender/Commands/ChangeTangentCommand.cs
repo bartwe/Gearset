@@ -29,13 +29,13 @@
             _prevTangentOutMode = key.TangentOutMode;
         }
 
-        public sealed override bool CanUndo { get { return true; } }
+        public override bool CanUndo { get { return true; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             ChangeTangent(_tangentValue);
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             var key = Control.Keys[_affectedKey];
 
             key.SetInTangent(_prevTangentInValue);

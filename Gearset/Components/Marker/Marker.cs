@@ -111,7 +111,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             switch (GearsetResources.CurrentRenderPass) {
                 case RenderPass.BasicEffectPass:
                     DrawMarks();

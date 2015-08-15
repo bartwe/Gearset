@@ -121,9 +121,9 @@ namespace Gearset.Components.Data {
             return result;
         }
 
-        public sealed override void Update(GameTime gameTime) {}
+        public override void Update(GameTime gameTime) {}
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             // Just to make sure we're only doing this one per frame.
             if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass)
                 return;

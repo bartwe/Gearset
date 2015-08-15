@@ -7,20 +7,20 @@ namespace Gearset.Components.CurveEditorControl {
     /// is already selected, it won't be added again.
     /// </summary>
     public sealed class KeySelection : Collection<KeyWrapper> {
-        protected sealed override void InsertItem(int index, KeyWrapper item) {
+        protected override void InsertItem(int index, KeyWrapper item) {
             if (item.IsSelected)
                 return;
             item.IsSelected = true;
             base.InsertItem(index, item);
         }
 
-        protected sealed override void RemoveItem(int index) {
+        protected override void RemoveItem(int index) {
             if (index < Count)
                 this[index].IsSelected = false;
             base.RemoveItem(index);
         }
 
-        protected sealed override void ClearItems() {
+        protected override void ClearItems() {
             foreach (var item in this) {
                 item.IsSelected = false;
             }

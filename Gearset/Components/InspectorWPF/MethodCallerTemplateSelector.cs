@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Gearset.Components.InspectorWPF {
     public sealed class MethodCallerTemplateSelector : DataTemplateSelector {
-        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

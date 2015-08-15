@@ -95,7 +95,7 @@ namespace Gearset.Components {
             return sampler;
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             // Update all samplers.
             foreach (var sampler in _samplers.Values) {
                 sampler.Update(gameTime);

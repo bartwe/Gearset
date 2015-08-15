@@ -27,9 +27,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override bool CanUndo { get { return true; } }
+        public override bool CanUndo { get { return true; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             // Do we need to save prev values?
             if (prevKeyContinuity == null) {
                 prevKeyContinuity = new CurveContinuity[affectedKeys.Length];
@@ -49,7 +49,7 @@ namespace Gearset.Components.CurveEditorControl {
             Control.InvalidateVisual();
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             var affectedCurves = new HashSet<CurveWrapper>();
 
             // Revert to previous values.

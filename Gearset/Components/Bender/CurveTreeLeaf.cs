@@ -11,9 +11,9 @@ namespace Gearset.Components {
 
         public CurveWrapper Curve { get; private set; }
         public Brush ColorBrush { get { return Curve.ColorBrush; } }
-        public sealed override string Name { get { return Curve.Name; } set { Curve.Name = value; } }
+        public override string Name { get { return Curve.Name; } set { Curve.Name = value; } }
 
-        public sealed override bool AreParentsVisible {
+        public override bool AreParentsVisible {
             get { return base.AreParentsVisible; }
             set {
                 var prevValue = AreParentsVisible;
@@ -22,7 +22,7 @@ namespace Gearset.Components {
             }
         }
 
-        public sealed override bool IsVisible {
+        public override bool IsVisible {
             get { return base.IsVisible; }
             set {
                 var becomingVisible = value && !IsVisible && AreParentsVisible;

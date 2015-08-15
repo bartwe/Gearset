@@ -56,7 +56,7 @@ namespace Gearset.Components.Profiler {
             _boxCount += 6;
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && _boxCount > 0) {
                 GearsetResources.Effect2D.Texture = null;
                 GearsetResources.Effect2D.TextureEnabled = false;

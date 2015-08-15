@@ -13,7 +13,7 @@ namespace Gearset.Components.InspectorWPF {
         /// </summary>
         static CollectionMarkerListTemplateSelector() {}
 
-        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

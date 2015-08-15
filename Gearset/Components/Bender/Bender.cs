@@ -58,7 +58,7 @@ namespace Gearset.Components {
             Config.Visible = Window.IsVisible;
         }
 
-        protected sealed override void OnVisibleChanged() {
+        protected override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -87,14 +87,14 @@ namespace Gearset.Components {
             curveTreeViewModel.RemoveCurveOrGroup(name);
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             Window.curveEditorControl.UpdateRender();
             Window.horizontalRuler.UpdateRender();
             Window.verticalRuler.UpdateRender();
             base.Update(gameTime);
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
         }
     }

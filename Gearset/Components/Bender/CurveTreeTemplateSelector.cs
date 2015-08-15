@@ -17,7 +17,7 @@ namespace Gearset.Components {
             TypeTemplateMap.Add(typeof(CurveTreeLeaf), new CachedTemplate("curveTreeLeafTemplate"));
         }
 
-        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

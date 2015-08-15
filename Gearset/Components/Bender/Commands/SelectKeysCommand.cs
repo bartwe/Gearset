@@ -24,9 +24,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override bool CanUndo { get { return _previousSelection != null; } }
+        public override bool CanUndo { get { return _previousSelection != null; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             // Save the previous selection before we make the change.
             if (_previousSelection == null) {
                 _previousSelection = new long[Control.Selection.Count];
@@ -42,7 +42,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             Debug.Assert(_previousSelection != null, "Inconsistent state.");
 
             // Change the selection

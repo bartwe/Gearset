@@ -39,11 +39,11 @@ namespace Gearset.Components.InspectorWPF {
             }
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             CharValue = (char)value;
         }
 
-        public sealed override void UpdateVariable() {
+        public override sealed void UpdateVariable() {
             TreeNode.Property = _charValue;
         }
 

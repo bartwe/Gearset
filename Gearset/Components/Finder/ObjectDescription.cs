@@ -31,7 +31,7 @@ namespace Gearset {
         public Object Object { get; set; }
         public String Description { get; set; }
 
-        public sealed override string ToString() {
+        public override string ToString() {
             return Object + " (" + Description + ")";
         }
     }

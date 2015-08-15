@@ -12,7 +12,7 @@ namespace Gearset.Components.InspectorWPF {
             InitializeComponent();
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             var config = value as GearConfig;
             if (config != null) {
                 _isEventFake = true;
@@ -31,7 +31,7 @@ namespace Gearset.Components.InspectorWPF {
                 UpdateVariable();
         }
 
-        public sealed override void UpdateVariable() {
+        public override sealed void UpdateVariable() {
             ((GearConfig)TreeNode.Property).Enabled = ToggleButton.IsChecked.Value;
             ((GearConfig)TreeNode.Property).Visible = ToggleButton.IsChecked.Value;
         }

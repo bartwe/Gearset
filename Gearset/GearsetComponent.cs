@@ -17,16 +17,16 @@ namespace Gearset {
 
         public GearConsole Console { get; private set; }
 
-        public sealed override void Initialize() {
+        public override void Initialize() {
             Console.Initialize();
             base.Initialize();
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             Console.Update(gameTime);
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             Console.Draw(gameTime);
         }
     }

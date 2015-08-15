@@ -69,7 +69,7 @@ namespace Gearset.Components {
 
         #region Update
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
 #if XBOX360
             return;
 #endif
@@ -139,7 +139,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a spriteBatch pass
             if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass) return;
 

@@ -604,14 +604,14 @@ namespace Gearset.Components.InspectorWPF {
             return Parent.GetPath() + "." + Name;
         }
 
-        public sealed override string ToString() {
+        public override string ToString() {
             return GetPath();
         }
 
         /// <summary>
         /// Method to rise the event.
         /// </summary>
-         void OnPropertyChanged(string name) {
+        void OnPropertyChanged(string name) {
             var handler = PropertyChanged;
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));

@@ -173,7 +173,7 @@ namespace Gearset.Components.CurveEditorControl {
 
         #region Rendering
 
-        protected sealed override void OnRender(DrawingContext dc) {
+        protected override void OnRender(DrawingContext dc) {
             if (!guidelinesFixed) {
                 var m = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
                 halfDpiX = m.M11 * 0.5;

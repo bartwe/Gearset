@@ -35,7 +35,7 @@ namespace Gearset.Components {
             _wrapSamplerState.Filter = TextureFilter.Point;
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             //if (!inspected)
             //    GearsetResources.Console.Inspect("SOlidBoxDrawer", this);
             //inspected = true;
@@ -84,7 +84,7 @@ namespace Gearset.Components {
             _boxCount += 6;
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && _boxCount > 0) {
                 GearsetResources.Effect2D.Texture = NoiseTexture;
                 GearsetResources.Effect2D.TextureEnabled = true;

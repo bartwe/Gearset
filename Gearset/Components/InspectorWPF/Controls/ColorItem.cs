@@ -17,7 +17,7 @@ namespace Gearset.Components.InspectorWPF {
             UpdateIfExpanded = true;
         }
 
-        public sealed override void UpdateUi(Object value) {
+        public override sealed void UpdateUi(Object value) {
             var color = (Color)value;
 
             _brush.Color = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);

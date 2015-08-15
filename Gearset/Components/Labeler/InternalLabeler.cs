@@ -35,7 +35,7 @@ namespace Gearset.Components {
             _persistent2DLabels.Remove(name);
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override sealed void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass)
                 return;
 

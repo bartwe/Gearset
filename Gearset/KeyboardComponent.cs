@@ -17,7 +17,7 @@ namespace Gearset.Components {
         /// </summary>
         public KeyboardState State { get { return _state; } }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             _prevState = _state;
             _state = Keyboard.GetState();
         }

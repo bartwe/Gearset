@@ -5,7 +5,7 @@ namespace Gearset.Components {
         internal Action Action;
         internal String Name;
 
-        public sealed override string ToString() {
+        public override string ToString() {
             return Name;
         }
     }

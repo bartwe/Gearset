@@ -37,13 +37,13 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override bool CanUndo { get { return _affectedKeys != null; } }
+        public override bool CanUndo { get { return _affectedKeys != null; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             ScaleKeys(_newMin, _newMax);
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             ScaleKeys(_min, _max);
         }
 

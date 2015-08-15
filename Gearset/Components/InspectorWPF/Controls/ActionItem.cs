@@ -33,9 +33,9 @@ namespace Gearset.Components.InspectorWPF {
             }
         }
 
-        public sealed override void UpdateUi(Object value) {}
+        public override sealed void UpdateUi(Object value) {}
 
-        public sealed override void OnTreeNodeChanged() {
+        public override sealed void OnTreeNodeChanged() {
             Button1.Content = TreeNode.FriendlyName;
         }
     }

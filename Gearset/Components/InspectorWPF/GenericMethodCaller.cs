@@ -26,7 +26,7 @@ namespace Gearset.Components.InspectorWPF {
         /// <summary>
         /// Calls the method with the established parameters.
         /// </summary>
-        public sealed override void CallMethod() {
+        public override void CallMethod() {
             MethodInfo.Invoke(_invocationTarget, (from i in Parameters select i.Parameter.Property).ToArray());
         }
     }

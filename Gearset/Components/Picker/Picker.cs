@@ -26,7 +26,7 @@ namespace Gearset.Components {
             _pickables.Add(pickable);
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             //  Unproject the screen space mouse coordinate into model space 
             //  coordinates. Because the world space matrix is identity, this 
             //  gives the coordinates in world space.
@@ -87,7 +87,7 @@ namespace Gearset.Components {
             }
         }
 
-        public sealed override void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a BasicEffectPass pass
             if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass) return;
 

@@ -94,7 +94,7 @@ namespace Gearset.Components.Logger {
             Config.Visible = Window.IsVisible;
         }
 
-        protected sealed override void OnVisibleChanged() {
+        protected override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -107,7 +107,7 @@ namespace Gearset.Components.Logger {
             _locationJustChanged = true;
         }
 
-        public sealed override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             var kbs = Keyboard.GetState();
 
             if (_locationJustChanged) {

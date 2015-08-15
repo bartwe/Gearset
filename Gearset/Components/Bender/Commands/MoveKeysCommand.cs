@@ -26,13 +26,13 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public sealed override bool CanUndo { get { return _affectedKeys != null; } }
+        public override bool CanUndo { get { return _affectedKeys != null; } }
 
-        public sealed override void Do() {
+        public override void Do() {
             MoveKeys(_positionOffset, _valueOffset);
         }
 
-        public sealed override void Undo() {
+        public override void Undo() {
             MoveKeys(-_positionOffset, -_valueOffset);
         }
 
