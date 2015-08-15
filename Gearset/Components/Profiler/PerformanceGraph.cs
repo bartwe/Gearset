@@ -4,11 +4,11 @@ using System.ComponentModel;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Profiler {
-    public class PerformanceGraph : UiView {
+    public sealed class PerformanceGraph : UiView {
         internal const int MaxFrames = 120;
         readonly Queue<Frame> _frames = new Queue<Frame>(MaxFrames);
         uint _frameCount;
-        protected int FrameCounter;
+        int _frameCounter;
         uint _skipFrames;
 
         internal PerformanceGraph(Profiler profiler, ProfilerConfig.UiViewConfig uiviewConfig, Vector2 size) : base(profiler, uiviewConfig, size) {
@@ -58,9 +58,9 @@ namespace Gearset.Components.Profiler {
 
             labeler.ShowLabel("__performanceGraph", Position + new Vector2(0, -12), "Performance Graph");
 
-            FrameCounter++;
-            if (FrameCounter > SkipFrames) {
-                FrameCounter = 0;
+            _frameCounter++;
+            if (_frameCounter > SkipFrames) {
+                _frameCounter = 0;
 
                 //If the frame buffer has capacity will just create a new one; otherwise we'll pop the oldest off and use that.
                 Frame frame;
@@ -124,7 +124,7 @@ namespace Gearset.Components.Profiler {
             }
         }
 
-        class Frame {
+        sealed class Frame {
             public readonly List<TimingInfo> TimingInfos = new List<TimingInfo>(16);
         }
 

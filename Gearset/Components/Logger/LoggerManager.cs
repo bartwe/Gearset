@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Color = System.Windows.Media.Color;
 
 namespace Gearset.Components.Logger {
-    public class LoggerManager : Gear {
+    public sealed class LoggerManager : Gear {
         readonly StreamItem _defaultStream;
 
         readonly SolidColorBrush[] _colors = {
@@ -94,7 +94,7 @@ namespace Gearset.Components.Logger {
             Config.Visible = Window.IsVisible;
         }
 
-        protected override void OnVisibleChanged() {
+        protected sealed override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -107,7 +107,7 @@ namespace Gearset.Components.Logger {
             _locationJustChanged = true;
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             var kbs = Keyboard.GetState();
 
             if (_locationJustChanged) {

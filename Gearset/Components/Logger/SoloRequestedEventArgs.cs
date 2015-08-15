@@ -1,7 +1,7 @@
 using System;
 
 namespace Gearset.Components.Logger {
-    class SoloRequestedEventArgs : EventArgs {
+    sealed class SoloRequestedEventArgs : EventArgs {
         public SoloRequestedEventArgs(StreamItem item) {
             StreamItem = item;
         }

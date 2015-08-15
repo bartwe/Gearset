@@ -8,7 +8,7 @@ namespace Gearset {
     /// attribute to your Main(string[] args) method (usually in
     /// program.cs)
     /// </summary>
-    public class GearsetComponent : GearsetComponentBase {
+    public sealed class GearsetComponent : GearsetComponentBase {
         public GearsetComponent(Game game)
             : base(game) {
             UpdateOrder = int.MaxValue - 1;
@@ -17,16 +17,16 @@ namespace Gearset {
 
         public GearConsole Console { get; private set; }
 
-        public override void Initialize() {
+        public sealed override void Initialize() {
             Console.Initialize();
             base.Initialize();
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             Console.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             Console.Draw(gameTime);
         }
     }

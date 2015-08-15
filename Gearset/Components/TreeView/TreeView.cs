@@ -7,7 +7,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Displays a hierarchy of values that need to be traced.
     /// </summary>
-    public class TreeView : Gear {
+    public sealed class TreeView : Gear {
         readonly TreeViewNode _root;
         readonly Texture2D _closedTexture;
         readonly Texture2D _openedTexture;
@@ -69,7 +69,7 @@ namespace Gearset.Components {
 
         #region Update
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
 #if XBOX360
             return;
 #endif
@@ -139,7 +139,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             // Only draw if we're doing a spriteBatch pass
             if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass) return;
 

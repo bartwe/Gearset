@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components.Profiler {
     //TODO: Added this with a much bigger buffer and no noise texture - think we need a better solution going forward.
-    class TempBoxDrawer : Gear {
+    sealed class TempBoxDrawer : Gear {
         const int MaxBoxes = 6000;
         readonly VertexPositionColor[] _vertices;
         int _boxCount;
@@ -56,7 +56,7 @@ namespace Gearset.Components.Profiler {
             _boxCount += 6;
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && _boxCount > 0) {
                 GearsetResources.Effect2D.Texture = null;
                 GearsetResources.Effect2D.TextureEnabled = false;

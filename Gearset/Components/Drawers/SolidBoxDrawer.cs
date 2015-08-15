@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
-    class SolidBoxDrawer : Gear {
+    sealed class SolidBoxDrawer : Gear {
         const int MaxBoxes = 1500;
         readonly VertexPositionColorTexture[] _vertices;
         readonly SamplerState _wrapSamplerState;
@@ -35,7 +35,7 @@ namespace Gearset.Components {
             _wrapSamplerState.Filter = TextureFilter.Point;
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             //if (!inspected)
             //    GearsetResources.Console.Inspect("SOlidBoxDrawer", this);
             //inspected = true;
@@ -84,7 +84,7 @@ namespace Gearset.Components {
             _boxCount += 6;
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass == RenderPass.ScreenSpacePass && _boxCount > 0) {
                 GearsetResources.Effect2D.Texture = NoiseTexture;
                 GearsetResources.Effect2D.TextureEnabled = true;

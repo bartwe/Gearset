@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components.InspectorWPF {
-    public class NodeTemplateSelector : DataTemplateSelector {
+    public sealed class NodeTemplateSelector : DataTemplateSelector {
         static readonly Dictionary<Type, CachedTemplate> TypeTemplateMap;
         static readonly CachedTemplate GenericTemplateCache = new CachedTemplate("GenericFieldTemplate");
         static readonly CachedTemplate GearConfigTemplateCache = new CachedTemplate("GearConfigTemplate");
@@ -55,7 +55,7 @@ namespace Gearset.Components.InspectorWPF {
             TypeTemplateMap.Add(typeof(PlotterConfig), new CachedTemplate("ClearableGearConfigTemplate"));
         }
 
-        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

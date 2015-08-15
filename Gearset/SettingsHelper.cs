@@ -10,8 +10,8 @@ namespace Gearset {
     /// <summary>
     /// Used to save data to/from a file.
     /// </summary>
-    [Obsolete("This class needs redesign to be usable again", true)]
-    class SettingsHelper {
+    [Obsolete("This sealed class needs redesign to be usable again", true)]
+    sealed class SettingsHelper {
         /// <summary>
         /// The place where all config values get saved.
         /// </summary>

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Gearset {
-    public class KeyedCollection<T> {
+    public sealed class KeyedCollection<T> {
         /// <summary>
         /// Dictionary that maps a key (string) to
         /// an index in the IList.

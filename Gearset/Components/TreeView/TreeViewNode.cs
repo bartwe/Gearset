@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Gearset.Components {
-    public class TreeViewNode {
+    public sealed class TreeViewNode {
         public List<TreeViewNode> Nodes;
         public String Name;
         public String FilterName;

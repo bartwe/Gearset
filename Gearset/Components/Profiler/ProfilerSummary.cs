@@ -3,7 +3,7 @@ using Gearset.Profiler.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Profiler {
-    public class ProfilerSummary : UiView {
+    public sealed class ProfilerSummary : UiView {
         const float Padding = 5.0f;
         // Marker log string.
         readonly StringBuilder _logString = new StringBuilder(512);

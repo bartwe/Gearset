@@ -7,7 +7,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Lets the user search for a object in its game.
     /// </summary>
-    class Finder : Gear {
+    sealed class Finder : Gear {
         float _searchDelay;
         bool _locationJustChanged;
 
@@ -46,7 +46,7 @@ namespace Gearset.Components {
             Config.Visible = Window.IsVisible;
         }
 
-        protected override void OnVisibleChanged() {
+        protected sealed override void OnVisibleChanged() {
             if (Window != null) {
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
                 Window.WasHiddenByGameMinimize = false;
@@ -65,7 +65,7 @@ namespace Gearset.Components {
             _searchDelay = .25f;
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             if (_searchDelay > 0) {
                 var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _searchDelay -= dt;

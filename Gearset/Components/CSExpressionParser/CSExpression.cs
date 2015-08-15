@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Gearset.Components.CSExpressionParser {
-    class CsExpression<T> {
+    sealed class CsExpression<T> {
         readonly ListDictionary _parameters;
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 namespace Gearset.Components {
     [Serializable]
-    public class BenderConfig : GearConfig {
+    public sealed class BenderConfig : GearConfig {
         public BenderConfig() {
             // Defaults
             Top = 300;

@@ -11,8 +11,8 @@ namespace Gearset.Components.InspectorWPF {
             InitializeComponent();
         }
 
-        public override void UpdateUi(Object value) {}
-        public override void UpdateVariable() {}
+        public sealed override void UpdateUi(Object value) {}
+        public sealed override void UpdateVariable() {}
 
         void editButton_Click(object sender, RoutedEventArgs e) {
             var curve = TreeNode.Property as Curve;

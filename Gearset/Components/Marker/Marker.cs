@@ -7,7 +7,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Places marks on 3D space with labels on 2D space
     /// </summary>
-    public class Marker : Gear {
+    public sealed class Marker : Gear {
         readonly Dictionary<String, DebugMark> _markTable = new Dictionary<String, DebugMark>();
         readonly SpriteBatch _spriteBatch;
         readonly Texture2D _markTexture;
@@ -111,7 +111,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             switch (GearsetResources.CurrentRenderPass) {
                 case RenderPass.BasicEffectPass:
                     DrawMarks();

@@ -7,7 +7,7 @@ namespace Gearset.Components.Data {
     /// <summary>
     /// Class that takes a DataSampler and plots its values to the screen.
     /// </summary>
-    public class Plotter : Gear {
+    public sealed class Plotter : Gear {
         /// <summary>
         /// Current plots.
         /// </summary>
@@ -121,9 +121,9 @@ namespace Gearset.Components.Data {
             return result;
         }
 
-        public override void Update(GameTime gameTime) {}
+        public sealed override void Update(GameTime gameTime) {}
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             // Just to make sure we're only doing this one per frame.
             if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass)
                 return;

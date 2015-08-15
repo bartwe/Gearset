@@ -15,7 +15,7 @@ namespace Gearset.Components.InspectorWPF {
             InitializeComponent();
         }
 
-        public override void UpdateUi(Object value) {
+        public sealed override void UpdateUi(Object value) {
             if (value != _currentTexture) {
                 _currentTexture = value as Texture2D;
                 if (_currentTexture == null)

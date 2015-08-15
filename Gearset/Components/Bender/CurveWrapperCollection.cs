@@ -8,7 +8,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// A collection of Curve Wrappers. It can be accessed as a dictionary
     /// using the [] semantic either by name or index.
     /// </summary>
-    public class CurveWrapperCollection : ICollection<CurveWrapper> {
+    public sealed class CurveWrapperCollection : ICollection<CurveWrapper> {
         readonly Dictionary<long, CurveWrapper> _curves;
 
         public CurveWrapperCollection() {

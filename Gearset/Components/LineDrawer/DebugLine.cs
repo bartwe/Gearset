@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    public class DebugLine {
+    public sealed class DebugLine {
         public Color Color;
         public Vector3 V1;
         public Vector3 V2;

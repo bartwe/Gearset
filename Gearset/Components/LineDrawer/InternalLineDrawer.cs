@@ -7,7 +7,7 @@ namespace Gearset.Components {
     /// <summary>   
     /// Draw lines in 3D space, can draw line lists and line strips.
     /// </summary>
-    public class InternalLineDrawer : Gear {
+    public  class InternalLineDrawer : Gear {
         /// <summary>
         /// Sets a maximun of lines we can draw.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Gearset.Components {
         /// </summary>
         public virtual LineDrawerConfig Config { get { return _config; } }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             // Make space for new frame data.
 //            _singleFrameLine2DCount = 0;
 //            _singleFrameLine3DCount = 0;
@@ -86,7 +86,7 @@ namespace Gearset.Components {
 
         #region Draw
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             // Only draw if we're doing a BasicEffectPass pass
             if (GearsetResources.CurrentRenderPass == RenderPass.BasicEffectPass) {
                 // If there are no lines, don't draw anything.

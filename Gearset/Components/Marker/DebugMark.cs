@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
-    class DebugMark {
+    sealed class DebugMark {
         public bool ScreenSpace;
         public Vector2 ScreenSpacePosition;
         public Color Color;

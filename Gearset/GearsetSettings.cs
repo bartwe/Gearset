@@ -11,10 +11,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Gearset {
     /// <summary>
-    /// This class holds the settings of Gearset.
+    /// This sealed class holds the settings of Gearset.
     /// </summary>
     [Serializable]
-    public class GearsetSettings : INotifyPropertyChanged {
+    public sealed class GearsetSettings : INotifyPropertyChanged {
         bool _enabled;
         bool _showOverlays;
         float _saveFrequency;

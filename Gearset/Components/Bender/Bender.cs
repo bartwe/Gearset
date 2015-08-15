@@ -3,7 +3,7 @@ using System.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class Bender : Gear {
+    sealed class Bender : Gear {
         readonly CurveTreeViewModel curveTreeViewModel;
 
         public Bender()
@@ -58,7 +58,7 @@ namespace Gearset.Components {
             Config.Visible = Window.IsVisible;
         }
 
-        protected override void OnVisibleChanged() {
+        protected sealed override void OnVisibleChanged() {
             if (Window != null)
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
         }
@@ -87,14 +87,14 @@ namespace Gearset.Components {
             curveTreeViewModel.RemoveCurveOrGroup(name);
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             Window.curveEditorControl.UpdateRender();
             Window.horizontalRuler.UpdateRender();
             Window.verticalRuler.UpdateRender();
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
         }
     }

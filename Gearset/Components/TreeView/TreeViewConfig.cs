@@ -2,7 +2,7 @@
 
 namespace Gearset.Components {
     [Serializable]
-    public class TreeViewConfig : GearConfig {
+    public sealed class TreeViewConfig : GearConfig {
         string _filter;
 
         [Inspector(FriendlyName = "Filter (Items that match will be shown)")]

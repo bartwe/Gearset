@@ -1,4 +1,4 @@
-// Wrapper for Gearset. You should copy this class into your
+// Wrapper for Gearset. You should copy this sealed class into your
 // project and it should be used instead of accessing Gearset's
 // methods directly. It allow you to completely enable/disable Gearset
 // by setting/unsetting the USE_GEARSET symbol in your project
@@ -6,7 +6,7 @@
 // This is useful for when you're game is ready for release.
 // 
 // This file and also provide a level of threadsafeness. 
-// If you need it, you can rename this class and move it to your
+// If you need it, you can rename this sealed class and move it to your
 // own namespace, or even to Microsoft.Xna.Framework so it's
 // quickly available from most classes in your project.
 // 
@@ -93,7 +93,7 @@ namespace Gearset {
             GearsetComponent = new GearsetComponent(game);
             game.Components.Add(GearsetComponent);
 
-            // This component updates this class allowing it to process
+            // This component updates this sealed class allowing it to process
             // calls from other threads which are queued.
             game.Components.Add(new GearsetWrapperUpdater(game));
 
@@ -131,10 +131,10 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This class will call update on the Debug class so that it can pump
+        /// This sealed class will call update on the Debug sealed class so that it can pump
         /// queued calls from other threads.
         /// </summary>
-        class GearsetWrapperUpdater : GearsetComponentBase {
+        sealed class GearsetWrapperUpdater : GearsetComponentBase {
             public GearsetWrapperUpdater(Game game)
                 : base(game) {
                 // This is important since the GearsetComponent will have an
@@ -142,7 +142,7 @@ namespace Gearset {
                 UpdateOrder = int.MaxValue - 2;
             }
 
-            public override void Update(GameTime gameTime) {
+            public sealed override void Update(GameTime gameTime) {
                 // If you rename this file. Update this:
                 Gs.Update(gameTime);
             }

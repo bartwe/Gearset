@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gearset.Components {
     [Serializable]
-    public class LoggerConfig : GearConfig {
+    public sealed class LoggerConfig : GearConfig {
         public LoggerConfig() {
             // Defaults
             Top = 300;

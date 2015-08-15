@@ -7,7 +7,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Keeps values of functions so they can be plotted.
     /// </summary>
-    public class DataSamplerManager : Gear {
+    public sealed class DataSamplerManager : Gear {
         readonly Dictionary<string, DataSampler> _samplers;
 
         public DataSamplerConfig Config { get { return GearsetSettings.Instance.DataSamplerConfig; } }
@@ -95,7 +95,7 @@ namespace Gearset.Components {
             return sampler;
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             // Update all samplers.
             foreach (var sampler in _samplers.Values) {
                 sampler.Update(gameTime);

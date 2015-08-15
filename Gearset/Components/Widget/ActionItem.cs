@@ -1,11 +1,11 @@
 using System;
 
 namespace Gearset.Components {
-    class ActionItem {
+    sealed class ActionItem {
         internal Action Action;
         internal String Name;
 
-        public override string ToString() {
+        public sealed override string ToString() {
             return Name;
         }
     }

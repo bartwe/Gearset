@@ -20,7 +20,7 @@ namespace Gearset.Components.InspectorWPF {
             ListBox1.ItemsSource = _items;
         }
 
-        public override void UpdateUi(Object value) {
+        public sealed override void UpdateUi(Object value) {
             if (_updateRequested) {
                 _items.Clear();
                 var enumerable = value as IEnumerable;
@@ -75,7 +75,7 @@ namespace Gearset.Components.InspectorWPF {
     ///// <summary>
     ///// Wraps objects in the list.
     ///// </summary>
-    //internal class ObjectWrapper
+    //internal sealed class ObjectWrapper
     //{
     //    /// <summary>
     //    /// Name is legacy from InspectorNode.
@@ -85,7 +85,7 @@ namespace Gearset.Components.InspectorWPF {
     //    {
     //        this.Property = o;
     //    }
-    //    internal override string ToString()
+    //    internal sealed override string ToString()
     //    {
     //        return Property.ToString();
     //    }

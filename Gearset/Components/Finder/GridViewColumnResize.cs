@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Wpf.Behaviours {
     /// <summary>
-    /// Static class used to attach to wpf control
+    /// Static sealed class used to attach to wpf control
     /// </summary>
     public static class GridViewColumnResize {
         public static string GetWidth(DependencyObject obj) {
@@ -35,9 +35,9 @@ namespace Wpf.Behaviours {
         #region Nested type: GridViewColumnResizeBehavior
 
         /// <summary>
-        /// GridViewColumn class that gets attached to the GridViewColumn control
+        /// GridViewColumn sealed class that gets attached to the GridViewColumn control
         /// </summary>
-        public class GridViewColumnResizeBehavior {
+        public sealed class GridViewColumnResizeBehavior {
             readonly GridViewColumn _element;
 
             public GridViewColumnResizeBehavior(GridViewColumn element) {
@@ -92,9 +92,9 @@ namespace Wpf.Behaviours {
         #region Nested type: ListViewResizeBehavior
 
         /// <summary>
-        /// ListViewResizeBehavior class that gets attached to the ListView control
+        /// ListViewResizeBehavior sealed class that gets attached to the ListView control
         /// </summary>
-        public class ListViewResizeBehavior {
+        public sealed class ListViewResizeBehavior {
             const int Margin = 25;
             const long RefreshTime = Timeout.Infinite;
             const long Delay = 50;

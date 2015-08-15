@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace Gearset.Components.InspectorWPF {
-    public class GenericMethodCaller : MethodCaller {
+    public sealed class GenericMethodCaller : MethodCaller {
         /// <summary>
         /// TargetObject for instance methods.
         /// </summary>
@@ -26,7 +26,7 @@ namespace Gearset.Components.InspectorWPF {
         /// <summary>
         /// Calls the method with the established parameters.
         /// </summary>
-        public override void CallMethod() {
+        public sealed override void CallMethod() {
             MethodInfo.Invoke(_invocationTarget, (from i in Parameters select i.Parameter.Property).ToArray());
         }
     }

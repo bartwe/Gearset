@@ -33,14 +33,14 @@ namespace Gearset {
     /// easily accessing the its components functionality.
     /// </summary>
     /// <remarks>
-    /// Create a single instance of this class in your game
+    /// Create a single instance of this sealed class in your game
     /// and keep it in a static variable you can reach with ease.
     /// (i.e Util.Console).
     /// 
     /// For 3D games, the Gearset camera matrices must be updated using
     /// the SetMatrices method.
     /// </remarks>
-    public class GearConsole {
+    public sealed class GearConsole {
         public static float LiteVersionNoticeAlpha;
         readonly Game _game;
 

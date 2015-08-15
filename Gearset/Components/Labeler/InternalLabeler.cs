@@ -35,7 +35,7 @@ namespace Gearset.Components {
             _persistent2DLabels.Remove(name);
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass)
                 return;
 
@@ -63,7 +63,7 @@ namespace Gearset.Components {
             base.Draw(gameTime);
         }
 
-        class Label2D {
+        sealed class Label2D {
             public String Name;
             public String Text;
             public Vector2 Position;
@@ -77,7 +77,7 @@ namespace Gearset.Components {
             }
         }
 
-        class Label3D {
+        sealed class Label3D {
             public String Name;
             public String Text;
             public Vector3 Position;

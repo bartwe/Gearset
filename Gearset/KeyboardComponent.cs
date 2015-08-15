@@ -5,7 +5,7 @@ namespace Gearset.Components {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class KeyboardComponent : Gear {
+    public sealed class KeyboardComponent : Gear {
         KeyboardState _prevState;
         KeyboardState _state;
 
@@ -17,7 +17,7 @@ namespace Gearset.Components {
         /// </summary>
         public KeyboardState State { get { return _state; } }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             _prevState = _state;
             _state = Keyboard.GetState();
         }

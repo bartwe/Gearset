@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class SphereDrawer : Gear {
+    sealed class SphereDrawer : Gear {
         readonly InternalLineDrawer _lines;
         internal int CircleSteps = 20;
         internal int Sides = 12;

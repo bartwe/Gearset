@@ -4,7 +4,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Scales a set of keys.
     /// </summary>
-    public class ScaleKeysCommand : CurveEditorCommand {
+    public sealed class ScaleKeysCommand : CurveEditorCommand {
         readonly long[] _affectedKeys;
         readonly Point[] _normalizedPos;
         readonly ScaleBoxHandle _handle;
@@ -37,13 +37,13 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override bool CanUndo { get { return _affectedKeys != null; } }
+        public sealed override bool CanUndo { get { return _affectedKeys != null; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             ScaleKeys(_newMin, _newMax);
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             ScaleKeys(_min, _max);
         }
 

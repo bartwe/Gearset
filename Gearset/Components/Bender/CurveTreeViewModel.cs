@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Color = System.Windows.Media.Color;
 
 namespace Gearset.Components {
-    class CurveTreeViewModel : INotifyPropertyChanged {
+    sealed class CurveTreeViewModel : INotifyPropertyChanged {
         /// <summary>
         /// A random used to generate colors, used with a predefined seed so multiple
         /// runs of the same code path will yield the same colors.

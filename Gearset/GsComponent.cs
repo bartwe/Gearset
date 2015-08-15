@@ -1,3 +1,3 @@
 ﻿namespace Gearset.Component {
-    class GsComponent {}
+    sealed class GsComponent {}
 }

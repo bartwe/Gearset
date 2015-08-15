@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 using Control = System.Windows.Forms.Control;
 
 namespace Gearset.Components.InspectorWPF {
-    public class InspectorManager : Gear, INotifyPropertyChanged {
+    public sealed class InspectorManager : Gear, INotifyPropertyChanged {
         /// <summary>
         /// Objects being inspected.
         /// </summary>
@@ -226,7 +226,7 @@ namespace Gearset.Components.InspectorWPF {
             Window.Top = GearsetResources.Game.Window.ClientBounds.Top;
         }
 
-        protected override void OnVisibleChanged() {
+        protected sealed override void OnVisibleChanged() {
             if (Window != null) {
                 Window.Visibility = Visible ? Visibility.Visible : Visibility.Hidden;
                 Window.WasHiddenByGameMinimize = false;
@@ -236,7 +236,7 @@ namespace Gearset.Components.InspectorWPF {
         /// <summary>
         /// Updates each component on the inspector TreeView.
         /// </summary>
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             foreach (var obj in Window.TreeView1.Items) {
                 var o = (InspectorNode)obj;
                 o.Update();

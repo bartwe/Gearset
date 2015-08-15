@@ -5,7 +5,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Selects the provided set of keys.
     /// </summary>
-    public class SelectKeysCommand : CurveEditorCommand {
+    public sealed class SelectKeysCommand : CurveEditorCommand {
         readonly long[] _newSelection;
         long[] _previousSelection;
 
@@ -24,9 +24,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override bool CanUndo { get { return _previousSelection != null; } }
+        public sealed override bool CanUndo { get { return _previousSelection != null; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             // Save the previous selection before we make the change.
             if (_previousSelection == null) {
                 _previousSelection = new long[Control.Selection.Count];
@@ -42,7 +42,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             Debug.Assert(_previousSelection != null, "Inconsistent state.");
 
             // Change the selection

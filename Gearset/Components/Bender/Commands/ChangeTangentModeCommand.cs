@@ -5,7 +5,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Changes the tangent value of a given key.
     /// </summary>
-    public class ChangeTangentModeCommand : CurveEditorCommand {
+    public sealed class ChangeTangentModeCommand : CurveEditorCommand {
         // Saved state.
         readonly long[] _affectedKeys;
         KeyTangentMode? _newTangentInMode;
@@ -30,9 +30,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override bool CanUndo { get { return true; } }
+        public sealed override bool CanUndo { get { return true; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             // Do we need to save prev values?
             if (_prevTangentInMode == null) {
                 Debug.Assert(_prevTangentOutMode == null);
@@ -65,7 +65,7 @@ namespace Gearset.Components.CurveEditorControl {
             Control.InvalidateVisual();
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             var affectedCurves = new HashSet<CurveWrapper>();
 
             // Revert to previous values.

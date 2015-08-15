@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Profiler {
     [Serializable]
-    public class ProfilerConfig : GearConfig {
+    public sealed class ProfilerConfig : GearConfig {
         public ProfilerConfig() {
             // Defaults
             Top = 300;
@@ -82,15 +82,15 @@ namespace Gearset.Components.Profiler {
         }
 
         [Serializable]
-        public class TimeRulerUiViewConfig : UiViewConfig {}
+        public sealed class TimeRulerUiViewConfig : UiViewConfig {}
 
         [Serializable]
-        public class PerformanceGraphUiViewConfig : UiViewConfig {
+        public sealed class PerformanceGraphUiViewConfig : UiViewConfig {
             [InspectorIgnore]
             public uint SkipFrames { get; internal set; }
         }
 
         [Serializable]
-        public class ProfilerSummaryUiViewConfig : UiViewConfig {}
+        public sealed class ProfilerSummaryUiViewConfig : UiViewConfig {}
     }
 }

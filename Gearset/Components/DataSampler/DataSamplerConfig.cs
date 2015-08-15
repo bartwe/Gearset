@@ -2,10 +2,10 @@
 
 namespace Gearset.Components {
     /// <summary>
-    /// This whole class is ignored by the inspector.
+    /// This whole sealed class is ignored by the inspector.
     /// </summary>
     [Serializable]
-    public class DataSamplerConfig : GearConfig {
+    public sealed class DataSamplerConfig : GearConfig {
         public DataSamplerConfig() {
             DefaultHistoryLength = 60;
         }

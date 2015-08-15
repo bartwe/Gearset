@@ -44,7 +44,7 @@ namespace Gearset.Components.InspectorWPF {
             }
         }
 
-        public override void UpdateUi(Object value) {
+        public sealed override void UpdateUi(Object value) {
             var e = value as Enum;
             if (TreeNode.Type == typeof(Enum))
                 return;
@@ -55,14 +55,14 @@ namespace Gearset.Components.InspectorWPF {
             }
         }
 
-        public override void UpdateVariable() {
+        public sealed override void UpdateVariable() {
             TreeNode.Property = EnumValue;
         }
 
         /// <summary>
         /// When the treeNode is set, we populate the comboBox.
         /// </summary>
-        public override void OnTreeNodeChanged() {
+        public sealed override void OnTreeNodeChanged() {
             base.OnTreeNodeChanged();
             if (TreeNode.Type == typeof(Enum))
                 return;

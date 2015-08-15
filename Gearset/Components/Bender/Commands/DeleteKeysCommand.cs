@@ -4,7 +4,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Selects the provided set of keys.
     /// </summary>
-    public class DeleteKeysCommand : CurveEditorCommand {
+    public sealed class DeleteKeysCommand : CurveEditorCommand {
         List<KeyWrapper> _deletedKeys;
 
         /// <summary>
@@ -13,9 +13,9 @@ namespace Gearset.Components.CurveEditorControl {
         public DeleteKeysCommand(CurveEditorControl2 control)
             : base(control) {}
 
-        public override bool CanUndo { get { return _deletedKeys != null; } }
+        public sealed override bool CanUndo { get { return _deletedKeys != null; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             // Store the keys to be removed
             if (_deletedKeys == null) {
                 _deletedKeys = new List<KeyWrapper>();
@@ -31,7 +31,7 @@ namespace Gearset.Components.CurveEditorControl {
             Control.Selection.Clear();
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             // Restore the keys removed.
             foreach (var key in _deletedKeys) {
                 key.Curve.RestoreKey(key);

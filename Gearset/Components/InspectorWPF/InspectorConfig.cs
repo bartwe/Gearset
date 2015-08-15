@@ -2,7 +2,7 @@
 
 namespace Gearset.Components {
     [Serializable]
-    public class InspectorConfig : GearConfig {
+    public sealed class InspectorConfig : GearConfig {
         String _searchText;
         [NonSerialized] bool _modifiedOnly;
 

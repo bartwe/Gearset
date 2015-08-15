@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Gearset {
-    public class ObjectDescription {
+    public sealed class ObjectDescription {
         readonly String _name;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Gearset {
         public Object Object { get; set; }
         public String Description { get; set; }
 
-        public override string ToString() {
+        public sealed override string ToString() {
             return Object + " (" + Description + ")";
         }
     }

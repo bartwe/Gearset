@@ -6,7 +6,7 @@ namespace Gearset.UI {
     /// <summary>
     /// Routes the mouse events in to the appopiate box in the box list.
     /// </summary>
-    public class MouseRouter {
+    public sealed class MouseRouter {
         //private UIManager parent;
 
         readonly List<LayoutBox> _downCollidingSet;

@@ -9,7 +9,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// A collection of Key Wrappers. It can be accessed as a dictionary
     /// using the [] semantic.
     /// </summary>
-    public class KeyWrapperCollection : ICollection<KeyWrapper> {
+    public sealed class KeyWrapperCollection : ICollection<KeyWrapper> {
         readonly Dictionary<long, KeyWrapper> _keys;
 
         public KeyWrapperCollection() {

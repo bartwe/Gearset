@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Gearset.Components.CurveEditorControl {
-    public class GridRuler : FrameworkElement {
+    public sealed class GridRuler : FrameworkElement {
         public double halfDpiX;
         public double halfDpiY;
         bool guidelinesFixed;
@@ -173,7 +173,7 @@ namespace Gearset.Components.CurveEditorControl {
 
         #region Rendering
 
-        protected override void OnRender(DrawingContext dc) {
+        protected sealed override void OnRender(DrawingContext dc) {
             if (!guidelinesFixed) {
                 var m = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
                 halfDpiX = m.M11 * 0.5;

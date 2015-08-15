@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Media;
 
 namespace Gearset.Components.Logger {
-    public class StreamItem : IComparable<StreamItem>, INotifyPropertyChanged {
+    public sealed class StreamItem : IComparable<StreamItem>, INotifyPropertyChanged {
         Boolean _enabled = true;
         public String Name { get; set; }
 

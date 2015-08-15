@@ -4,7 +4,7 @@ using Gearset.UI;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Data {
-    public class Plot : Window
+    public sealed class Plot : Window
 #if WINDOWS
         , INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;

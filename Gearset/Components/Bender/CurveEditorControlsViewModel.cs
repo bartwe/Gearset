@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// ViewModel class used to bind WPF controls to CurveEditorControl properties
+    /// ViewModel sealed class used to bind WPF controls to CurveEditorControl properties
     /// and methods.
     /// </summary>
-    public class CurveEditorControlsViewModel : INotifyPropertyChanged {
+    public sealed class CurveEditorControlsViewModel : INotifyPropertyChanged {
         public CurveEditorControlsViewModel(CurveEditorControl2 control) {
             Control = control;
             Control.ToolModeChanged += Control_ToolModeChanged;
@@ -242,7 +242,7 @@ namespace Gearset.Components.CurveEditorControl {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public class SetBothTangentsCommand : ICommand {
+        public sealed class SetBothTangentsCommand : ICommand {
             readonly CurveEditorControl2 _control;
             readonly CurveEditorControlsViewModel _viewModel;
             readonly KeyTangentMode _tangentMode;
@@ -272,7 +272,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public class ZoomExtentsCommand : ICommand {
+        public sealed class ZoomExtentsCommand : ICommand {
             readonly CurveEditorControl2 _control;
             readonly bool _selectionOnly;
             CurveEditorControlsViewModel _viewModel;
@@ -323,7 +323,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public class ZoomCommand : ICommand {
+        public sealed class ZoomCommand : ICommand {
             readonly CurveEditorControl2 _control;
             readonly float _xFactor;
             readonly float _yFactor;

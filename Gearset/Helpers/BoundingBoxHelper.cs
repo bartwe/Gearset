@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 namespace Gearset {
-    class BoundingBoxHelper {
+    sealed class BoundingBoxHelper {
         static BasicEffect _effect;
         static Random _random = new Random();
         static VertexPositionColor[] _vertices;

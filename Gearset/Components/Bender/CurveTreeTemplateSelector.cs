@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Gearset.Components {
-    public class CurveTreeTemplateSelector : DataTemplateSelector {
+    public sealed class CurveTreeTemplateSelector : DataTemplateSelector {
         static readonly Dictionary<Type, CachedTemplate> TypeTemplateMap;
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Gearset.Components {
             TypeTemplateMap.Add(typeof(CurveTreeLeaf), new CachedTemplate("curveTreeLeafTemplate"));
         }
 
-        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

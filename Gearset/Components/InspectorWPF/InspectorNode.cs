@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components.InspectorWPF {
-    public class InspectorNode : INotifyPropertyChanged {
+    public sealed class InspectorNode : INotifyPropertyChanged {
         /// <summary>
         /// This list contains a list of Types that 
         /// contain extension methods that we will call
@@ -370,7 +370,7 @@ namespace Gearset.Components.InspectorWPF {
         /// Fills the list of Children with nodes.
         /// </summary>
         /// <param name="force">if set to <c>true</c> the children, if any, will be deleted and the node reexpanded.</param>
-        public virtual void Expand(bool force, bool includePrivate) {
+        public void Expand(bool force, bool includePrivate) {
             Dictionary<MemberInfo, InspectorReflectionHelper.SetterGetterPair> setterGetterDict;
 
             // Root will never be null, so we check if a child is null
@@ -397,7 +397,7 @@ namespace Gearset.Components.InspectorWPF {
                 setterGetterDict = InspectorReflectionHelper.GetSetterGetterDict3(this);
             }
             catch (CompileErrorException) {
-                GearsetResources.Console.Log("Gearset", "A compiler error occured, try verifying that the class you're inspecting is private");
+                GearsetResources.Console.Log("Gearset", "A compiler error occured, try verifying that the sealed class you're inspecting is private");
                 return;
             }
 
@@ -604,14 +604,14 @@ namespace Gearset.Components.InspectorWPF {
             return Parent.GetPath() + "." + Name;
         }
 
-        public override string ToString() {
+        public sealed override string ToString() {
             return GetPath();
         }
 
         /// <summary>
         /// Method to rise the event.
         /// </summary>
-        protected void OnPropertyChanged(string name) {
+         void OnPropertyChanged(string name) {
             var handler = PropertyChanged;
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));

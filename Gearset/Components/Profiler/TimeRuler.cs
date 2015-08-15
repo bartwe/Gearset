@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Profiler {
-    public class TimeRuler : UiView {
+    public sealed class TimeRuler : UiView {
         /// <summary>
         /// Height(in pixels) of level.
         /// </summary>

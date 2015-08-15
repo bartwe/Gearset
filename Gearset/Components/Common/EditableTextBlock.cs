@@ -49,7 +49,7 @@ namespace Gearset.Components {
             }
         }
 
-        public override void OnApplyTemplate() {
+        public sealed override void OnApplyTemplate() {
             _block = GetTemplateChild("PART_TextBlock") as TextBlock;
             _box = GetTemplateChild("PART_TextBox") as TextBox;
 
@@ -65,7 +65,7 @@ namespace Gearset.Components {
             IsEditing = false;
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e) {
+        protected sealed override void OnMouseDown(MouseButtonEventArgs e) {
             if (e.ChangedButton != MouseButton.Left)
                 return;
             if (!(e.Source is TextBlock))

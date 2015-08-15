@@ -23,7 +23,7 @@ namespace Gearset.Components.InspectorWPF {
         /// each member of an object of the specified type. But this object only
         /// reachable by the path specified. For example, to get the Position (Vector3)
         /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the class World which contains a
+        /// If the object being ispected is the sealed class World which contains a
         /// player then parameters must be: path="Player.Position.", t=Vector3.
         /// 
         /// This method is ~10X faster than the first one which created C# code.
@@ -105,7 +105,7 @@ namespace Gearset.Components.InspectorWPF {
             //// name is usually the same as the assembly name.
             //ModuleBuilder myModule = myAssembly.DefineDynamicModule(myAssemblyName.Name, true);
 
-            //// Define a public class 'Example'.
+            //// Define a public sealed class 'Example'.
             //TypeBuilder myTypeBuilder = myModule.DefineType("Example", TypeAttributes.Public);
 
             // Create GET methods for every field
@@ -328,7 +328,7 @@ namespace Gearset.Components.InspectorWPF {
         /// each member of an object of the specified type. But this object only
         /// reachable by the path specified. For example, to get the Position (Vector3)
         /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the class World which contains a
+        /// If the object being ispected is the sealed class World which contains a
         /// player then parameters must be: path="Player.Position.", t=Vector3.
         /// 
         /// This method is ~10X faster than the previous one that creaated C# code.
@@ -410,7 +410,7 @@ namespace Gearset.Components.InspectorWPF {
             // name is usually the same as the assembly name.
             var myModule = myAssembly.DefineDynamicModule(myAssemblyName.Name, true);
 
-            // Define a public class 'Example'.
+            // Define a public sealed class 'Example'.
             var myTypeBuilder = myModule.DefineType("Example", TypeAttributes.Public);
 
             // Create GET methods for every field
@@ -619,7 +619,7 @@ namespace Gearset.Components.InspectorWPF {
         /// each member of an object of the specified type. But this object only
         /// reachable by the path specified. For example, to get the Position (Vector3)
         /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the class World which contains a
+        /// If the object being ispected is the sealed class World which contains a
         /// player then parameters must be: path="Player.Position.", t=Vector3.
         /// </summary>
         /// <param name="path">Path to get to object of type t, including the 
@@ -686,10 +686,10 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Helper class to store a setter and a getter for a specified
+        /// Helper sealed class to store a setter and a getter for a specified
         /// FieldInfo in the setterGetterCache dictionary.
         /// </summary>
-        internal class SetterGetterPair {
+        internal sealed class SetterGetterPair {
             internal Setter Setter;
             internal Getter Getter;
 

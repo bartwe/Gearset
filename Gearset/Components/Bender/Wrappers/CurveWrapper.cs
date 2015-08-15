@@ -7,7 +7,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Wraps a Curve, giving it an Id and a Name.
     /// </summary>
-    public class CurveWrapper {
+    public sealed class CurveWrapper {
         public static long LatestId;
         bool _visible;
 

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Gearset.Components.InspectorWPF {
-    public class MethodParamContainer : INotifyPropertyChanged {
+    public sealed class MethodParamContainer : INotifyPropertyChanged {
         ItemsControl _uiContainer;
         InspectorNode _parameter;
 
@@ -25,7 +25,7 @@ namespace Gearset.Components.InspectorWPF {
         public String ParameterType { get { return ParameterInfo.ParameterType.Name; } }
         public ParameterInfo ParameterInfo { get; set; }
 
-        public virtual InspectorNode Parameter {
+        public InspectorNode Parameter {
             get { return _parameter; }
             set {
                 _parameter = value;
@@ -35,7 +35,7 @@ namespace Gearset.Components.InspectorWPF {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(String propertyName) {
+        void OnPropertyChanged(String propertyName) {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -47,7 +47,7 @@ namespace Gearset.Components.InspectorWPF {
         }
     }
 
-    public class MethodParamContainer<T> {
+    public sealed class MethodParamContainer<T> {
         public T RealParameter;
         public Object Parameter { get { return RealParameter; } set { RealParameter = (T)value; } }
     }

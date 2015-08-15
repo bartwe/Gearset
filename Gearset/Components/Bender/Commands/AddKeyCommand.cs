@@ -4,7 +4,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Selects the provided set of keys.
     /// </summary>
-    public class AddKeyCommand : CurveEditorCommand {
+    public sealed class AddKeyCommand : CurveEditorCommand {
         readonly long _curveId;
         readonly float _position;
         readonly float _value;
@@ -21,9 +21,9 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         public long KeyId { get; set; }
-        public override bool CanUndo { get { return KeyId >= 0; } }
+        public sealed override bool CanUndo { get { return KeyId >= 0; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             KeyWrapper wrapper;
             if (KeyId < 0) {
                 wrapper = Control.Curves[_curveId].AddKey(new CurveKey(_position, _value));
@@ -34,7 +34,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             Control.Curves[_curveId].RemoveKey(KeyId);
         }
     }

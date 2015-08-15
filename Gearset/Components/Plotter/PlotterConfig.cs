@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     [Serializable]
-    public class PlotterConfig : GearConfig {
+    public sealed class PlotterConfig : GearConfig {
         public PlotterConfig() {
             DefaultSize = new Vector2(100, 60);
             HiddenPlots = new List<string>();

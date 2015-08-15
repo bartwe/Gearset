@@ -4,7 +4,7 @@ using System.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    public class Widget : Gear {
+    public sealed class Widget : Gear {
         readonly ObservableCollection<ActionItem> _buttonActions;
         int _initialPositionSetDelay = 3;
 
@@ -23,7 +23,7 @@ namespace Gearset.Components {
 
         internal WidgetWindow Window { get; private set; }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             if (_initialPositionSetDelay > 0) {
                 _initialPositionSetDelay--;
                 GameWindow_Move(this, null);

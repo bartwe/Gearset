@@ -7,7 +7,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Wraps a CurveKey, giving it an ID and a reference to it's owner curve.
     /// </summary>
-    public class KeyWrapper {
+    public sealed class KeyWrapper {
         public static long LatestId;
         CurveKey _key;
 

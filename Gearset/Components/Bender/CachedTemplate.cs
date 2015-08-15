@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 
 namespace Gearset.Components {
-    class CachedTemplate {
+    sealed class CachedTemplate {
         internal String Name;
         internal DataTemplate DataTemplate;
 

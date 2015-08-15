@@ -4,7 +4,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Moves a set of keys.
     /// </summary>
-    public class MoveKeysCommand : CurveEditorCommand {
+    public sealed class MoveKeysCommand : CurveEditorCommand {
         readonly long[] _affectedKeys;
         float _positionOffset;
         float _valueOffset;
@@ -26,13 +26,13 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override bool CanUndo { get { return _affectedKeys != null; } }
+        public sealed override bool CanUndo { get { return _affectedKeys != null; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             MoveKeys(_positionOffset, _valueOffset);
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             MoveKeys(-_positionOffset, -_valueOffset);
         }
 

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 
 namespace Gearset.Components.InspectorWPF {
-    public class NoticeViewModel : INotifyPropertyChanged {
+    public sealed class NoticeViewModel : INotifyPropertyChanged {
         String _noticeText;
         String _noticeHyperlinkText;
         String _noticeHyperlinkUrl;

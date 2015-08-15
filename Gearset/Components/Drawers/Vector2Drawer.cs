@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class Vector2Drawer : Gear {
+    sealed class Vector2Drawer : Gear {
         readonly InternalLineDrawer _lines;
 
         internal Vector2Drawer()

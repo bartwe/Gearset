@@ -119,7 +119,7 @@ namespace Gearset.Components.InspectorWPF {
                 targetTreeNode.Property = (double)((float)data);
         }
 
-        protected override void OnGiveFeedback(GiveFeedbackEventArgs e) {
+        protected sealed override void OnGiveFeedback(GiveFeedbackEventArgs e) {
             e.UseDefaultCursors = true;
             base.OnGiveFeedback(e);
         }

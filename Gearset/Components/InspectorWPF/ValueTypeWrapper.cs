@@ -1,8 +1,8 @@
 namespace Gearset.Components.InspectorWPF {
-    public class ValueTypeWrapper<T> where T : struct {
+    public sealed class ValueTypeWrapper<T> where T : struct {
         public T Value { get; set; }
 
-        public override string ToString() {
+        public sealed override string ToString() {
             return Value + " [copy]";
         }
     }

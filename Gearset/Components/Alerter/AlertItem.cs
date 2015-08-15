@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class AlertItem {
+    sealed class AlertItem {
         internal String Text;
         internal Vector2 Position;
         internal int RemainingTime = -1;

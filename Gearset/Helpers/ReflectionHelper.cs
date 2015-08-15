@@ -7,7 +7,7 @@ using Microsoft.CSharp;
 using Microsoft.Xna.Framework;
 
 namespace Gearset {
-    class ReflectionHelper {
+    sealed class ReflectionHelper {
         static readonly List<String> UsingNamespaces;
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Gearset {
 
             namespace DummyNamespace___
             {
-                public class DummyClass___
+                public sealed class DummyClass___
                 {
                     public static " + returnTypeName + @" DummyMethod(Object[] p)
                     {
@@ -156,7 +156,7 @@ namespace Gearset {
             completeCode.Append(@"
             namespace DummyNamespace___
             {
-                public class DummyClass___
+                public sealed class DummyClass___
                 {
                     ");
 
@@ -176,7 +176,7 @@ namespace Gearset {
                 i++;
             }
 
-            // Close the class and the namespace
+            // Close the sealed class and the namespace
             completeCode.Append(@"}
                                 }");
 

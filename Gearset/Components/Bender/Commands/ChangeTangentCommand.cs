@@ -2,7 +2,7 @@
     /// <summary>
     /// Changes the tangent value of a given key.
     /// </summary>
-    public class ChangeTangentCommand : CurveEditorCommand {
+    public sealed class ChangeTangentCommand : CurveEditorCommand {
         readonly long _affectedKey;
         readonly TangentSelectionMode _selectedTangent;
         // Saved state.
@@ -29,13 +29,13 @@
             _prevTangentOutMode = key.TangentOutMode;
         }
 
-        public override bool CanUndo { get { return true; } }
+        public sealed override bool CanUndo { get { return true; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             ChangeTangent(_tangentValue);
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             var key = Control.Keys[_affectedKey];
 
             key.SetInTangent(_prevTangentInValue);

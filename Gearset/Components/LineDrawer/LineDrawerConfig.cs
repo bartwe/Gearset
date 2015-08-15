@@ -2,7 +2,7 @@
 
 namespace Gearset.Components {
     [Serializable]
-    public class LineDrawerConfig : GearConfig {
+    public sealed class LineDrawerConfig : GearConfig {
         /// <summary>
         /// Raised when the user request lines to be cleared.
         /// </summary>

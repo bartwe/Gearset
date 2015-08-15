@@ -50,11 +50,11 @@ namespace Gearset.UI {
             UpdateLayout();
         }
 
-        protected override void OnPositionChanged() {
+        protected sealed override void OnPositionChanged() {
             UpdateLayout();
         }
 
-        protected override void OnSizeChanged() {
+        protected sealed override void OnSizeChanged() {
             UpdateLayout();
         }
 

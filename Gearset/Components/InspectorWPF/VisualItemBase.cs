@@ -32,7 +32,7 @@ namespace Gearset.Components.InspectorWPF {
         public virtual void OnTreeNodeChanged() {}
 
         /// <summary>
-        /// Override this method and add logic to update
+        /// sealed override this method and add logic to update
         /// the control to reflect the new value.
         /// </summary>
         /// <param name="value"></param>
@@ -41,7 +41,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Override this method and add logic to update
+        /// sealed override this method and add logic to update
         /// the value of the variable of the treenode.
         /// </summary>
         public virtual void UpdateVariable() {

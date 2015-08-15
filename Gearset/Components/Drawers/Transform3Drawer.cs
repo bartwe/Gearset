@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    class Transform3Drawer : Gear {
+    sealed class Transform3Drawer : Gear {
         readonly Vector3Drawer _vectors;
         internal float AxisSize = 1f;
 

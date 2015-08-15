@@ -12,7 +12,7 @@ using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 
 namespace Gearset.Components.CurveEditorControl {
-    public class CurveEditorControl2 : FrameworkElement {
+    public sealed class CurveEditorControl2 : FrameworkElement {
         const float KeySize = 2;
         const float SelectedKeySize = 3;
         const double ClickSelectionExtents = 2;
@@ -434,7 +434,7 @@ namespace Gearset.Components.CurveEditorControl {
             OnSelectionChanged();
         }
 
-        protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters) {
+        protected sealed override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters) {
             // Instead of colliding with actual geometry, just collide with the whole box.
             return new PointHitTestResult(this, hitTestParameters.HitPoint);
             //return base.HitTestCore(hitTestParameters);
@@ -481,7 +481,7 @@ namespace Gearset.Components.CurveEditorControl {
             public bool IsSelected;
         }
 
-        class CurveKeyInstanceComparer : IEqualityComparer<CurveKey> {
+        sealed class CurveKeyInstanceComparer : IEqualityComparer<CurveKey> {
             public bool Equals(CurveKey x, CurveKey y) {
                 return ReferenceEquals(x, y);
             }
@@ -1027,7 +1027,7 @@ namespace Gearset.Components.CurveEditorControl {
 
         #region Rendering
 
-        protected override void OnRender(DrawingContext dc) {
+        protected sealed override void OnRender(DrawingContext dc) {
             //Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Background, new Action(() => { }));
             //watch.Reset();
             //watch.Start();

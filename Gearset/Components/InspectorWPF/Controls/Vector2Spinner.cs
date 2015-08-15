@@ -57,14 +57,14 @@ namespace Gearset.Components.InspectorWPF {
         /// <summary>
         /// Updates the UI.
         /// </summary>
-        public override void UpdateUi(Object value) {
+        public sealed override void UpdateUi(Object value) {
             Value = (Vector2)value;
         }
 
         /// <summary>
         /// Updates the variable fromt he UI.
         /// </summary>
-        public override void UpdateVariable() {
+        public sealed override void UpdateVariable() {
             TreeNode.Property = Value;
         }
 

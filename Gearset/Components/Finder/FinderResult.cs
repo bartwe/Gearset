@@ -1,5 +1,5 @@
 using System.Collections.Generic;
 
 namespace Gearset {
-    public class FinderResult : List<ObjectDescription> {}
+    public sealed class FinderResult : List<ObjectDescription> {}
 }

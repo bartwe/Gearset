@@ -373,7 +373,7 @@ namespace Gearset.Components.Profiler {
             ProfilerSummary.Draw(_internalLabeler, _prevLog);
         }
 
-        public class LevelItem : IComparable<LevelItem>, INotifyPropertyChanged {
+        public sealed class LevelItem : IComparable<LevelItem>, INotifyPropertyChanged {
             Boolean _enabled = true;
 
             public LevelItem(int levelId) {
@@ -416,7 +416,7 @@ namespace Gearset.Components.Profiler {
         /// <summary>
         /// Collection of markers.
         /// </summary>
-        internal class MarkerCollection {
+        internal sealed class MarkerCollection {
             // Marker collection.
             public readonly Marker[] Markers = new Marker[MaxSamples];
             // Marker nest information.
@@ -428,7 +428,7 @@ namespace Gearset.Components.Profiler {
         /// <summary>
         /// Frame logging information.
         /// </summary>
-        internal class FrameLog {
+        internal sealed class FrameLog {
             public readonly MarkerCollection[] Levels;
 
             public FrameLog() {
@@ -442,7 +442,7 @@ namespace Gearset.Components.Profiler {
         /// <summary>
         /// Marker information
         /// </summary>
-        protected internal class MarkerInfo {
+        internal sealed class MarkerInfo {
             // Name of marker.
             public readonly string Name;
             // Marker log.

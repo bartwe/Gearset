@@ -2,7 +2,7 @@
 using System.Windows.Media;
 
 namespace Gearset.Components.Logger {
-    public class LogItem {
+    public sealed class LogItem {
         /// <summary>
         /// The background color to use for this Log, it is the same for 
         /// items in the same update.

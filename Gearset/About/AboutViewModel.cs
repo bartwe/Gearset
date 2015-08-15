@@ -2,7 +2,7 @@
 using System.ComponentModel;
 
 namespace Gearset.About {
-    public class AboutViewModel : INotifyPropertyChanged {
+    public sealed class AboutViewModel : INotifyPropertyChanged {
         public AboutViewModel(String productNameAndVersion, string copyrightNotice) {
             ProductNameAndVersion = productNameAndVersion;
             CopyrightNotice = copyrightNotice;

@@ -5,7 +5,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Keeps the history of a function.
     /// </summary>
-    public class DataSampler {
+    public sealed class DataSampler {
         public FixedLengthQueue<float> Values;
         int _elapsedFrames;
 

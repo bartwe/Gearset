@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Gearset {
-    public class UndoEngine {
+    public sealed class UndoEngine {
         /// <summary>
         /// History of commands for undo.
         /// </summary>

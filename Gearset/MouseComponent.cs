@@ -8,7 +8,7 @@ namespace Gearset.Components {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class MouseComponent : Gear {
+    public sealed class MouseComponent : Gear {
         MouseState _state;
         MouseState _prevState;
 
@@ -78,7 +78,7 @@ namespace Gearset.Components {
 
         #region Update
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             _prevState = _state;
             _state = Mouse.GetState();
             _justClicked = false;

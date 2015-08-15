@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     [Serializable]
-    public class LabelerConfig : GearConfig {
+    public sealed class LabelerConfig : GearConfig {
         /// <summary>
         /// Gets or sets the default color of the labels shown.
         /// </summary>

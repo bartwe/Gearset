@@ -69,13 +69,13 @@ namespace Gearset.Components {
         public virtual void OnResolutionChanged() {}
 
         /// <summary>
-        /// Override to implement functionality when the value
+        /// sealed override to implement functionality when the value
         /// of Enabled changes.
         /// </summary>
         protected virtual void OnEnabledChanged() {}
 
         /// <summary>
-        /// Override to implement functionality when the value
+        /// sealed override to implement functionality when the value
         /// of Visible changes.
         /// </summary>
         protected virtual void OnVisibleChanged() {}

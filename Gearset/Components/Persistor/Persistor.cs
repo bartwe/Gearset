@@ -9,9 +9,9 @@ namespace Gearset.Components.Persistor {
     /// Handles persistance of object members. Can store and load data
     /// from/to an object as when it is being initialized. With this
     /// component variables can be edited, stored and reloaded.
-    /// This class is not threadsafe as it uses the same StringBuilder
+    /// This sealed class is not threadsafe as it uses the same StringBuilder
     /// </summary>
-    class Persistor {
+    sealed class Persistor {
         /// <summary>
         /// One instance for all calls to String.Split. Avoids
         /// garbage generation.

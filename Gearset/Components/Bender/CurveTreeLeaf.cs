@@ -3,7 +3,7 @@ using Gearset.Components.CurveEditorControl;
 using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
-    public class CurveTreeLeaf : CurveTreeNode {
+    public sealed class CurveTreeLeaf : CurveTreeNode {
         public CurveTreeLeaf(CurveTreeNode parent, CurveWrapper curve)
             : base(parent) {
             Curve = curve;
@@ -11,9 +11,9 @@ namespace Gearset.Components {
 
         public CurveWrapper Curve { get; private set; }
         public Brush ColorBrush { get { return Curve.ColorBrush; } }
-        public override string Name { get { return Curve.Name; } set { Curve.Name = value; } }
+        public sealed override string Name { get { return Curve.Name; } set { Curve.Name = value; } }
 
-        public override bool AreParentsVisible {
+        public sealed override bool AreParentsVisible {
             get { return base.AreParentsVisible; }
             set {
                 var prevValue = AreParentsVisible;
@@ -22,7 +22,7 @@ namespace Gearset.Components {
             }
         }
 
-        public override bool IsVisible {
+        public sealed override bool IsVisible {
             get { return base.IsVisible; }
             set {
                 var becomingVisible = value && !IsVisible && AreParentsVisible;

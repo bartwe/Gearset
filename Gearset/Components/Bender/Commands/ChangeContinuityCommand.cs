@@ -5,7 +5,7 @@ namespace Gearset.Components.CurveEditorControl {
     /// <summary>
     /// Changes the tangent value of a given key.
     /// </summary>
-    public class ChangeContinuityCommand : CurveEditorCommand {
+    public sealed class ChangeContinuityCommand : CurveEditorCommand {
         readonly CurveContinuity newKeyContinuity;
         // Saved state.
         readonly long[] affectedKeys;
@@ -27,9 +27,9 @@ namespace Gearset.Components.CurveEditorControl {
             }
         }
 
-        public override bool CanUndo { get { return true; } }
+        public sealed override bool CanUndo { get { return true; } }
 
-        public override void Do() {
+        public sealed override void Do() {
             // Do we need to save prev values?
             if (prevKeyContinuity == null) {
                 prevKeyContinuity = new CurveContinuity[affectedKeys.Length];
@@ -49,7 +49,7 @@ namespace Gearset.Components.CurveEditorControl {
             Control.InvalidateVisual();
         }
 
-        public override void Undo() {
+        public sealed override void Undo() {
             var affectedCurves = new HashSet<CurveWrapper>();
 
             // Revert to previous values.

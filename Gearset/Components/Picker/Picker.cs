@@ -5,7 +5,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Class that handles picking objects from the screen
     /// </summary>
-    class Picker : Gear {
+    sealed class Picker : Gear {
         readonly List<IPickable> _pickables;
         IPickable _hoveringObject;
         IPickable _selectedObject;
@@ -26,7 +26,7 @@ namespace Gearset.Components {
             _pickables.Add(pickable);
         }
 
-        public override void Update(GameTime gameTime) {
+        public sealed override void Update(GameTime gameTime) {
             //  Unproject the screen space mouse coordinate into model space 
             //  coordinates. Because the world space matrix is identity, this 
             //  gives the coordinates in world space.
@@ -87,7 +87,7 @@ namespace Gearset.Components {
             }
         }
 
-        public override void Draw(GameTime gameTime) {
+        public sealed override void Draw(GameTime gameTime) {
             // Only draw if we're doing a BasicEffectPass pass
             if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass) return;
 

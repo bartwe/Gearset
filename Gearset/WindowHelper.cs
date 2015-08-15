@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 
 namespace Gearset {
-    public class WindowHelper {
+    public sealed class WindowHelper {
         public static void EnsureOnScreen(Window window) {
             Screen[] sc;
             sc = Screen.AllScreens;

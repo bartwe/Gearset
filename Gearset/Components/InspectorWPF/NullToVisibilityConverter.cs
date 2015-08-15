@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// This class is the same as the BooleanToVisibilityConverter
+    /// This sealed class is the same as the BooleanToVisibilityConverter
     /// but negated.
     /// </summary>
     [Localizability(LocalizationCategory.NeverLocalize)]

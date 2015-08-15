@@ -5,7 +5,7 @@ namespace Gearset.Components {
     /// <summary>
     /// Draws 2D/3D Boxes 
     /// </summary>
-    class BoxDrawer : Gear {
+    sealed class BoxDrawer : Gear {
         readonly InternalLineDrawer _lines;
 
         internal BoxDrawer()

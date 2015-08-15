@@ -16,7 +16,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Only to be used by subclasses that override the name property.
+        /// Only to be used by subclasses that sealed override the name property.
         /// </summary>
         protected CurveTreeNode(CurveTreeNode parent) {
             Parent = parent;

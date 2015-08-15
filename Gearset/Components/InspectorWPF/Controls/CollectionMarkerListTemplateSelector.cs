@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components.InspectorWPF {
-    public class CollectionMarkerListTemplateSelector : DataTemplateSelector {
+    public sealed class CollectionMarkerListTemplateSelector : DataTemplateSelector {
         static readonly CachedTemplate Texture2DTemplateCache = new CachedTemplate("textureTemplate");
         static readonly CachedTemplate GenericTemplateCache = new CachedTemplate("genericTemplate");
 
@@ -13,7 +13,7 @@ namespace Gearset.Components.InspectorWPF {
         /// </summary>
         static CollectionMarkerListTemplateSelector() {}
 
-        public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
+        public sealed override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             var element = container as FrameworkElement;
 
             if (element != null && item != null) {

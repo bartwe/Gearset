@@ -2,10 +2,10 @@
 
 namespace Gearset {
     /// <summary>
-    /// This class is used to bind data to a DynamicDataDisplay 
+    /// This sealed class is used to bind data to a DynamicDataDisplay 
     /// ChartPlotter from a FixedLengthQueue
     /// </summary>
-    //public class FixedLengthPointSource : IPointDataSource
+    //public sealed class FixedLengthPointSource : IPointDataSource
     //{
     //    public event EventHandler DataChanged;
     //    private DataSampler sampler;

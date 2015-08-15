@@ -1,5 +1,5 @@
 using System;
 
 namespace Gearset {
-    public class CompileErrorException : Exception {}
+    public sealed class CompileErrorException : Exception {}
 }

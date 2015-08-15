@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Gearset.Profiler.Extensions {
     /// <summary>
-    /// Static class for string builder extension methods.
+    /// Static sealed class for string builder extension methods.
     /// </summary>
     /// <remarks>
     /// You can specified StringBuilder for SpriteFont.DrawString from XNA GS 3.0. And you can save unwanted memory allocations.
@@ -20,7 +20,7 @@ namespace Gearset.Profiler.Extensions {
     /// StringBuilder.AppendFormat method. Another issue is memory allocation occurred when you specify int or float for
     /// StringBuild.Append method.
     /// 
-    /// This class provides solution for those issue.
+    /// This sealed class provides solution for those issue.
     /// 
     /// All methods are defined as extension methods as StringBuilder. So, you can use those method like below.
     /// 

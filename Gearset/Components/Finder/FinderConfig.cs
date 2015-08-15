@@ -2,7 +2,7 @@
 
 namespace Gearset.Components {
     [Serializable]
-    public class FinderConfig : GearConfig {
+    public sealed class FinderConfig : GearConfig {
         String _searchText;
         [NonSerialized] SearchFunction _searchFunction;
 

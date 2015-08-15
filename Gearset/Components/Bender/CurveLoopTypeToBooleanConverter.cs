@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// This class is the same as the BooleanToVisibilityConverter
+    /// This sealed class is the same as the BooleanToVisibilityConverter
     /// but negated.
     /// </summary>
     [Localizability(LocalizationCategory.NeverLocalize)]

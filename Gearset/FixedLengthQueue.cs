@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 #endif
 
 namespace Gearset {
-    public class FixedLengthQueue<T> :
+    public sealed class FixedLengthQueue<T> :
 #if WINDOWS
         INotifyCollectionChanged,
 #endif

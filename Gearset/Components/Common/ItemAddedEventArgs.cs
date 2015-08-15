@@ -1,7 +1,7 @@
 using System;
 
 namespace Gearset.Components {
-    public class ItemAddedEventArgs<T> : EventArgs {
+    public sealed class ItemAddedEventArgs<T> : EventArgs {
         public ItemAddedEventArgs(T addedItem) {
             AddedItem = addedItem;
         }
