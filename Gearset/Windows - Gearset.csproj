@@ -335,7 +335,6 @@
     </Compile>
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="ObfuscationSettings.cs" />
-    <Compile Include="ObservableFixedLengthQueue.cs" />
     <Compile Include="RenderPass.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>

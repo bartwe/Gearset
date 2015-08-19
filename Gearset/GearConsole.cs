@@ -281,11 +281,6 @@ namespace Gearset {
         internal Picker Picker { get; private set; }
 
         /// <summary>
-        /// This component is for internal use. Allows XDTK to save data
-        /// that can be later retreived.
-        /// </summary>
-        //internal Persistor Persistor { get; private set; }
-        /// <summary>
         /// Component that let the game developer inspect game objects
         /// in real time, showing the value of public fields. The inspector
         /// is also capable of calling methods on objects.
