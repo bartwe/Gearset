@@ -5,8 +5,8 @@ namespace Gearset {
         readonly String _name;
 
         /// <summary>
-        /// Creates an ObjectDescription. The name field will be taken out
-        /// of the object's ToString() method.
+        ///     Creates an ObjectDescription. The name field will be taken out
+        ///     of the object's ToString() method.
         /// </summary>
         /// <param name="o">The matching object.</param>
         /// <param name="description">A string describing the object.</param>
@@ -16,7 +16,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Creates an ObjectDescription.
+        ///     Creates an ObjectDescription.
         /// </summary>
         /// <param name="o">The matching object.</param>
         /// <param name="description">A string describing the object.</param>

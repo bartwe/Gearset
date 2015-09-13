@@ -4,12 +4,12 @@ using System.Windows.Input;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class StringItem : VisualItemBase {
         /// <summary>
-        /// Store the valur of IsUpdating when the textbox
-        /// gets focus.
+        ///     Store the valur of IsUpdating when the textbox
+        ///     gets focus.
         /// </summary>
         bool _wasUpdating;
 
@@ -26,7 +26,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         public override sealed void UpdateUi(Object value) {
-            if (value == null) return;
+            if (value == null)
+                return;
             var text = value.ToString();
             TextBox1.Text = text;
             TextBox1.ToolTip = text;

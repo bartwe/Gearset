@@ -11,7 +11,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Gets or sets the default size.
+        ///     Gets or sets the default size.
         /// </summary>
         /// <value>The default size</value>
         [Inspector(FriendlyName = "Default size of new plots")]
@@ -24,13 +24,13 @@ namespace Gearset.Components {
         public List<String> HiddenPlots { get; internal set; }
 
         /// <summary>
-        /// Raised when the user request plots to be cleared.
+        ///     Raised when the user request plots to be cleared.
         /// </summary>
         [field: NonSerialized]
         public event EventHandler Cleared;
 
         /// <summary>
-        /// Clears all lines
+        ///     Clears all lines
         /// </summary>
         public void Clear() {
             if (Cleared != null)

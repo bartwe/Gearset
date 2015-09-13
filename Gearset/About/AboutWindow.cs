@@ -5,7 +5,7 @@ using System.Windows.Navigation;
 
 namespace Gearset {
     /// <summary>
-    /// Interaction logic for LicenseWindow.xaml
+    ///     Interaction logic for LicenseWindow.xaml
     /// </summary>
     public partial class AboutWindow : Window {
         public AboutWindow() {

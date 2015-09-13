@@ -4,21 +4,21 @@ using System.Collections.Generic;
 namespace Gearset {
     public sealed class KeyedCollection<T> {
         /// <summary>
-        /// Dictionary that maps a key (string) to
-        /// an index in the IList.
+        ///     Dictionary that maps a key (string) to
+        ///     an index in the IList.
         /// </summary>
         readonly Dictionary<String, int> _keyIndexTable;
 
         /// <summary>
-        /// The list that holds the values.
+        ///     The list that holds the values.
         /// </summary>
         readonly IList<T> _list;
 
         /// <summary>
-        /// Constructs a KeyCollection and uses the specified
-        /// list to hold the values. The list must be empty and
-        /// if it doesn't resize dynamically then it must have
-        /// enough space to hold everything inserted.
+        ///     Constructs a KeyCollection and uses the specified
+        ///     list to hold the values. The list must be empty and
+        ///     if it doesn't resize dynamically then it must have
+        ///     enough space to hold everything inserted.
         /// </summary>
         public KeyedCollection(IList<T> list) {
             if (list.Count > 0)
@@ -28,8 +28,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Constructs a KeyedCollection with a List of T
-        /// to holds the values.
+        ///     Constructs a KeyedCollection with a List of T
+        ///     to holds the values.
         /// </summary>
         public KeyedCollection() {
             _list = new List<T>();
@@ -37,7 +37,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Returns a reference to the back-end list.
+        ///     Returns a reference to the back-end list.
         /// </summary>
         public IList<T> List { get { return _list; } }
 
@@ -74,8 +74,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds a new value to the keyed collection. If the key
-        /// already exist, the value will be changed.
+        ///     Adds a new value to the keyed collection. If the key
+        ///     already exist, the value will be changed.
         /// </summary>
         public int Set(String key, T value) {
             int index;
@@ -92,7 +92,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds a new value to the keyed collection
+        ///     Adds a new value to the keyed collection
         /// </summary>
         public void Set(int index, T value) {
             if (index >= _list.Count) {
@@ -102,7 +102,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds a new value and returns its index.
+        ///     Adds a new value and returns its index.
         /// </summary>
         /// <param name="value"></param>
         public int Add(T value) {

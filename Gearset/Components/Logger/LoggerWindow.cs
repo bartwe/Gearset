@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components.Logger {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    ///     Interaction logic for Window1.xaml
     /// </summary>
     public partial class LoggerWindow : Window {
         public LoggerWindow() {

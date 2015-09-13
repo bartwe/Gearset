@@ -18,7 +18,7 @@ namespace Gearset.Components.Data {
 #endif
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Plot"/> is visible.
+        ///     Gets or sets a value indicating whether this <see cref="Plot" /> is visible.
         /// </summary>
         /// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
         public bool Visible {

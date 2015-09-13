@@ -2,11 +2,11 @@
 
 namespace Gearset {
     /// <summary>
-    /// Provides a simple way to add Gearset to your game. Simply
-    /// add this component to your Game's Component collection and
-    /// you're set. (Additionally you have to add the [STAThread]
-    /// attribute to your Main(string[] args) method (usually in
-    /// program.cs)
+    ///     Provides a simple way to add Gearset to your game. Simply
+    ///     add this component to your Game's Component collection and
+    ///     you're set. (Additionally you have to add the [STAThread]
+    ///     attribute to your Main(string[] args) method (usually in
+    ///     program.cs)
     /// </summary>
     public sealed class GearsetComponent : GearsetComponentBase {
         public GearsetComponent(Game game)

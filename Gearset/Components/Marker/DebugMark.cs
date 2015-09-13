@@ -51,7 +51,8 @@ namespace Gearset.Components {
             Type = type;
             ScreenSpace = screenSpace;
 
-            if (screenSpace) ScreenSpacePosition = new Vector2(position.X, position.Y);
+            if (screenSpace)
+                ScreenSpacePosition = new Vector2(position.X, position.Y);
             else {
                 if (type == MarkType.Cross) {
                     Mark = new VertexPositionColor[6];

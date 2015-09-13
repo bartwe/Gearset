@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components.Profiler {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    ///     Interaction logic for Window1.xaml
     /// </summary>
     public partial class ProfilerWindow : Window {
         public ProfilerWindow() {

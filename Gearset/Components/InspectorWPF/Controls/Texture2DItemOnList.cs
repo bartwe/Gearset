@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class Texture2DItemOnList : UserControl {
         /// <summary>
-        /// Registers a dependency property
+        ///     Registers a dependency property
         /// </summary>
         //public static readonly DependencyProperty ObjectWrapperProperty =
         //    DependencyProperty.Register("ObjectWrapper", typeof(Gearset.Components.InspectorWPF.CollectionMarkerItem.ObjectWrapper), typeof(Texture2DItemOnList),

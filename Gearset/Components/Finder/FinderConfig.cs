@@ -31,12 +31,13 @@ namespace Gearset.Components {
             set {
                 _searchText = value;
                 OnPropertyChanged("SearchText");
-                if (SearchTextChanged != null) SearchTextChanged(this, EventArgs.Empty);
+                if (SearchTextChanged != null)
+                    SearchTextChanged(this, EventArgs.Empty);
             }
         }
 
         /// <summary>
-        /// The function that will be called everytime the query string changes.
+        ///     The function that will be called everytime the query string changes.
         /// </summary>
         public SearchFunction SearchFunction {
             get { return _searchFunction; }

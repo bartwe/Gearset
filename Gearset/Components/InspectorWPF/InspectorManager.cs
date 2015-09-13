@@ -14,17 +14,17 @@ using Control = System.Windows.Forms.Control;
 namespace Gearset.Components.InspectorWPF {
     public sealed class InspectorManager : Gear, INotifyPropertyChanged {
         /// <summary>
-        /// Objects being inspected.
+        ///     Objects being inspected.
         /// </summary>
         readonly ObservableCollection<InspectorNode> _inspectedObjects;
 
         /// <summary>
-        /// Nodes shown in the Watch window.
+        ///     Nodes shown in the Watch window.
         /// </summary>
         readonly ObservableCollection<InspectorNode> _watchedNodes;
 
         /// <summary>
-        /// Methods Callers
+        ///     Methods Callers
         /// </summary>
         readonly ObservableCollection<MethodCaller> _methodCallers;
 
@@ -38,18 +38,18 @@ namespace Gearset.Components.InspectorWPF {
         string[] _searchTerms;
 
         /// <summary>
-        /// It is set to the seconds to wait between the user stop typing and the filtering
-        /// is actually performed. It is reset to some value with every keystroke.
+        ///     It is set to the seconds to wait between the user stop typing and the filtering
+        ///     is actually performed. It is reset to some value with every keystroke.
         /// </summary>
         float _updateSearchFilteringDelay;
 
         /// <summary>
-        /// List of notices to show.
+        ///     List of notices to show.
         /// </summary>
         ObservableCollection<NoticeViewModel> _notices;
 
         /// <summary>
-        /// Constructor, creates the inspector logger.
+        ///     Constructor, creates the inspector logger.
         /// </summary>
         public InspectorManager()
             : base(GearsetSettings.Instance.InspectorConfig) {
@@ -121,7 +121,7 @@ namespace Gearset.Components.InspectorWPF {
         internal Inspector Window { get; private set; }
 
         /// <summary>
-        /// Gets the Inspector's config.
+        ///     Gets the Inspector's config.
         /// </summary>
         public InspectorConfig Config { get; private set; }
 
@@ -170,7 +170,8 @@ namespace Gearset.Components.InspectorWPF {
 
         public bool FilterPredicate(Object o) {
             // If there's nothing filtering, accept everything.
-            if (!Config.ModifiedOnly && String.IsNullOrWhiteSpace(Config.SearchText)) return true;
+            if (!Config.ModifiedOnly && String.IsNullOrWhiteSpace(Config.SearchText))
+                return true;
 
             var node = o as InspectorNode;
             if (node != null) {
@@ -218,8 +219,8 @@ namespace Gearset.Components.InspectorWPF {
         void gameWindow_Move(object sender, EventArgs e) {}
 
         /// <summary>
-        /// Updates the position of the inspector if its attached
-        /// to the game window.
+        ///     Updates the position of the inspector if its attached
+        ///     to the game window.
         /// </summary>
         void UpdatePosition() {
             Window.Left = GearsetResources.Game.Window.ClientBounds.Left - Window.Width;
@@ -234,7 +235,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Updates each component on the inspector TreeView.
+        ///     Updates each component on the inspector TreeView.
         /// </summary>
         public override void Update(GameTime gameTime) {
             foreach (var obj in Window.TreeView1.Items) {
@@ -298,9 +299,9 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Adds the object to the inspector logger so the user
-        /// can inspect its fields, properties and methods. The node
-        /// will be autoExpanded.
+        ///     Adds the object to the inspector logger so the user
+        ///     can inspect its fields, properties and methods. The node
+        ///     will be autoExpanded.
         /// </summary>
         /// <param name="name">A friendly name to use in the Inspector Tree.</param>
         /// <param name="o">The object to inspect.</param>
@@ -309,8 +310,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Adds the object to the inspector logger so the user
-        /// can inspect its fields, properties and methods.
+        ///     Adds the object to the inspector logger so the user
+        ///     can inspect its fields, properties and methods.
         /// </summary>
         /// <param name="name">A friendly name to use in the Inspector Tree.</param>
         /// <param name="o">The object to inspect.</param>
@@ -369,8 +370,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Adds the object to the inspector logger so the user
-        /// can inspect its fields, properties and methods.
+        ///     Adds the object to the inspector logger so the user
+        ///     can inspect its fields, properties and methods.
         /// </summary>
         /// <param name="name">A friendly name to use in the Inspector Tree.</param>
         /// <param name="o">The object to inspect.</param>
@@ -382,7 +383,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Remove the object from the inspector, if exist.
+        ///     Remove the object from the inspector, if exist.
         /// </summary>
         /// <param name="o">The object to remove.</param>
         public void RemoveInspect(Object o) {
@@ -399,8 +400,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Get the TreeViewItems (containers) and let the InspectorTreeNodes
-        /// know where they are.
+        ///     Get the TreeViewItems (containers) and let the InspectorTreeNodes
+        ///     know where they are.
         /// </summary>
         void ItemContainerGenerator1_StatusChanged(object sender, EventArgs e) {
             if (Window.TreeView1.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated) {
@@ -433,8 +434,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Get the TreeViewItems (containers) and let the InspectorTreeNodes
-        /// know where they are.
+        ///     Get the TreeViewItems (containers) and let the InspectorTreeNodes
+        ///     know where they are.
         /// </summary>
         void ItemContainerGenerator2_StatusChanged(object sender, EventArgs e) {
             //if (Inspector.TreeView2.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)

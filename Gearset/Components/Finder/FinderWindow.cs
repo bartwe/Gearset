@@ -4,7 +4,6 @@ using System.Windows.Input;
 
 namespace Gearset.Components {
     /// <summary>
-    /// 
     /// </summary>
     public partial class FinderWindow : Window {
         bool _isDragging;

@@ -6,34 +6,34 @@ using Rectangle = System.Drawing.Rectangle;
 
 namespace Gearset.Components {
     /// <summary>
-    /// This is a game component that implements IUpdateable.
+    ///     This is a game component that implements IUpdateable.
     /// </summary>
     public sealed class MouseComponent : Gear {
         MouseState _state;
         MouseState _prevState;
 
         /// <summary>
-        /// Can last only one frame true
+        ///     Can last only one frame true
         /// </summary>
         bool _justClicked;
 
         /// <summary>
-        /// Can last only one frame true
+        ///     Can last only one frame true
         /// </summary>
         bool _justDragging;
 
         /// <summary>
-        /// Remains true while the left mouse button is pressed.
+        ///     Remains true while the left mouse button is pressed.
         /// </summary>
         bool _mouseDown;
 
         /// <summary>
-        /// How long the mouse was down.
+        ///     How long the mouse was down.
         /// </summary>
         int _mouseDownTime;
 
         /// <summary>
-        /// The position where the left button became pressed.
+        ///     The position where the left button became pressed.
         /// </summary>
         Vector2 _mouseDownPosition;
 
@@ -52,21 +52,21 @@ namespace Gearset.Components {
         bool HaveFocus { get { return Game.IsActive; } }
 
         /// <summary>
-        /// The distance the (down left) mouse can move without being
-        /// considered a drag (still a click). Should be zero for PC
-        /// games and some higher value for tablets.
+        ///     The distance the (down left) mouse can move without being
+        ///     considered a drag (still a click). Should be zero for PC
+        ///     games and some higher value for tablets.
         /// </summary>
         public float ClickThreshold { get; set; }
 
         /// <summary>
-        /// Set to true if the component should force the mouse to 
-        /// stay inside the client logger bounds.
+        ///     Set to true if the component should force the mouse to
+        ///     stay inside the client logger bounds.
         /// </summary>
         public bool KeepMouseInWindow { get; set; }
 
         /// <summary>
-        /// Get the movement the mouse have made since it started dragging.
-        /// If the mouse is not dragging it will return Vector2.Zero.
+        ///     Get the movement the mouse have made since it started dragging.
+        ///     If the mouse is not dragging it will return Vector2.Zero.
         /// </summary>
         public Vector2 DragOffset {
             get {
@@ -124,22 +124,22 @@ namespace Gearset.Components {
         #region Is Left Just Up/Down/Click
 
         /// <summary>
-        /// True if the mouse was just pressed, last one frame true.
+        ///     True if the mouse was just pressed, last one frame true.
         /// </summary>
         public bool IsLeftJustDown() {
             return (_state.LeftButton == ButtonState.Pressed && _prevState.LeftButton == ButtonState.Released && HaveFocus);
         }
 
         /// <summary>
-        /// True if the mouse was just released, last one frame true.
+        ///     True if the mouse was just released, last one frame true.
         /// </summary>
         public bool IsLeftJustUp() {
             return (_state.LeftButton == ButtonState.Released && _prevState.LeftButton == ButtonState.Pressed && HaveFocus);
         }
 
         /// <summary>
-        /// True if mouse did a released-pressed-released cycle
-        /// without moving the ClickThreshold.
+        ///     True if mouse did a released-pressed-released cycle
+        ///     without moving the ClickThreshold.
         /// </summary>
         public bool IsLeftClick() {
             return _justClicked && HaveFocus;
@@ -150,14 +150,14 @@ namespace Gearset.Components {
         #region Is Right Just Up/Down/Click
 
         /// <summary>
-        /// True if the mouse was just pressed, last one frame true.
+        ///     True if the mouse was just pressed, last one frame true.
         /// </summary>
         public bool IsRightJustDown() {
             return (_state.RightButton == ButtonState.Pressed && _prevState.RightButton == ButtonState.Released && HaveFocus);
         }
 
         /// <summary>
-        /// True if the mouse was just released, last one frame true.
+        ///     True if the mouse was just released, last one frame true.
         /// </summary>
         public bool IsRightJustUp() {
             return (_state.RightButton == ButtonState.Released && _prevState.RightButton == ButtonState.Pressed && HaveFocus);
@@ -168,7 +168,7 @@ namespace Gearset.Components {
         #region Dragging
 
         /// <summary>
-        /// The mouse mave moved the ClickThreshold since it was pressed.
+        ///     The mouse mave moved the ClickThreshold since it was pressed.
         /// </summary>
         /// <returns></returns>
         public bool IsDragging() {
@@ -176,8 +176,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// The mouse just moved the threshold, this will only be true
-        /// for one frame.
+        ///     The mouse just moved the threshold, this will only be true
+        ///     for one frame.
         /// </summary>
         public bool IsJustDragging() {
             return _justDragging && HaveFocus;

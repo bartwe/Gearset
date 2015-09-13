@@ -139,7 +139,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Shows a dialog asking for a filename and saves the log file.
+        ///     Shows a dialog asking for a filename and saves the log file.
         /// </summary>
         public void SaveLogToFile() {
             // Configure save file dialog box
@@ -161,7 +161,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Saves the log to the specified file.
+        ///     Saves the log to the specified file.
         /// </summary>
         /// <param name="filename">Name of the file to save the log (usually ending in .log)</param>
         public void SaveLogToFile(string filename) {
@@ -201,7 +201,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -211,7 +211,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -222,7 +222,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -234,7 +234,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -244,7 +244,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Los a message to the specified stream.
+        ///     Los a message to the specified stream.
         /// </summary>
         /// <param name="streamName">Name of the Stream to log the message to</param>
         /// <param name="message">Message to log</param>
@@ -274,7 +274,7 @@ namespace Gearset.Components.Logger {
         }
 
         /// <summary>
-        /// Logs the specified message in the default stream.
+        ///     Logs the specified message in the default stream.
         /// </summary>
         /// <param name="content">The message to log.</param>
         public void Log(String message) {
@@ -282,8 +282,10 @@ namespace Gearset.Components.Logger {
         }
 
         Visual GetDescendantByType(Visual element, Type type) {
-            if (element == null) return null;
-            if (element.GetType() == type) return element;
+            if (element == null)
+                return null;
+            if (element.GetType() == type)
+                return element;
             Visual foundElement = null;
             if (element is FrameworkElement) {
                 (element as FrameworkElement).ApplyTemplate();
@@ -301,7 +303,8 @@ namespace Gearset.Components.Logger {
             FilteredView.Refresh();
             if (e.PropertyName == "Enabled") {
                 var stream = sender as StreamItem;
-                if (stream == null) return;
+                if (stream == null)
+                    return;
 
                 if (stream.Enabled && Config.HiddenStreams.Contains(stream.Name))
                     Config.HiddenStreams.Remove(stream.Name);

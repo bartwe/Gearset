@@ -22,7 +22,7 @@ namespace Gearset.Components.Profiler {
         bool _visible;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="TimeRuler"/> is visible.
+        ///     Gets or sets a value indicating whether this <see cref="TimeRuler" /> is visible.
         /// </summary>
         /// <value><c>true</c> if visible; otherwise, <c>false</c>.</value>
         public bool Visible {

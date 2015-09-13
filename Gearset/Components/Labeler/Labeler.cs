@@ -1,6 +1,6 @@
 ﻿namespace Gearset.Components {
     /// <summary>
-    /// Shows labels of text in 2D positions or 3d (TODO)s unprojected positions.
+    ///     Shows labels of text in 2D positions or 3d (TODO)s unprojected positions.
     /// </summary>
     public sealed class Labeler : InternalLabeler {
         public Labeler()

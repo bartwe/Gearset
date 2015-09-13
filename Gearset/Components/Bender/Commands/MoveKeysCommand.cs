@@ -2,7 +2,7 @@
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Moves a set of keys.
+    ///     Moves a set of keys.
     /// </summary>
     public sealed class MoveKeysCommand : CurveEditorCommand {
         readonly long[] _affectedKeys;
@@ -10,7 +10,7 @@ namespace Gearset.Components.CurveEditorControl {
         float _valueOffset;
 
         /// <summary>
-        /// Creates a new command to move a set of keys.
+        ///     Creates a new command to move a set of keys.
         /// </summary>
         public MoveKeysCommand(CurveEditorControl2 control, float positionOffset, float valueOffset)
             : base(control) {
@@ -37,9 +37,9 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// This method will move will update the offset and move the keys accordingly.
-        /// This is to be used while dragging, before the mouse is released and the command
-        /// added (without calling Do()) to the history.
+        ///     This method will move will update the offset and move the keys accordingly.
+        ///     This is to be used while dragging, before the mouse is released and the command
+        ///     added (without calling Do()) to the history.
         /// </summary>
         public void UpdateOffsets(float positionOffset, float valueOffset) {
             MoveKeys(positionOffset - _positionOffset, valueOffset - _valueOffset);
@@ -48,7 +48,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Performs the actual movement of the keys.
+        ///     Performs the actual movement of the keys.
         /// </summary>
         void MoveKeys(float positionOffset, float valueOffset) {
             var affectedCurves = new List<CurveWrapper>();

@@ -24,7 +24,7 @@ namespace Gearset.Components.InspectorWPF {
         public bool CallAutomatically { get; set; }
 
         /// <summary>
-        /// The TreeViewNode which holds this node.
+        ///     The TreeViewNode which holds this node.
         /// </summary>
         public ItemsControl UiContainer {
             get { return _uiContainer; }
@@ -38,8 +38,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Determines if all parameters have been set so the method
-        /// can be invoked.
+        ///     Determines if all parameters have been set so the method
+        ///     can be invoked.
         /// </summary>
         public bool IsReady {
             get {
@@ -52,11 +52,11 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Parameters for the invocation of the method. On a especific
-        /// implementation of a Method caller, the CallMethod method
-        /// should use a delegate to speed things up, and of course
-        /// not use this list to pass parameters but still use it to expose
-        /// it to the UI.
+        ///     Parameters for the invocation of the method. On a especific
+        ///     implementation of a Method caller, the CallMethod method
+        ///     should use a delegate to speed things up, and of course
+        ///     not use this list to pass parameters but still use it to expose
+        ///     it to the UI.
         /// </summary>
         public ObservableCollection<MethodParamContainer> Parameters { get; private set; }
 
@@ -83,13 +83,13 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Calls the method 
+        ///     Calls the method
         /// </summary>
         public abstract void CallMethod();
 
         /// <summary>
-        /// If the methodCaller should be called every
-        /// frame, this can be done in this 
+        ///     If the methodCaller should be called every
+        ///     frame, this can be done in this
         /// </summary>
         public virtual void Update() {
             if (CallAutomatically)

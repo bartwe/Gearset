@@ -7,8 +7,8 @@ using Color = System.Windows.Media.Color;
 namespace Gearset.Components {
     sealed class CurveTreeViewModel : INotifyPropertyChanged {
         /// <summary>
-        /// A random used to generate colors, used with a predefined seed so multiple
-        /// runs of the same code path will yield the same colors.
+        ///     A random used to generate colors, used with a predefined seed so multiple
+        ///     runs of the same code path will yield the same colors.
         /// </summary>
         readonly Random _random = new Random(32154);
 
@@ -54,7 +54,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Removes the provided Curve from Bender.
+        ///     Removes the provided Curve from Bender.
         /// </summary>
         internal void RemoveCurve(Curve curve) {
             var leaf = FindContainerLeaf(Root, curve);
@@ -101,8 +101,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Will remove the whole subtree of nodes below the provided node (from the control).
-        /// The provided node must be removed from the tree by the calling code.
+        ///     Will remove the whole subtree of nodes below the provided node (from the control).
+        ///     The provided node must be removed from the tree by the calling code.
         /// </summary>
         void RemoveNodeAndCurves(CurveTreeNode node) {
             for (var i = node.Children.Count - 1; i >= 0; i--) {
@@ -114,7 +114,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds the curve to the TreeView and also the CurveEditorControl.
+        ///     Adds the curve to the TreeView and also the CurveEditorControl.
         /// </summary>
         internal void AddCurve(string name, Curve curve) {
             // Check if the curve is already added.

@@ -21,7 +21,7 @@ namespace Gearset.Components.Profiler {
         const int MaxSampleFrames = 4;
 
         /// <summary>
-        /// Duration (in frame count) for take snap shot of log.
+        ///     Duration (in frame count) for take snap shot of log.
         /// </summary>
         const int LogSnapDuration = 120;
 
@@ -80,7 +80,7 @@ namespace Gearset.Components.Profiler {
         public bool SkipUpdate { get; set; }
 
         /// <summary>
-        /// Gets/Sets target sample frames.
+        ///     Gets/Sets target sample frames.
         /// </summary>
         public int TargetSampleFrames { get; set; }
 
@@ -319,7 +319,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Get average time of given level index and marker name.
+        ///     Get average time of given level index and marker name.
         /// </summary>
         /// <param name="levelIndex">Index of level</param>
         /// <param name="markerName">name of marker</param>
@@ -404,7 +404,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Marker structure.
+        ///     Marker structure.
         /// </summary>
         internal struct Marker {
             public int MarkerId;
@@ -414,7 +414,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Collection of markers.
+        ///     Collection of markers.
         /// </summary>
         internal sealed class MarkerCollection {
             // Marker collection.
@@ -426,7 +426,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Frame logging information.
+        ///     Frame logging information.
         /// </summary>
         internal sealed class FrameLog {
             public readonly MarkerCollection[] Levels;
@@ -440,7 +440,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Marker information
+        ///     Marker information
         /// </summary>
         internal sealed class MarkerInfo {
             // Name of marker.
@@ -454,7 +454,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Marker log information.
+        ///     Marker log information.
         /// </summary>
         public struct MarkerLog {
             public float Min;
@@ -469,7 +469,7 @@ namespace Gearset.Components.Profiler {
         }
 
         /// <summary>
-        /// Marker log information.
+        ///     Marker log information.
         /// </summary>
         public struct TimingSummaryItem {
             public float SnapAvg { get; set; }

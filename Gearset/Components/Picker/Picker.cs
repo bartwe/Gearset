@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Class that handles picking objects from the screen
+    ///     Class that handles picking objects from the screen
     /// </summary>
     sealed class Picker : Gear {
         readonly List<IPickable> _pickables;
@@ -18,8 +18,8 @@ namespace Gearset.Components {
         public IPickable Picked { get; private set; }
 
         /// <summary>
-        /// Adds a new Pickable so it can be picked with
-        /// the mouse.
+        ///     Adds a new Pickable so it can be picked with
+        ///     the mouse.
         /// </summary>
         /// <param name="pickable"></param>
         public void AddPickable(IPickable pickable) {
@@ -89,7 +89,8 @@ namespace Gearset.Components {
 
         public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a BasicEffectPass pass
-            if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass) return;
+            if (GearsetResources.CurrentRenderPass != RenderPass.BasicEffectPass)
+                return;
 
             if (_hoveringObject is IPickable<BoundingBox>)
                 BoundingBoxHelper.DrawBoundingBox(((IPickable<BoundingBox>)_hoveringObject).PickableVolume, Color.Gray);

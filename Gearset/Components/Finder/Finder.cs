@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Lets the user search for a object in its game.
+    ///     Lets the user search for a object in its game.
     /// </summary>
     sealed class Finder : Gear {
         float _searchDelay;
@@ -36,7 +36,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// WPF window instance.
+        ///     WPF window instance.
         /// </summary>
         internal FinderWindow Window { get; private set; }
 
@@ -92,8 +92,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// The default search function. It will search through the GameComponentCollection
-        /// of the Game.
+        ///     The default search function. It will search through the GameComponentCollection
+        ///     of the Game.
         /// </summary>
         FinderResult DefaultSearchFunction(String queryString) {
             var result = new FinderResult();

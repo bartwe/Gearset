@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Textblock that can be eddited.
+    ///     Textblock that can be eddited.
     /// </summary>
     [TemplatePart(Name = "PART_TextBlock", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
@@ -21,14 +21,14 @@ namespace Gearset.Components {
         public bool IsEditing { get { return (bool)GetValue(IsEditingProperty); } set { SetValue(IsEditingProperty, value); } }
 
         /// <summary>
-        /// Same as setting IsEditing
+        ///     Same as setting IsEditing
         /// </summary>
         public void StartEdit() {
             IsEditing = true;
         }
 
         /// <summary>
-        /// Same as unsetting IsEditing
+        ///     Same as unsetting IsEditing
         /// </summary>
         public void StopEdit() {
             IsEditing = false;
@@ -87,7 +87,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Gets or sets whether this TextBlock is editing or not.
+        ///     Gets or sets whether this TextBlock is editing or not.
         /// </summary>
         public static readonly DependencyProperty IsEditingProperty =
             DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock),

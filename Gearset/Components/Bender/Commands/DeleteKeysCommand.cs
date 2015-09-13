@@ -2,13 +2,13 @@
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Selects the provided set of keys.
+    ///     Selects the provided set of keys.
     /// </summary>
     public sealed class DeleteKeysCommand : CurveEditorCommand {
         List<KeyWrapper> _deletedKeys;
 
         /// <summary>
-        /// Creates a new command to select the given keys. You can pass null to deselect all.
+        ///     Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public DeleteKeysCommand(CurveEditorControl2 control)
             : base(control) {}

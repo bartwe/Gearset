@@ -2,7 +2,7 @@
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Selects the provided set of keys.
+    ///     Selects the provided set of keys.
     /// </summary>
     public sealed class AddKeyCommand : CurveEditorCommand {
         readonly long _curveId;
@@ -10,7 +10,7 @@ namespace Gearset.Components.CurveEditorControl {
         readonly float _value;
 
         /// <summary>
-        /// Creates a new command to select the given keys. You can pass null to deselect all.
+        ///     Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public AddKeyCommand(CurveEditorControl2 control, long curveId, float position, float value)
             : base(control) {

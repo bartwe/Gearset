@@ -13,7 +13,7 @@ namespace Gearset.Components.InspectorWPF {
         static CachedTemplate _rootTemplateCache = new CachedTemplate("RootTemplate");
 
         /// <summary>
-        /// Static constructor
+        ///     Static constructor
         /// </summary>
         static NodeTemplateSelector() {
             TypeTemplateMap = new Dictionary<Type, CachedTemplate>();

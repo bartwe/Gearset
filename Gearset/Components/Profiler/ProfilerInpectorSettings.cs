@@ -1,10 +1,11 @@
 ﻿namespace Gearset.Components.Profiler {
     /// <summary>
-    /// A facade for Profiler settings.
+    ///     A facade for Profiler settings.
     /// </summary>
     /// <remarks>
-    /// Ideally utilised by the Inspector to hide lots of property noise - I still wanted to be able to throw a Profiler into the 
-    /// inspector though so didn't want to tag the properties with [InspectorIgnore]
+    ///     Ideally utilised by the Inspector to hide lots of property noise - I still wanted to be able to throw a Profiler
+    ///     into the
+    ///     inspector though so didn't want to tag the properties with [InspectorIgnore]
     /// </remarks>
     public sealed class ProfilerInpectorSettings {
         readonly Profiler _profiler;

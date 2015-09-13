@@ -19,8 +19,8 @@ namespace Gearset.Components.CurveEditorControl {
         public const double TangentHandleLength = 35;
 
         /// <summary>
-        /// Map keys to wrappers for O(1) retrieval. This map must be updated
-        /// by wrappers every time their wrapped key changes.
+        ///     Map keys to wrappers for O(1) retrieval. This map must be updated
+        ///     by wrappers every time their wrapped key changes.
         /// </summary>
         readonly Dictionary<CurveKey, KeyWrapper> keyToWrapperMap;
 
@@ -61,14 +61,14 @@ namespace Gearset.Components.CurveEditorControl {
         bool quasiModalTool;
 
         /// <summary>
-        /// Will only have a value after a mouse down when a key was added
-        /// and will be reset to null on mouse up.
+        ///     Will only have a value after a mouse down when a key was added
+        ///     and will be reset to null on mouse up.
         /// </summary>
         long? keyAddedOnMouseDown;
 
         /// <summary>
-        /// Determines if we should move the keys when a mouse move event occurs.
-        /// This is MouseDown -> MouseMove communication.
+        ///     Determines if we should move the keys when a mouse move event occurs.
+        ///     This is MouseDown -> MouseMove communication.
         /// </summary>
         bool moveKeysWithMouse;
 
@@ -118,25 +118,25 @@ namespace Gearset.Components.CurveEditorControl {
         public CurveWrapperCollection Curves { get; private set; }
 
         /// <summary>
-        /// Dictionary of all keys of all curves. The key of the dictionary
-        /// represents the Id of the key.
+        ///     Dictionary of all keys of all curves. The key of the dictionary
+        ///     represents the Id of the key.
         /// </summary>
         public KeyWrapperCollection Keys { get; private set; }
 
         /// <summary>
-        /// List of selected curve keys.
+        ///     List of selected curve keys.
         /// </summary>
         public KeySelection Selection { get; private set; }
 
         public CurveEditorControlsViewModel ControlsViewModel { get; set; }
 
         /// <summary>
-        /// Determines whether we're currently drawing a selection box.
+        ///     Determines whether we're currently drawing a selection box.
         /// </summary>
         bool SelectingWithBox { get { return dragging && SelectionBox.IsSelecting; } }
 
         /// <summary>
-        /// Gets or set the current tool used by the control.
+        ///     Gets or set the current tool used by the control.
         /// </summary>
         public ToolMode ToolMode {
             get { return toolMode; }
@@ -147,7 +147,8 @@ namespace Gearset.Components.CurveEditorControl {
                     ComputeScaleBox();
                 }
                 InvalidateVisual(true);
-                if (ToolModeChanged != null) ToolModeChanged(this, EventArgs.Empty);
+                if (ToolModeChanged != null)
+                    ToolModeChanged(this, EventArgs.Empty);
             }
         }
 
@@ -269,7 +270,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// This method is called by KeyWrappers so the map gets updated.
+        ///     This method is called by KeyWrappers so the map gets updated.
         /// </summary>
         internal void UpdateKeyMap(KeyWrapper wrapper, CurveKey key) {
             keyToWrapperMap[key] = wrapper;
@@ -280,7 +281,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Gets the KeyWrapper of a given CurveKey.
+        ///     Gets the KeyWrapper of a given CurveKey.
         /// </summary>
         public KeyWrapper GetWrapper(CurveKey key) {
             KeyWrapper result = null;
@@ -289,7 +290,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Computes the boundaries of the scale box based on the current selection.
+        ///     Computes the boundaries of the scale box based on the current selection.
         /// </summary>
         void ComputeScaleBox() {
             scaleBox.Min.X = scaleBox.Min.Y = double.MaxValue;
@@ -317,7 +318,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Initializes all general pens and brushes.
+        ///     Initializes all general pens and brushes.
         /// </summary>
         void InitializePenAndBrushes() {
             manualTangentPen = new Pen(Brushes.Black, 1);
@@ -376,7 +377,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Sets the provided KeyTangentMode to the current selection
+        ///     Sets the provided KeyTangentMode to the current selection
         /// </summary>
         public void SetKeysContinuity(CurveContinuity continuity) {
             if (Selection.Count > 0) {
@@ -386,7 +387,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Sets the provided KeyTangentMode to the current selection
+        ///     Sets the provided KeyTangentMode to the current selection
         /// </summary>
         public void SetTangentModes(KeyTangentMode? inTangent, KeyTangentMode? outTangent) {
             if (Selection.Count > 0) {
@@ -423,7 +424,7 @@ namespace Gearset.Components.CurveEditorControl {
         //}
 
         /// <summary>
-        /// Deselects all keys (if any) owned by the provided curve.
+        ///     Deselects all keys (if any) owned by the provided curve.
         /// </summary>
         internal void DeselectAllKeysOwnedBy(CurveWrapper curveWrapper) {
             for (var i = Selection.Count - 1; i >= 0; i--) {
@@ -453,7 +454,7 @@ namespace Gearset.Components.CurveEditorControl {
             }
 
             /// <summary>
-            /// Make sure that p1 is min and p2 is max.
+            ///     Make sure that p1 is min and p2 is max.
             /// </summary>
             public void EnsureMaxMin() {
                 if (p1.X > p2.X) {
@@ -883,13 +884,12 @@ namespace Gearset.Components.CurveEditorControl {
         #region Key/Curve intersection with mouse/box
 
         /// <summary>
-        /// Returns a list of key ids that lie inside the selection box, it takes into
-        /// account the size of the key (i.e. selected vs unselected). 
-        /// 
-        /// If the box contains
-        /// any tangent handles of the selected keys they will be returned as negative values
-        /// (see TangentSelection enum) and keys without a tangent won't be returned. Each
-        /// tangent will be followed by it's corresponding key id.
+        ///     Returns a list of key ids that lie inside the selection box, it takes into
+        ///     account the size of the key (i.e. selected vs unselected).
+        ///     If the box contains
+        ///     any tangent handles of the selected keys they will be returned as negative values
+        ///     (see TangentSelection enum) and keys without a tangent won't be returned. Each
+        ///     tangent will be followed by it's corresponding key id.
         /// </summary>
         IList<long> GetKeysInSelectionBox(bool checkTangentHandles) {
             // TODO: this list could be reused.

@@ -5,14 +5,14 @@ using Point = System.Windows.Point;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class Vector2Spinner : VisualItemBase {
         Vector2 _downPosition;
 
         /// <summary>
-        /// True if the TreeNode was Updating before the user
-        /// started to edit it.
+        ///     True if the TreeNode was Updating before the user
+        ///     started to edit it.
         /// </summary>
         bool _wasUpdating;
 
@@ -44,25 +44,31 @@ namespace Gearset.Components.InspectorWPF {
                 String xstr;
                 String ystr;
                 String lstr;
-                if (Math.Abs(x) > 1e-4) xstr = String.Format("{0:0.0000}", x);
-                else xstr = String.Format("{0:0.0#e+00}", x);
-                if (Math.Abs(y) > 1e-4) ystr = String.Format("{0:0.0000}", y);
-                else ystr = String.Format("{0:0.0#e+00}", y);
-                if (Math.Abs(l) > 1e-4) lstr = String.Format("{0:0.0000}", l);
-                else lstr = String.Format("{0:0.0#e+00}", l);
+                if (Math.Abs(x) > 1e-4)
+                    xstr = String.Format("{0:0.0000}", x);
+                else
+                    xstr = String.Format("{0:0.0#e+00}", x);
+                if (Math.Abs(y) > 1e-4)
+                    ystr = String.Format("{0:0.0000}", y);
+                else
+                    ystr = String.Format("{0:0.0#e+00}", y);
+                if (Math.Abs(l) > 1e-4)
+                    lstr = String.Format("{0:0.0000}", l);
+                else
+                    lstr = String.Format("{0:0.0#e+00}", l);
                 TextBlock1.Text = String.Format("({0}, {1}) {2} ", xstr, ystr, lstr);
             }
         }
 
         /// <summary>
-        /// Updates the UI.
+        ///     Updates the UI.
         /// </summary>
         public override sealed void UpdateUi(Object value) {
             Value = (Vector2)value;
         }
 
         /// <summary>
-        /// Updates the variable fromt he UI.
+        ///     Updates the variable fromt he UI.
         /// </summary>
         public override sealed void UpdateVariable() {
             TreeNode.Property = Value;

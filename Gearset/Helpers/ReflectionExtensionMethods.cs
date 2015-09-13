@@ -7,7 +7,7 @@ namespace Gearset {
         #region Get Instance Field/Property
 
         /// <summary>
-        /// Return public Instance fields.
+        ///     Return public Instance fields.
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
@@ -27,7 +27,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Return public Instance properties.
+        ///     Return public Instance properties.
         /// </summary>
         public static PropertyInfo[] GetInstanceProperties(this Type t, bool skipPrivate = true) {
             if (skipPrivate)
@@ -36,14 +36,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Return public Instance methods.
+        ///     Return public Instance methods.
         /// </summary>
         public static MethodInfo[] GetInstanceMethods(this Type t) {
             return t.GetMethods(BindingFlags.Default | BindingFlags.Public | BindingFlags.Instance);
         }
 
         /// <summary>
-        /// Return public Static methods.
+        ///     Return public Static methods.
         /// </summary>
         public static MethodInfo[] GetStaticMethods(this Type t) {
             return t.GetMethods(BindingFlags.Default | BindingFlags.Public | BindingFlags.Static);

@@ -5,7 +5,7 @@ using Point = System.Windows.Point;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class Vector3Spinner : VisualItemBase {
         public enum ModeEnum {
@@ -20,8 +20,8 @@ namespace Gearset.Components.InspectorWPF {
         bool _isDragging;
 
         /// <summary>
-        /// True if the TreeNode was Updating before the user
-        /// started to edit it.
+        ///     True if the TreeNode was Updating before the user
+        ///     started to edit it.
         /// </summary>
         bool _wasUpdating;
 
@@ -61,27 +61,35 @@ namespace Gearset.Components.InspectorWPF {
                 String ystr;
                 String zstr;
                 String lstr;
-                if (x * x > 1e-7 || x == 0) xstr = String.Format("{0:0.0000}", x);
-                else xstr = String.Format("{0:0.0#e+00}", x);
-                if (y * y > 1e-7 || y == 0) ystr = String.Format("{0:0.0000}", y);
-                else ystr = String.Format("{0:0.0#e+00}", y);
-                if (z * z > 1e-7 || z == 0) zstr = String.Format("{0:0.0000}", z);
-                else zstr = String.Format("{0:0.0#e+00}", z);
-                if (l * l > 1e-7 || l == 0) lstr = String.Format("{0:0.0000}", l);
-                else lstr = String.Format("{0:0.0#e+00}", l);
+                if (x * x > 1e-7 || x == 0)
+                    xstr = String.Format("{0:0.0000}", x);
+                else
+                    xstr = String.Format("{0:0.0#e+00}", x);
+                if (y * y > 1e-7 || y == 0)
+                    ystr = String.Format("{0:0.0000}", y);
+                else
+                    ystr = String.Format("{0:0.0#e+00}", y);
+                if (z * z > 1e-7 || z == 0)
+                    zstr = String.Format("{0:0.0000}", z);
+                else
+                    zstr = String.Format("{0:0.0#e+00}", z);
+                if (l * l > 1e-7 || l == 0)
+                    lstr = String.Format("{0:0.0000}", l);
+                else
+                    lstr = String.Format("{0:0.0#e+00}", l);
                 TextBlock1.Text = String.Format("({0}, {1}, {2}) {3}", xstr, ystr, zstr, lstr);
             }
         }
 
         /// <summary>
-        /// Updates the UI.
+        ///     Updates the UI.
         /// </summary>
         public override sealed void UpdateUi(Object value) {
             Value = (Vector3)value;
         }
 
         /// <summary>
-        /// Updates the variable fromt he UI.
+        ///     Updates the variable fromt he UI.
         /// </summary>
         public override sealed void UpdateVariable() {
             TreeNode.Property = Value;

@@ -13,7 +13,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Gear"/> is enabled.
+        ///     Gets or sets a value indicating whether this <see cref="Gear" /> is enabled.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
         [InspectorIgnore]
@@ -28,7 +28,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Gear"/> is visible.
+        ///     Gets or sets a value indicating whether this <see cref="Gear" /> is visible.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
         [InspectorIgnore]
@@ -52,7 +52,7 @@ namespace Gearset.Components {
         public event EventHandler<BooleanChangedEventArgs> VisibleChanged;
 
         /// <summary>
-        /// Call this method when a data-bound property changes so the UI gets notified.
+        ///     Call this method when a data-bound property changes so the UI gets notified.
         /// </summary>
         protected void OnPropertyChanged(String propertyName) {
             if (PropertyChanged != null)

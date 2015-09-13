@@ -8,18 +8,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Gearset {
     /// <summary>
-    /// Used to save data to/from a file.
+    ///     Used to save data to/from a file.
     /// </summary>
     [Obsolete("This sealed class needs redesign to be usable again", true)]
     sealed class SettingsHelper {
         /// <summary>
-        /// The place where all config values get saved.
+        ///     The place where all config values get saved.
         /// </summary>
         Dictionary<String, object> _configuration;
 
         /// <summary>
-        /// The filename of the configuration file, initialized
-        /// by default with "$username$.default.DebugConsoleConfig"
+        ///     The filename of the configuration file, initialized
+        ///     by default with "$username$.default.DebugConsoleConfig"
         /// </summary>
         public String CurrentSettingsName;
 
@@ -29,12 +29,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Sets a specified configuration value, or overwrite the current
-        /// if present.
+        ///     Sets a specified configuration value, or overwrite the current
+        ///     if present.
         /// </summary>
-        /// <param name="key">The name of the configuration value, as a rule of thumb
-        /// use the following format for keys "filename.variableName" (without
-        /// the .cs extension)</param>
+        /// <param name="key">
+        ///     The name of the configuration value, as a rule of thumb
+        ///     use the following format for keys "filename.variableName" (without
+        ///     the .cs extension)
+        /// </param>
         /// <param name="value">The value, only serializable objects should be used here.</param>
         internal void Set(String key, object value) {
             if (_configuration.ContainsKey(key)) {
@@ -46,7 +48,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Retrieves a configuratio value.
+        ///     Retrieves a configuratio value.
         /// </summary>
         /// <param name="key">The name of the configuration value</param>
         /// <param name="defaultValue">This valus is returned if the key is not found</param>
@@ -60,7 +62,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Saves the current state of the configuration.
+        ///     Saves the current state of the configuration.
         /// </summary>
         internal void Save() {
 #if WINDOWS
@@ -77,7 +79,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Loads a saved configuration
+        ///     Loads a saved configuration
         /// </summary>
         internal void Load() {
 #if WINDOWS

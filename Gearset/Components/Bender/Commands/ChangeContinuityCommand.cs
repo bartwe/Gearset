@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Changes the tangent value of a given key.
+    ///     Changes the tangent value of a given key.
     /// </summary>
     public sealed class ChangeContinuityCommand : CurveEditorCommand {
         readonly CurveContinuity newKeyContinuity;
@@ -12,7 +12,7 @@ namespace Gearset.Components.CurveEditorControl {
         CurveContinuity[] prevKeyContinuity;
 
         /// <summary>
-        /// Creates a new command to select the given keys. You can pass null to deselect all.
+        ///     Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public ChangeContinuityCommand(CurveEditorControl2 control, CurveContinuity newKeyContinuity)
             : base(control) {

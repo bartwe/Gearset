@@ -1,6 +1,6 @@
 ﻿namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Base sealed class for all curve editor commands.
+    ///     Base sealed class for all curve editor commands.
     /// </summary>
     public abstract class CurveEditorCommand : IUndoable {
         public CurveEditorCommand(CurveEditorControl2 control) {

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class ActionItem : VisualItemBase {
         public ActionItem() {

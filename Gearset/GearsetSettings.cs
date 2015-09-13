@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Gearset {
     /// <summary>
-    /// This sealed class holds the settings of Gearset.
+    ///     This sealed class holds the settings of Gearset.
     /// </summary>
     [Serializable]
     public sealed class GearsetSettings : INotifyPropertyChanged {
@@ -89,7 +89,7 @@ namespace Gearset {
         public DataSamplerConfig DataSamplerConfig { get; internal set; }
 
         /// <summary>
-        /// Actual settings.
+        ///     Actual settings.
         /// </summary>
         public static GearsetSettings Instance { get; private set; }
 
@@ -103,7 +103,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Saves the current state of the configuration.
+        ///     Saves the current state of the configuration.
         /// </summary>
         internal static void Save() {
 #if WINDOWS
@@ -125,7 +125,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Loads a saved configuration
+        ///     Loads a saved configuration
         /// </summary>
         internal static void Load() {
 #if WINDOWS

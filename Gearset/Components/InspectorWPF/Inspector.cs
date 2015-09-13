@@ -13,20 +13,20 @@ using System.Windows.Navigation;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    ///     Interaction logic for Window1.xaml
     /// </summary>
     public partial class Inspector : Window {
         /// <summary>
-        /// position where the mouse was clicked.
+        ///     position where the mouse was clicked.
         /// </summary>
         Point _downPosition;
 
         bool _isDragging;
 
         /// <summary>
-        /// If the node expansion was generated because the currently selected node
-        /// dissapeared (because we're adding private fields, for example) then this
-        /// would generate a conflict with the expansion.
+        ///     If the node expansion was generated because the currently selected node
+        ///     dissapeared (because we're adding private fields, for example) then this
+        ///     would generate a conflict with the expansion.
         /// </summary>
         internal InspectorNode NodeToExpandAfterUpdate;
 
@@ -200,7 +200,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         static DependencyObject VisualUpwardSearch<T>(DependencyObject source) {
-            while (source != null && source.GetType() != typeof(T)) source = VisualTreeHelper.GetParent(source);
+            while (source != null && source.GetType() != typeof(T))
+                source = VisualTreeHelper.GetParent(source);
             return source;
         }
 

@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class TextBox : UserControl {
         bool _isEmpty;
@@ -28,17 +28,17 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// What text to show as placeholder
+        ///     What text to show as placeholder
         /// </summary>
         public String PlaceholderText { get { return (String)GetValue(PlaceholderTextProperty); } set { SetValue(PlaceholderTextProperty, value); } }
 
         /// <summary>
-        /// Text alignment
+        ///     Text alignment
         /// </summary>
         public TextAlignment TextAlignment { get { return TextBox1.TextAlignment; } set { TextBox1.TextAlignment = value; } }
 
         /// <summary>
-        /// Text to show, if this value is empty, the palceholder will be shown instead.
+        ///     Text to show, if this value is empty, the palceholder will be shown instead.
         /// </summary>
         public String Text { get { return (String)GetValue(System.Windows.Controls.TextBox.TextProperty); } set { SetValue(System.Windows.Controls.TextBox.TextProperty, value); } }
 
@@ -81,7 +81,8 @@ namespace Gearset.Components.InspectorWPF {
         //}
 
         void TextBox1_TextChanged(object sender, TextChangedEventArgs e) {
-            if (_fakeTextChanged) return;
+            if (_fakeTextChanged)
+                return;
             if (TextBox1.Text != String.Empty) {
                 UseNormal();
             }
@@ -131,19 +132,19 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Registers a dependency property
+        ///     Registers a dependency property
         /// </summary>
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.Register("PlaceholderText", typeof(String), typeof(TextBox), new PropertyMetadata(OnPlaceholderTextChanged));
 
         /// <summary>
-        /// Registers a dependency property
+        ///     Registers a dependency property
         /// </summary>
         public static readonly DependencyProperty TextAlignmentProperty =
             DependencyProperty.Register("TextAlignment", typeof(TextAlignment), typeof(TextBox), new PropertyMetadata(OnTextAlignmentChanged));
 
         /// <summary>
-        /// Registers a dependency property
+        ///     Registers a dependency property
         /// </summary>
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(String), typeof(TextBox));

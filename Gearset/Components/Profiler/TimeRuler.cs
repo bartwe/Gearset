@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Gearset.Components.Profiler {
     public sealed class TimeRuler : UiView {
         /// <summary>
-        /// Height(in pixels) of level.
+        ///     Height(in pixels) of level.
         /// </summary>
         const int BarHeight = 8;
 
@@ -12,12 +12,12 @@ namespace Gearset.Components.Profiler {
         const int MaxSampleFrames = 1;
 
         /// <summary>
-        /// Padding(in pixels) of level.
+        ///     Padding(in pixels) of level.
         /// </summary>
         const int BarPadding = 1;
 
         /// <summary>
-        /// Delay frame count for auto display frame adjustment.
+        ///     Delay frame count for auto display frame adjustment.
         /// </summary>
         const int AutoAdjustDelay = 30;
 
@@ -34,12 +34,12 @@ namespace Gearset.Components.Profiler {
         public ProfilerConfig Config { get { return GearsetSettings.Instance.ProfilerConfig; } }
 
         /// <summary>
-        /// Gets/Set log display or no.
+        ///     Gets/Set log display or no.
         /// </summary>
         public bool ShowLog { get; set; }
 
         /// <summary>
-        /// Gets/Sets target sample frames.
+        ///     Gets/Sets target sample frames.
         /// </summary>
         public int TargetSampleFrames { get; set; }
 

@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset {
     /// <summary>
-    /// Contains some helper methods for handling text.
+    ///     Contains some helper methods for handling text.
     /// </summary>
     public static class TextHelper {
         #region DrawText
 
         /// <summary>
-        /// A Helper method to draw some text. No SpriteBatch.Begin() is
-        /// called so this must be done by the calling method.
+        ///     A Helper method to draw some text. No SpriteBatch.Begin() is
+        ///     called so this must be done by the calling method.
         /// </summary>
         static void DrawText(String text, Vector2 drawPosition) {
             var color = new Color(1, 1, 1, GearsetResources.GlobalAlpha);

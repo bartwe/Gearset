@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class CollectionMarkerItem : VisualItemBase {
         readonly List<Object> _items;

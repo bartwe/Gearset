@@ -48,7 +48,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Initializes all general pens and brushes.
+        ///     Initializes all general pens and brushes.
         /// </summary>
         void InitializeResources() {
             textBrush = new SolidColorBrush(Color.FromRgb(120, 120, 120));

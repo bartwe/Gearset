@@ -3,15 +3,15 @@ using System.Windows.Controls;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class EnumItem : VisualItemBase {
         bool _wasUpdating;
 
         /// <summary>
-        /// When the variable changes, the UpdateUI method
-        /// will trigger a SelectionChanged event which would
-        /// update the variable back (not wanted)
+        ///     When the variable changes, the UpdateUI method
+        ///     will trigger a SelectionChanged event which would
+        ///     update the variable back (not wanted)
         /// </summary>
         bool _isEventFake;
 
@@ -60,7 +60,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// When the treeNode is set, we populate the comboBox.
+        ///     When the treeNode is set, we populate the comboBox.
         /// </summary>
         public override sealed void OnTreeNodeChanged() {
             base.OnTreeNodeChanged();

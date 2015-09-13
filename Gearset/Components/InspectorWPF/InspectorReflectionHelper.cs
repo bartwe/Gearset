@@ -9,8 +9,8 @@ using System.Threading;
 namespace Gearset.Components.InspectorWPF {
     static class InspectorReflectionHelper {
         /// <summary>
-        /// Used to store the setters and getters for types we've
-        /// already generated.
+        ///     Used to store the setters and getters for types we've
+        ///     already generated.
         /// </summary>
         static readonly Dictionary<String, Dictionary<MemberInfo, SetterGetterPair>> SetterGetterCache;
 
@@ -19,14 +19,13 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Method that creates a Diccionary of methods to set/get the value of
-        /// each member of an object of the specified type. But this object only
-        /// reachable by the path specified. For example, to get the Position (Vector3)
-        /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the sealed class World which contains a
-        /// player then parameters must be: path="Player.Position.", t=Vector3.
-        /// 
-        /// This method is ~10X faster than the first one which created C# code.
+        ///     Method that creates a Diccionary of methods to set/get the value of
+        ///     each member of an object of the specified type. But this object only
+        ///     reachable by the path specified. For example, to get the Position (Vector3)
+        ///     from a player, the parameters must be: path="Position.", t=Vector3.
+        ///     If the object being ispected is the sealed class World which contains a
+        ///     player then parameters must be: path="Player.Position.", t=Vector3.
+        ///     This method is ~10X faster than the first one which created C# code.
         /// </summary>
         internal static Dictionary<MemberInfo, SetterGetterPair> GetSetterGetterDict3(InspectorNode node) {
             var nodeType = node.Type;
@@ -324,14 +323,13 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Method that creates a Diccionary of methods to set/get the value of
-        /// each member of an object of the specified type. But this object only
-        /// reachable by the path specified. For example, to get the Position (Vector3)
-        /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the sealed class World which contains a
-        /// player then parameters must be: path="Player.Position.", t=Vector3.
-        /// 
-        /// This method is ~10X faster than the previous one that creaated C# code.
+        ///     Method that creates a Diccionary of methods to set/get the value of
+        ///     each member of an object of the specified type. But this object only
+        ///     reachable by the path specified. For example, to get the Position (Vector3)
+        ///     from a player, the parameters must be: path="Position.", t=Vector3.
+        ///     If the object being ispected is the sealed class World which contains a
+        ///     player then parameters must be: path="Player.Position.", t=Vector3.
+        ///     This method is ~10X faster than the previous one that creaated C# code.
         /// </summary>
         internal static Dictionary<MemberInfo, SetterGetterPair> GetSetterGetterDict2(InspectorNode node) {
             var nodeType = node.Type;
@@ -615,15 +613,17 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Method that creates a Diccionary of methods to set/get the value of
-        /// each member of an object of the specified type. But this object only
-        /// reachable by the path specified. For example, to get the Position (Vector3)
-        /// from a player, the parameters must be: path="Position.", t=Vector3.
-        /// If the object being ispected is the sealed class World which contains a
-        /// player then parameters must be: path="Player.Position.", t=Vector3.
+        ///     Method that creates a Diccionary of methods to set/get the value of
+        ///     each member of an object of the specified type. But this object only
+        ///     reachable by the path specified. For example, to get the Position (Vector3)
+        ///     from a player, the parameters must be: path="Position.", t=Vector3.
+        ///     If the object being ispected is the sealed class World which contains a
+        ///     player then parameters must be: path="Player.Position.", t=Vector3.
         /// </summary>
-        /// <param name="path">Path to get to object of type t, including the 
-        /// name of the object itself and a point at the end.</param>
+        /// <param name="path">
+        ///     Path to get to object of type t, including the
+        ///     name of the object itself and a point at the end.
+        /// </param>
         /// <param name="o">Type of the object to get methods for.</param>
         /// <returns></returns>
         internal static Dictionary<MemberInfo, SetterGetterPair> GetSetterGetterDict(InspectorNode node) {
@@ -631,11 +631,11 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Adds all the needed assemblies to deal with a specified type.
-        /// Add references to all types needed, including generic parameters and
-        /// implemented interfaces.
-        /// We go up the hierarchy, baseType could be null if the type is 
-        /// a Interface.
+        ///     Adds all the needed assemblies to deal with a specified type.
+        ///     Add references to all types needed, including generic parameters and
+        ///     implemented interfaces.
+        ///     We go up the hierarchy, baseType could be null if the type is
+        ///     a Interface.
         /// </summary>
         static void AddReferencedAssemblies(Type t) {
             var baseType = t;
@@ -686,8 +686,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Helper sealed class to store a setter and a getter for a specified
-        /// FieldInfo in the setterGetterCache dictionary.
+        ///     Helper sealed class to store a setter and a getter for a specified
+        ///     FieldInfo in the setterGetterCache dictionary.
         /// </summary>
         internal sealed class SetterGetterPair {
             internal Setter Setter;

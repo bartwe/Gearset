@@ -4,7 +4,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class ColorItem : VisualItemBase {
         readonly SolidColorBrush _brush;

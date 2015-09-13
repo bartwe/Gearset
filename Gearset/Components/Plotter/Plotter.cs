@@ -5,11 +5,11 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.Data {
     /// <summary>
-    /// Class that takes a DataSampler and plots its values to the screen.
+    ///     Class that takes a DataSampler and plots its values to the screen.
     /// </summary>
     public sealed class Plotter : Gear {
         /// <summary>
-        /// Current plots.
+        ///     Current plots.
         /// </summary>
 #if WINDOWS
         readonly ObservableCollection<Plot> _plots;
@@ -21,13 +21,13 @@ namespace Gearset.Components.Data {
 #endif
 
         /// <summary>
-        /// Keep a reference to the last plot added so we can position the next one.
+        ///     Keep a reference to the last plot added so we can position the next one.
         /// </summary>
         Plot _lastPlotAdded;
 
         /// <summary>
-        /// If a plot is beign removed, the change of visibility to false will not
-        /// imply that the plot should be added to the hidden list.
+        ///     If a plot is beign removed, the change of visibility to false will not
+        ///     imply that the plot should be added to the hidden list.
         /// </summary>
         Plot _plotBeignRemoved;
 
@@ -35,7 +35,7 @@ namespace Gearset.Components.Data {
         readonly InternalLabeler _labels;
 
         /// <summary>
-        /// Gets or sets the config object.
+        ///     Gets or sets the config object.
         /// </summary>
         public PlotterConfig Config { get { return GearsetResources.Console.Settings.PlotterConfig; } }
 
@@ -59,8 +59,8 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Shows a plot of the sampler with the specified name if the sampler does
-        /// not exist it is created.
+        ///     Shows a plot of the sampler with the specified name if the sampler does
+        ///     not exist it is created.
         /// </summary>
         public void ShowPlot(String samplerName) {
             // Check if the plot exist already.
@@ -103,7 +103,7 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Calculates a position for a new plot.
+        ///     Calculates a position for a new plot.
         /// </summary>
         Vector2 GetNextPosition() {
             var padding = new Vector2(3, 15);
@@ -129,7 +129,8 @@ namespace Gearset.Components.Data {
                 return;
 
             foreach (var plot in _plots) {
-                if (!plot.Visible) continue;
+                if (!plot.Visible)
+                    continue;
                 var count = plot.Sampler.Values.Capacity;
                 float max, min, actualmin, actualmax;
                 var position = plot.Position;
@@ -208,8 +209,8 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Removes a plot, if ShowPlot is called again for this plot, it will be shown
-        /// again
+        ///     Removes a plot, if ShowPlot is called again for this plot, it will be shown
+        ///     again
         /// </summary>
         /// <param name="name">Name of the plot to remove.</param>
         public void RemovePlot(String name) {
@@ -228,8 +229,8 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Removes all plots, if ShowPlot is called again, plots will be shown
-        /// again.
+        ///     Removes all plots, if ShowPlot is called again, plots will be shown
+        ///     again.
         /// </summary>
         public void Clear() {
             HideAll();
@@ -237,7 +238,7 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Hides all plots, data will still be captured.
+        ///     Hides all plots, data will still be captured.
         /// </summary>
         public void HideAll() {
             foreach (var plot in _plots) {
@@ -246,7 +247,7 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Hides all plots, data will still be captured.
+        ///     Hides all plots, data will still be captured.
         /// </summary>
         public void ShowAll() {
             foreach (var plot in _plots) {
@@ -255,7 +256,7 @@ namespace Gearset.Components.Data {
         }
 
         /// <summary>
-        /// Resets the positions of all overlaid plots.
+        ///     Resets the positions of all overlaid plots.
         /// </summary>
         public void ResetPositions() {
             var plotsAux = new List<Plot>();

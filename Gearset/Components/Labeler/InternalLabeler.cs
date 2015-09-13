@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Shows labels of text in 2D positions or 3d (TODO)s unprojected positions.
+    ///     Shows labels of text in 2D positions or 3d (TODO)s unprojected positions.
     /// </summary>
     public class InternalLabeler : Gear {
         readonly Dictionary<String, Label2D> _persistent2DLabels;
@@ -29,7 +29,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Remove a persistent label if exists.
+        ///     Remove a persistent label if exists.
         /// </summary>
         public void HideLabel(String name) {
             _persistent2DLabels.Remove(name);
@@ -94,7 +94,7 @@ namespace Gearset.Components {
         #region Persistent 2D Labels
 
         /// <summary>
-        /// Shows a label in the specified position. or changes a label position.
+        ///     Shows a label in the specified position. or changes a label position.
         /// </summary>
         public void ShowLabel(String name, Vector2 position) {
             Label2D label;
@@ -108,7 +108,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Creates a label, or changes its values.
+        ///     Creates a label, or changes its values.
         /// </summary>
         public void ShowLabel(String name, Vector2 position, String text) {
             Label2D label;
@@ -123,7 +123,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Creates a label or changes its values
+        ///     Creates a label or changes its values
         /// </summary>
         public void ShowLabel(String name, Vector2 position, String text, Color color) {
             Label2D label;
@@ -143,7 +143,7 @@ namespace Gearset.Components {
         #region Persistent 3D Labels
 
         /// <summary>
-        /// Shows a label in the specified position. or changes a label position.
+        ///     Shows a label in the specified position. or changes a label position.
         /// </summary>
         public void ShowLabel(String name, Vector3 position) {
             Label3D label;
@@ -157,7 +157,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Creates a label, or changes its values.
+        ///     Creates a label, or changes its values.
         /// </summary>
         public void ShowLabel(String name, Vector3 position, String text) {
             Label3D label;
@@ -172,7 +172,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Creates a label or changes its values
+        ///     Creates a label or changes its values
         /// </summary>
         public void ShowLabel(String name, Vector3 position, String text, Color color) {
             Label3D label;

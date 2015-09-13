@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Changes the tangent value of a given key.
+    ///     Changes the tangent value of a given key.
     /// </summary>
     public sealed class ChangeTangentModeCommand : CurveEditorCommand {
         // Saved state.
@@ -14,7 +14,7 @@ namespace Gearset.Components.CurveEditorControl {
         KeyTangentMode[] _prevTangentOutMode;
 
         /// <summary>
-        /// Creates a new command to select the given keys. You can pass null to deselect all.
+        ///     Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public ChangeTangentModeCommand(CurveEditorControl2 control, KeyTangentMode? newTangentInMode, KeyTangentMode? newTangentOutMode)
             : base(control) {

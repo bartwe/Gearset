@@ -15,7 +15,7 @@ namespace Gearset {
         int _capacity;
 
         /// <summary>
-        /// When an item is dequeued it will get queued into <c>DequeueTarget</c>, if any.
+        ///     When an item is dequeued it will get queued into <c>DequeueTarget</c>, if any.
         /// </summary>
         public FixedLengthQueue<T> DequeueTarget;
 
@@ -25,13 +25,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Gets the number of items in the queue.
+        ///     Gets the number of items in the queue.
         /// </summary>
         /// <value>The count</value>
         public int Count { get { return _queue.Count; } }
 
         /// <summary>
-        /// Setting this is O(abs(Capacity - value))
+        ///     Setting this is O(abs(Capacity - value))
         /// </summary>
         public int Capacity {
             get { return _capacity; }
@@ -56,8 +56,8 @@ namespace Gearset {
 #endif
 
         /// <summary>
-        /// Enqueues the specified item. If the queue is full, the oldest item
-        /// will be droppped.
+        ///     Enqueues the specified item. If the queue is full, the oldest item
+        ///     will be droppped.
         /// </summary>
         /// <param name="item">The item.</param>
         public void Enqueue(T item) {
@@ -83,7 +83,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Dequeues the oldest item.
+        ///     Dequeues the oldest item.
         /// </summary>
         public T Dequeue() {
             var t = _queue.Dequeue();

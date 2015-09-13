@@ -14,9 +14,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Gearset.Components.InspectorWPF {
     public sealed class InspectorNode : INotifyPropertyChanged {
         /// <summary>
-        /// This list contains a list of Types that 
-        /// contain extension methods that we will call
-        /// on types.
+        ///     This list contains a list of Types that
+        ///     contain extension methods that we will call
+        ///     on types.
         /// </summary>
         public static List<Type> ExtensionMethodTypes = new List<Type>();
 
@@ -29,8 +29,8 @@ namespace Gearset.Components.InspectorWPF {
         bool _userModified;
 
         /// <summary>
-        /// The VisualItem that can Update the variable 
-        /// and Update the UI
+        ///     The VisualItem that can Update the variable
+        ///     and Update the UI
         /// </summary>
         internal VisualItemBase VisualItem;
 
@@ -47,12 +47,12 @@ namespace Gearset.Components.InspectorWPF {
         Random _random = new Random();
 
         /// <summary>
-        /// Only set for Nodes of Type Void (methods) (no getter nor setter).
+        ///     Only set for Nodes of Type Void (methods) (no getter nor setter).
         /// </summary>
         public MethodInfo Method;
 
         /// <summary>
-        /// Use this constructor to create child nodes.
+        ///     Use this constructor to create child nodes.
         /// </summary>
         /// <param name="type">The type of the field this node represets</param>
         /// <param name="name">The name of the field this node represets</param>
@@ -72,7 +72,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Use this constructor to create the root node
+        ///     Use this constructor to create the root node
         /// </summary>
         /// <param name="type">The type of the field this node represets</param>
         /// <param name="name">The name of the field this node represets</param>
@@ -92,7 +92,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// The TreeViewNode which holds this node.
+        ///     The TreeViewNode which holds this node.
         /// </summary>
         public TreeViewItem UiContainer {
             get { return _uiContainer; }
@@ -111,7 +111,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Returns the root of the tree.
+        ///     Returns the root of the tree.
         /// </summary>
         public InspectorNode Root {
             get {
@@ -123,7 +123,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// This value will only be set in the root node.
+        ///     This value will only be set in the root node.
         /// </summary>
         internal Object RootTarget {
             get { return _rootTarget; }
@@ -134,14 +134,14 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Returns true if the node is an ExtraNode, that means that it does not correspond 
-        /// to any field or property of the parent but is added as an extra control to better
-        /// manipulate the parent.
+        ///     Returns true if the node is an ExtraNode, that means that it does not correspond
+        ///     to any field or property of the parent but is added as an extra control to better
+        ///     manipulate the parent.
         /// </summary>
         public bool IsExtraNode { get; private set; }
 
         /// <summary>
-        /// Will turn true when the user modify this property through the UI.
+        ///     Will turn true when the user modify this property through the UI.
         /// </summary>
         public bool UserModified {
             get { return _userModified; }
@@ -152,38 +152,40 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// If true, the UI will be updated every frame to reflect
-        /// the node value.
+        ///     If true, the UI will be updated every frame to reflect
+        ///     the node value.
         /// </summary>
         public bool Updating {
             get { return _updating; }
             set {
                 _updating = value;
-                if (_updating) Force = false;
+                if (_updating)
+                    Force = false;
                 OnPropertyChanged("Updating");
             }
         }
 
         /// <summary>
-        /// If true, the value set in the UI will be set to
-        /// this node every frame.
+        ///     If true, the value set in the UI will be set to
+        ///     this node every frame.
         /// </summary>
         public bool Force {
             get { return _force; }
             set {
                 _force = value;
-                if (_force) Updating = false;
+                if (_force)
+                    Updating = false;
                 OnPropertyChanged("Force");
             }
         }
 
         /// <summary>
-        /// If false, the "Cant write" icon won't be showed. This property is to be binded by WPF.
+        ///     If false, the "Cant write" icon won't be showed. This property is to be binded by WPF.
         /// </summary>
         public bool ShowCantWriteIcon { get { return !_hideCantWriteIcon && (!CanWrite); } }
 
         /// <summary>
-        /// Gets or sets whether the private children of this node are shown or not.
+        ///     Gets or sets whether the private children of this node are shown or not.
         /// </summary>
         public bool IsShowingPrivate {
             get { return _isShowingPrivate; }
@@ -197,8 +199,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// The target object (always represented by the root of the tree)
-        /// so it is looked up recursively.
+        ///     The target object (always represented by the root of the tree)
+        ///     so it is looked up recursively.
         /// </summary>
         public Object Target {
             get {
@@ -211,17 +213,17 @@ namespace Gearset.Components.InspectorWPF {
         public InspectorNode Parent { get; private set; }
 
         /// <summary>
-        /// Used to reference this node in XAML
+        ///     Used to reference this node in XAML
         /// </summary>
         public InspectorNode Itself { get { return this; } }
 
         /// <summary>
-        /// The name of the field this node represents.
+        ///     The name of the field this node represents.
         /// </summary>
         public String Name { get; private set; }
 
         /// <summary>
-        /// Name of this node shown in Inspector tree.
+        ///     Name of this node shown in Inspector tree.
         /// </summary>
         public String FriendlyName {
             get {
@@ -236,7 +238,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// The type of the field this node represents.
+        ///     The type of the field this node represents.
         /// </summary>
         public Type Type {
             get { return _type; }
@@ -247,13 +249,13 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// A list that contains nodes that represent the
-        /// fields of the object represented by this node.
+        ///     A list that contains nodes that represent the
+        ///     fields of the object represented by this node.
         /// </summary>
         public ObservableCollection<InspectorNode> Children { get; private set; }
 
         /// <summary>
-        /// The children as must be viewed by the UI layer.
+        ///     The children as must be viewed by the UI layer.
         /// </summary>
         public CollectionViewSource ChildrenView {
             get { return _childrenView; }
@@ -264,31 +266,31 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// A list that contains methods available for this object.
-        /// TODO: a global Dictionary(Type, List(Method)) might be better.
+        ///     A list that contains methods available for this object.
+        ///     TODO: a global Dictionary(Type, List(Method)) might be better.
         /// </summary>
         public ICollection<InspectorNode> Methods { get; private set; }
 
         /// <summary>
-        /// True if the value this node represents can be set.
+        ///     True if the value this node represents can be set.
         /// </summary>
         public bool CanWrite { get { return Parent == null ? true : _setter != null; } }
 
         /// <summary>
-        /// True if the value this node represents can be get.
+        ///     True if the value this node represents can be get.
         /// </summary>
         public bool CanRead { get { return Parent == null ? true : _getter != null; } }
 
         /// <summary>
-        /// True if this node represents a property, otherwise
-        /// it represents a field. We store this information
-        /// in order to know when a ValueType is encapsulated 
-        /// so we should instanciate it.
+        ///     True if this node represents a property, otherwise
+        ///     it represents a field. We store this information
+        ///     in order to know when a ValueType is encapsulated
+        ///     so we should instanciate it.
         /// </summary>
         public bool IsProperty { get; set; }
 
         /// <summary>
-        /// Gets whether this node is declared private inside its parent.
+        ///     Gets whether this node is declared private inside its parent.
         /// </summary>
         public bool IsPrivate {
             get { return _isPrivate; }
@@ -299,20 +301,20 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// True if Parent equals null.
+        ///     True if Parent equals null.
         /// </summary>
         public bool IsRoot { get { return Parent == null; } }
 
         /// <summary>
-        /// True for nodes that will be auto-expanded when the UI
-        /// for it is generated. Setting this value will only have
-        /// effect if the UI hasn't been created.
+        ///     True for nodes that will be auto-expanded when the UI
+        ///     for it is generated. Setting this value will only have
+        ///     effect if the UI hasn't been created.
         /// </summary>
         public bool AutoExpand { get; internal set; }
 
         /// <summary>
-        /// The object this node represents.
-        /// This will produce boxing/unboxing.
+        ///     The object this node represents.
+        ///     This will produce boxing/unboxing.
         /// </summary>
         public Object Property {
             set {
@@ -358,7 +360,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// So we can notify when a bound property changes.
+        ///     So we can notify when a bound property changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -367,7 +369,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Fills the list of Children with nodes.
+        ///     Fills the list of Children with nodes.
         /// </summary>
         /// <param name="force">if set to <c>true</c> the children, if any, will be deleted and the node reexpanded.</param>
         public void Expand(bool force, bool includePrivate) {
@@ -576,8 +578,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Get the TreeViewItems (containers) and let the InspectorTreeNodes
-        /// know where they are.
+        ///     Get the TreeViewItems (containers) and let the InspectorTreeNodes
+        ///     know where they are.
         /// </summary>
         void ItemContainerGenerator_StatusChanged(object sender, EventArgs e) {
             if (UiContainer.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated) {
@@ -596,11 +598,12 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Returns the path that leads to this node from the
-        /// Target object with and added point at the end.
+        ///     Returns the path that leads to this node from the
+        ///     Target object with and added point at the end.
         /// </summary>
         internal String GetPath() {
-            if (Parent == null) return Name;
+            if (Parent == null)
+                return Name;
             return Parent.GetPath() + "." + Name;
         }
 
@@ -609,7 +612,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Method to rise the event.
+        ///     Method to rise the event.
         /// </summary>
         void OnPropertyChanged(string name) {
             var handler = PropertyChanged;
@@ -619,8 +622,8 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Calls the update callback so the UI can get updated
-        /// and recursively call Update on it's children.
+        ///     Calls the update callback so the UI can get updated
+        ///     and recursively call Update on it's children.
         /// </summary>
         public void Update() {
             if (UiContainer == null)

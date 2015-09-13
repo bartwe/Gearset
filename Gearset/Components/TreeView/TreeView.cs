@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Displays a hierarchy of values that need to be traced.
+    ///     Displays a hierarchy of values that need to be traced.
     /// </summary>
     public sealed class TreeView : Gear {
         readonly TreeViewNode _root;
@@ -23,8 +23,8 @@ namespace Gearset.Components {
         #region Set
 
         /// <summary>
-        /// Sets the value of a specified key, if the key is not present
-        /// in the tree, then is added.
+        ///     Sets the value of a specified key, if the key is not present
+        ///     in the tree, then is added.
         /// </summary>
         /// <param name="key"></param>
         public void Set(String key, Object value) {
@@ -141,7 +141,8 @@ namespace Gearset.Components {
 
         public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a spriteBatch pass
-            if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass) return;
+            if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass)
+                return;
 
             var position = 20;
             foreach (var node in _root.Nodes) {

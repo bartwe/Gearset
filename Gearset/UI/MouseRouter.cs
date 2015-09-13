@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Gearset.UI {
     /// <summary>
-    /// Routes the mouse events in to the appopiate box in the box list.
+    ///     Routes the mouse events in to the appopiate box in the box list.
     /// </summary>
     public sealed class MouseRouter {
         //private UIManager parent;
@@ -26,12 +26,12 @@ namespace Gearset.UI {
         bool HaveFocus { get { return true; } } // return parent.Game.IsActive; } }
 
         /// <summary>
-        /// True if the mouse was just pressed, last one frame true.
+        ///     True if the mouse was just pressed, last one frame true.
         /// </summary>
         public bool IsLeftJustDown { get { return (_state.LeftButton == ButtonState.Pressed && _prevState.LeftButton == ButtonState.Released && HaveFocus); } }
 
         /// <summary>
-        /// True if the mouse was just released, last one frame true.
+        ///     True if the mouse was just released, last one frame true.
         /// </summary>
         public bool IsLeftJustUp { get { return (_state.LeftButton == ButtonState.Released && _prevState.LeftButton == ButtonState.Pressed && HaveFocus); } }
 
@@ -47,7 +47,7 @@ namespace Gearset.UI {
                 foreach (var item in _downCollidingSet)
                     item.RaiseMouseDown(item.WorldToLocal(position));
             }
-            // Check mouse up, click.
+                // Check mouse up, click.
             else if (IsLeftJustUp) {
                 FindCollidingBoxes(_upCollidingSet, position);
                 foreach (var item in _upCollidingSet) {

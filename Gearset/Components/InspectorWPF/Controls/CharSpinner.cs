@@ -4,11 +4,11 @@ using System.Windows.Input;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class CharSpinner : VisualItemBase {
         /// <summary>
-        /// The real char value.
+        ///     The real char value.
         /// </summary>
         char _charValue;
 

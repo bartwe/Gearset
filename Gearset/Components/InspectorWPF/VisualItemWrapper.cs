@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Holds items
+    ///     Holds items
     /// </summary>
     public partial class VisualItemWrapper : UserControl {
         VisualItemBase _visualItem;
@@ -29,19 +29,19 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// The InspectorTreeNode that this control affetcs.
+        ///     The InspectorTreeNode that this control affetcs.
         /// </summary>
         public String Text { get { return (String)GetValue(TextProperty); } set { SetValue(TextProperty, value); } }
 
         /// <summary>
-        /// Calls the handler that updates the textBlock with the new value.
+        ///     Calls the handler that updates the textBlock with the new value.
         /// </summary>
         public static void TextChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             ((VisualItemWrapper)d).UpdateText((string)e.NewValue);
         }
 
         /// <summary>
-        /// Updates the textBlock with the new value.
+        ///     Updates the textBlock with the new value.
         /// </summary>
         void UpdateText(String text) {
             TextBlock1.Text = text;
@@ -87,7 +87,7 @@ namespace Gearset.Components.InspectorWPF {
         #endregion
 
         /// <summary>
-        /// Registers a dependency property
+        ///     Registers a dependency property
         /// </summary>
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(String), typeof(VisualItemWrapper),

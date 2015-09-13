@@ -1,52 +1,42 @@
-﻿//-----------------------------------------------------------------------------
-// StringBuilderExtensions.cs
-//
-// Microsoft XNA Community Game Platform
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text;
 
 namespace Gearset.Profiler.Extensions {
     /// <summary>
-    /// Static sealed class for string builder extension methods.
+    ///     Static sealed class for string builder extension methods.
     /// </summary>
     /// <remarks>
-    /// You can specified StringBuilder for SpriteFont.DrawString from XNA GS 3.0. And you can save unwanted memory allocations.
-    /// 
-    /// But there are still problems for adding numerical value to StringBuilder. One of them is boxing occurred when you use 
-    /// StringBuilder.AppendFormat method. Another issue is memory allocation occurred when you specify int or float for
-    /// StringBuild.Append method.
-    /// 
-    /// This sealed class provides solution for those issue.
-    /// 
-    /// All methods are defined as extension methods as StringBuilder. So, you can use those method like below.
-    /// 
-    /// stringBuilder.AppendNumber(12345);
-    /// 
+    ///     You can specified StringBuilder for SpriteFont.DrawString from XNA GS 3.0. And you can save unwanted memory
+    ///     allocations.
+    ///     But there are still problems for adding numerical value to StringBuilder. One of them is boxing occurred when you
+    ///     use
+    ///     StringBuilder.AppendFormat method. Another issue is memory allocation occurred when you specify int or float for
+    ///     StringBuild.Append method.
+    ///     This sealed class provides solution for those issue.
+    ///     All methods are defined as extension methods as StringBuilder. So, you can use those method like below.
+    ///     stringBuilder.AppendNumber(12345);
     /// </remarks>
     public static class StringBuilderExtensions {
         /// <summary>
-        /// Cache for NumberGroupSizes of NumberFormat class.
+        ///     Cache for NumberGroupSizes of NumberFormat class.
         /// </summary>
         static readonly int[] NumberGroupSizes = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes;
 
         /// <summary>
-        /// string buffer.
+        ///     string buffer.
         /// </summary>
         static readonly char[] NumberString = new char[32];
 
         /// <summary>
-        /// Convert integer to string and add to string builder.
+        ///     Convert integer to string and add to string builder.
         /// </summary>
         public static void AppendNumber(this StringBuilder builder, int number) {
             AppendNumberInternal(builder, number, 0, AppendNumberOptions.None);
         }
 
         /// <summary>
-        /// Convert integer to string and add to string builder.
+        ///     Convert integer to string and add to string builder.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="number"></param>
@@ -56,7 +46,7 @@ namespace Gearset.Profiler.Extensions {
         }
 
         /// <summary>
-        /// Convert float to string and add to string builder.
+        ///     Convert float to string and add to string builder.
         /// </summary>
         /// <remarks>It shows 2 decimal digits.</remarks>
         public static void AppendNumber(this StringBuilder builder, float number) {
@@ -64,7 +54,7 @@ namespace Gearset.Profiler.Extensions {
         }
 
         /// <summary>
-        /// Convert float to string and add to string builder.
+        ///     Convert float to string and add to string builder.
         /// </summary>
         /// <remarks>It shows 2 decimal digits.</remarks>
         public static void AppendNumber(this StringBuilder builder, float number, AppendNumberOptions options) {
@@ -72,7 +62,7 @@ namespace Gearset.Profiler.Extensions {
         }
 
         /// <summary>
-        /// Convert float to string and add to string builder.
+        ///     Convert float to string and add to string builder.
         /// </summary>
         public static void AppendNumber(this StringBuilder builder, float number, int decimalCount, AppendNumberOptions options) {
             // Handle NaN, Infinity cases.

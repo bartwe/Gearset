@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Widget that is shown above the Game's titlebar.
+    ///     Widget that is shown above the Game's titlebar.
     /// </summary>
     public partial class WidgetWindow : Window {
         public WidgetWindow() {

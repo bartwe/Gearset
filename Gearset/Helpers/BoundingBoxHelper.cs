@@ -56,14 +56,14 @@ namespace Gearset {
         #region Draw
 
         /// <summary>
-        /// Draws White a specified Bounding Box.
+        ///     Draws White a specified Bounding Box.
         /// </summary>
         public static void DrawBoundingBox(BoundingBox box) {
             DrawBoundingBox(box, Color.White);
         }
 
         /// <summary>
-        /// Draws with the specified color, the specified BBox.
+        ///     Draws with the specified color, the specified BBox.
         /// </summary>
         public static void DrawBoundingBox(BoundingBox box, Color color) {
             InitializeVertices(box, color);

@@ -5,8 +5,8 @@ using System.Diagnostics;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// A collection of Curve Wrappers. It can be accessed as a dictionary
-    /// using the [] semantic either by name or index.
+    ///     A collection of Curve Wrappers. It can be accessed as a dictionary
+    ///     using the [] semantic either by name or index.
     /// </summary>
     public sealed class CurveWrapperCollection : ICollection<CurveWrapper> {
         readonly Dictionary<long, CurveWrapper> _curves;

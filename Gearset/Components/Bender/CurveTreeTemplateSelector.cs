@@ -8,7 +8,7 @@ namespace Gearset.Components {
         static readonly Dictionary<Type, CachedTemplate> TypeTemplateMap;
 
         /// <summary>
-        /// Static constructor
+        ///     Static constructor
         /// </summary>
         static CurveTreeTemplateSelector() {
             TypeTemplateMap = new Dictionary<Type, CachedTemplate>();

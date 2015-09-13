@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Wpf.Behaviours {
     /// <summary>
-    /// Static sealed class used to attach to wpf control
+    ///     Static sealed class used to attach to wpf control
     /// </summary>
     public static class GridViewColumnResize {
         public static string GetWidth(DependencyObject obj) {
@@ -35,7 +35,7 @@ namespace Wpf.Behaviours {
         #region Nested type: GridViewColumnResizeBehavior
 
         /// <summary>
-        /// GridViewColumn sealed class that gets attached to the GridViewColumn control
+        ///     GridViewColumn sealed class that gets attached to the GridViewColumn control
         /// </summary>
         public sealed class GridViewColumnResizeBehavior {
             readonly GridViewColumn _element;
@@ -65,7 +65,8 @@ namespace Wpf.Behaviours {
 
             public double Mulitplier {
                 get {
-                    if (Width == "*" || Width == "1*") return 1;
+                    if (Width == "*" || Width == "1*")
+                        return 1;
                     if (Width.EndsWith("*")) {
                         double perc;
                         if (double.TryParse(Width.Substring(0, Width.Length - 1), out perc)) {
@@ -92,7 +93,7 @@ namespace Wpf.Behaviours {
         #region Nested type: ListViewResizeBehavior
 
         /// <summary>
-        /// ListViewResizeBehavior sealed class that gets attached to the ListView control
+        ///     ListViewResizeBehavior sealed class that gets attached to the ListView control
         /// </summary>
         public sealed class ListViewResizeBehavior {
             const int Margin = 25;
@@ -102,7 +103,8 @@ namespace Wpf.Behaviours {
             readonly Timer _timer;
 
             public ListViewResizeBehavior(ListView element) {
-                if (element == null) throw new ArgumentNullException("element");
+                if (element == null)
+                    throw new ArgumentNullException("element");
                 _element = element;
                 element.Loaded += OnLoaded;
 

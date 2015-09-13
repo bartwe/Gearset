@@ -5,14 +5,14 @@ using Point = System.Windows.Point;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Wraps a CurveKey, giving it an ID and a reference to it's owner curve.
+    ///     Wraps a CurveKey, giving it an ID and a reference to it's owner curve.
     /// </summary>
     public sealed class KeyWrapper {
         public static long LatestId;
         CurveKey _key;
 
         /// <summary>
-        /// Initializes a KeyWrapper
+        ///     Initializes a KeyWrapper
         /// </summary>
         /// <param name="curveKey">The key to wrap</param>
         /// <param name="curve">The curve that owns curveKey</param>
@@ -29,7 +29,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Wrapped CurveKey instance.
+        ///     Wrapped CurveKey instance.
         /// </summary>
         public CurveKey Key {
             get { return _key; }
@@ -42,34 +42,34 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// The curve where the wrapped CurveKey belongs.
+        ///     The curve where the wrapped CurveKey belongs.
         /// </summary>
         public CurveWrapper Curve { get; internal set; }
 
         /// <summary>
-        /// Id of the curve, this is used by undo commands to reference
-        /// a modification to the wrapped key.
+        ///     Id of the curve, this is used by undo commands to reference
+        ///     a modification to the wrapped key.
         /// </summary>
         public long Id { get; internal set; }
 
         /// <summary>
-        /// Determines whether this key is selected or not.
+        ///     Determines whether this key is selected or not.
         /// </summary>
         public bool IsSelected { get; set; }
 
         /// <summary>
-        /// Determines the way the in tangent is handled.
+        ///     Determines the way the in tangent is handled.
         /// </summary>
         public KeyTangentMode TangentInMode { get; set; }
 
         /// <summary>
-        /// Determines the way the out Tangent is handled.
+        ///     Determines the way the out Tangent is handled.
         /// </summary>
         public KeyTangentMode TangentOutMode { get; set; }
 
         /// <summary>
-        /// Moves the key by the given offset. It will actually remove the old key
-        /// from the curve and add a new offseted curve.
+        ///     Moves the key by the given offset. It will actually remove the old key
+        ///     from the curve and add a new offseted curve.
         /// </summary>
         public void MoveKey(float positionOffset, float valueOffset) {
             // Copy the old key with offseted values.
@@ -85,8 +85,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Computes the tangent of this key (if set to some automatic mode). It will also
-        /// recomute the tangents of adjacent keys if they're also auto.
+        ///     Computes the tangent of this key (if set to some automatic mode). It will also
+        ///     recomute the tangents of adjacent keys if they're also auto.
         /// </summary>
         public void ComputeTangentIfAuto() {
             if (IsTangentModeAuto(TangentInMode) || IsTangentModeAuto(TangentOutMode)) {
@@ -111,15 +111,15 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Returns true if the passed KeyTangentMode is automatically, i.e. it is
-        /// supposed to be calculated everytime the key is moved.
+        ///     Returns true if the passed KeyTangentMode is automatically, i.e. it is
+        ///     supposed to be calculated everytime the key is moved.
         /// </summary>
         public bool IsTangentModeAuto(KeyTangentMode tangentMode) {
             return tangentMode == KeyTangentMode.Smooth || tangentMode == KeyTangentMode.Linear || tangentMode == KeyTangentMode.Flat;
         }
 
         /// <summary>
-        /// Returns the position of the key in curve coords.
+        ///     Returns the position of the key in curve coords.
         /// </summary>
         /// <param name="control"></param>
         public Point GetPosition() {
@@ -128,7 +128,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Gets the positions of the tangent handles in screen coords.
+        ///     Gets the positions of the tangent handles in screen coords.
         /// </summary>
         public void GetTangentHandleScreenPositions(out Point inHandle, out Point outHandle) {
             float distancePrev, distanceNext;
@@ -174,8 +174,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Get distance between given index key position and previous/next key. Based
-        /// on XNA's curve editor method.
+        ///     Get distance between given index key position and previous/next key. Based
+        ///     on XNA's curve editor method.
         /// </summary>
         public void GetPrevAndNextDistance(out float prev, out float next) {
             prev = next = 1;

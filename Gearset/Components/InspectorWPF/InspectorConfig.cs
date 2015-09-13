@@ -29,10 +29,12 @@ namespace Gearset.Components {
         public String SearchText {
             get { return _searchText; }
             set {
-                if (value == null) return;
+                if (value == null)
+                    return;
                 _searchText = value;
                 OnPropertyChanged("SearchText");
-                if (SearchTextChanged != null) SearchTextChanged(this, EventArgs.Empty);
+                if (SearchTextChanged != null)
+                    SearchTextChanged(this, EventArgs.Empty);
             }
         }
 
@@ -41,7 +43,8 @@ namespace Gearset.Components {
             get { return _modifiedOnly; }
             set {
                 _modifiedOnly = value;
-                if (ModifiedOnlyChanged != null) ModifiedOnlyChanged(this, EventArgs.Empty);
+                if (ModifiedOnlyChanged != null)
+                    ModifiedOnlyChanged(this, EventArgs.Empty);
             }
         }
 

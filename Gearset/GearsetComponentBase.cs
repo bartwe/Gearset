@@ -2,7 +2,7 @@
 
 namespace Gearset {
     /// <summary>
-    /// Base sealed class for Gearset game components.
+    ///     Base sealed class for Gearset game components.
     /// </summary>
     public class GearsetComponentBase : DrawableGameComponent {
         public GearsetComponentBase(Game game)

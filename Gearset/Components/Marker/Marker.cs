@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Places marks on 3D space with labels on 2D space
+    ///     Places marks on 3D space with labels on 2D space
     /// </summary>
     public sealed class Marker : Gear {
         readonly Dictionary<String, DebugMark> _markTable = new Dictionary<String, DebugMark>();
@@ -48,7 +48,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// ScreenSpace Mark.
+        ///     ScreenSpace Mark.
         /// </summary>
         public void ShowMark(String key, Vector2 screenPosition, Color color) {
             var position = new Vector3(screenPosition, 0);
@@ -59,7 +59,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// ScreenSpace Mark.
+        ///     ScreenSpace Mark.
         /// </summary>
         public void ShowMark(String key, Vector2 screenPosition) {
             var position = new Vector3(screenPosition, 0);
@@ -127,7 +127,8 @@ namespace Gearset.Components {
             // Draw the marks.
             foreach (var m in _markTable) {
                 var mark = m.Value;
-                if (mark.ScreenSpace) continue;
+                if (mark.ScreenSpace)
+                    continue;
                 switch (m.Value.Type) {
                     case MarkType.Cross:
                         GearsetResources.Device.DrawUserPrimitives(PrimitiveType.LineList, m.Value.Mark, 0, 3);
@@ -141,14 +142,16 @@ namespace Gearset.Components {
             foreach (var m in _markTable) {
                 var mark = m.Value;
                 if (mark.ScreenSpace) {
-                    if (mark.ScreenSpace == false) continue;
+                    if (mark.ScreenSpace == false)
+                        continue;
                     _spriteBatch.Draw(_markTexture, mark.ScreenSpacePosition - new Vector2((int)(_markTexture.Width * .5f), (int)(_markTexture.Height * .5f)), mark.Color);
                     _spriteBatch.Draw(mark.Label, mark.ScreenSpacePosition + new Vector2((int)(_markTexture.Width * .5f), 0), Color.White);
                 }
                 else {
                     var texture = mark.Label;
                     var position = Vector3.Transform(mark.Mark[0].Position, Matrix.Identity * (GearsetResources.View * GearsetResources.Projection));
-                    if (position.Z < 0) continue;
+                    if (position.Z < 0)
+                        continue;
                     var dest = new Rectangle((int)(((position.X / position.Z + 1) / 2) * GearsetResources.Device.Viewport.Width),
                         (int)(((-position.Y / position.Z + 1) / 2) * GearsetResources.Device.Viewport.Height),
                         texture.Width,

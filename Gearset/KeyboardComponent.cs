@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Gearset.Components {
     /// <summary>
-    /// This is a game component that implements IUpdateable.
+    ///     This is a game component that implements IUpdateable.
     /// </summary>
     public sealed class KeyboardComponent : Gear {
         KeyboardState _prevState;
@@ -13,7 +13,7 @@ namespace Gearset.Components {
             : base(new GearConfig()) {}
 
         /// <summary>
-        /// Gets the current state of the keyboard.
+        ///     Gets the current state of the keyboard.
         /// </summary>
         public KeyboardState State { get { return _state; } }
 

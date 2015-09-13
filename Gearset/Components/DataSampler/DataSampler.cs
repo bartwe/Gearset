@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Keeps the history of a function.
+    ///     Keeps the history of a function.
     /// </summary>
     public sealed class DataSampler {
         public FixedLengthQueue<float> Values;
@@ -50,7 +50,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Takes a sample from the bound function.
+        ///     Takes a sample from the bound function.
         /// </summary>
         public void TakeSample() {
             if (Function != null)
@@ -58,8 +58,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Inserts a sample. This method must be used with samplers that are
-        /// not bound to a function.
+        ///     Inserts a sample. This method must be used with samplers that are
+        ///     not bound to a function.
         /// </summary>
         /// <param name="value"></param>
         public void InsertSample(float value) {

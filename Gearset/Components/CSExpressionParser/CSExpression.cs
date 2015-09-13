@@ -8,28 +8,28 @@ namespace Gearset.Components.CSExpressionParser {
         readonly ListDictionary _parameters;
 
         /// <summary>
-        /// Delegate to evaluate expression without using MethodInfo.Invoke.
+        ///     Delegate to evaluate expression without using MethodInfo.Invoke.
         /// </summary>
         ExpressionDelegate _expressionMethod;
 
         String _expression = String.Empty;
 
         /// <summary>
-        /// Construct a new CSExpression that returns default(T).
-        /// Add parameters the this expression before changing the
-        /// Expression, otherwise it will be invalid.
+        ///     Construct a new CSExpression that returns default(T).
+        ///     Add parameters the this expression before changing the
+        ///     Expression, otherwise it will be invalid.
         /// </summary>
         public CsExpression() {
             _parameters = new ListDictionary();
         }
 
         /// <summary>
-        /// Evaluates the expression and return its value.
+        ///     Evaluates the expression and return its value.
         /// </summary>
         public T Value { get { return Evaluate(); } }
 
         /// <summary>
-        /// A c# expression that can be evaluated and return a value of type T.
+        ///     A c# expression that can be evaluated and return a value of type T.
         /// </summary>
         public String Expression { get { return _expression; } set { OnExpressionChanged(value); } }
 
@@ -67,7 +67,7 @@ namespace Gearset.Components.CSExpressionParser {
         }
 
         /// <summary>
-        /// Evaluates the expression if any, else return de default <c>T</c>.
+        ///     Evaluates the expression if any, else return de default <c>T</c>.
         /// </summary>
         /// <returns></returns>
         T Evaluate() {
@@ -77,7 +77,7 @@ namespace Gearset.Components.CSExpressionParser {
         }
 
         /// <summary>
-        /// Sets a parameter that will be used in the expression.
+        ///     Sets a parameter that will be used in the expression.
         /// </summary>
         public void SetParameter(String name, Object value) {
             if (name.Contains(" ")) {

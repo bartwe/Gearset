@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// ViewModel sealed class used to bind WPF controls to CurveEditorControl properties
-    /// and methods.
+    ///     ViewModel sealed class used to bind WPF controls to CurveEditorControl properties
+    ///     and methods.
     /// </summary>
     public sealed class CurveEditorControlsViewModel : INotifyPropertyChanged {
         public CurveEditorControlsViewModel(CurveEditorControl2 control) {
@@ -19,7 +19,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Gets the control associated with this view-model.
+        ///     Gets the control associated with this view-model.
         /// </summary>
         public CurveEditorControl2 Control { get; private set; }
 

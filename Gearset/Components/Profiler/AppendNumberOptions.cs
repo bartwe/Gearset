@@ -2,7 +2,7 @@ using System;
 
 namespace Gearset.Profiler.Extensions {
     /// <summary>
-    /// Options for StringBuilder extension methods.
+    ///     Options for StringBuilder extension methods.
     /// </summary>
     [Flags]
     public enum AppendNumberOptions {

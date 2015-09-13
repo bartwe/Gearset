@@ -11,12 +11,12 @@ namespace Gearset {
         static readonly List<String> UsingNamespaces;
 
         /// <summary>
-        /// The provider used to compile C# Code.
+        ///     The provider used to compile C# Code.
         /// </summary>
         public static CodeDomProvider CodeProvider;
 
         /// <summary>
-        /// The parameters to be passed to the compiler.
+        ///     The parameters to be passed to the compiler.
         /// </summary>
         public static CompilerParameters CompilerParameters;
 
@@ -89,7 +89,7 @@ namespace Gearset {
         #region Compile C# Method
 
         /// <summary>
-        /// Creates a C# Method that can be called from the specified code
+        ///     Creates a C# Method that can be called from the specified code
         /// </summary>
         /// <param name="code"></param>
         /// <param name="returnType">Set it to null if the method should return void.</param>
@@ -135,8 +135,8 @@ namespace Gearset {
 
 
         /// <summary>
-        /// This method is not intended as a generic way to compile CSHARP
-        /// code, it is highly coupled with the InspectorManager.
+        ///     This method is not intended as a generic way to compile CSHARP
+        ///     code, it is highly coupled with the InspectorManager.
         /// </summary>
         /// <param name="codes"></param>
         /// <param name="returnTypes"></param>
@@ -215,19 +215,19 @@ namespace Gearset {
         #region Run C# Line
 
         /// <summary>
-        /// Compiles and run the passed C# Code without returning results. 
-        /// Parameters can be accesed using the notation "(type)p[i]" where 
-        /// type is the Type of the passed parameter in the i direction. We
-        /// tryied to make this method with a generic parameter so it wouldn't 
-        /// generate garbage when dealing with Value Types, but the Invoke method 
-        /// will return an Object and garbage would have been still generated.
+        ///     Compiles and run the passed C# Code without returning results.
+        ///     Parameters can be accesed using the notation "(type)p[i]" where
+        ///     type is the Type of the passed parameter in the i direction. We
+        ///     tryied to make this method with a generic parameter so it wouldn't
+        ///     generate garbage when dealing with Value Types, but the Invoke method
+        ///     will return an Object and garbage would have been still generated.
         /// </summary>
         public static void RunCSharpLine(String line, params Object[] parameters) {
             CompileCSharpMethod(line, null).Invoke(null, new Object[] { parameters });
         }
 
         /// <summary>
-        /// Compiles and run the passed C# Code. Returns the value of the line.
+        ///     Compiles and run the passed C# Code. Returns the value of the line.
         /// </summary>
         public static Object RunCSharpLineAndReturnValue(String line, params Object[] parameters) {
             return CompileCSharpMethod(line, typeof(Object)).Invoke(null, new Object[] { parameters });

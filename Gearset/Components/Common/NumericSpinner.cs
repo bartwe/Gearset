@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Interaction logic for the NumericSpinner control
+    ///     Interaction logic for the NumericSpinner control
     /// </summary>
     public partial class NumericSpinner : UserControl {
         Point _downPosition;
@@ -13,10 +13,10 @@ namespace Gearset.Components {
         Object _mouseDownValue = 0f;
 
         /// <summary>
-        /// Defines the state of the spinner, if IsEditing 
-        /// is because the user is currently editing the value
-        /// so the Updating value of the TreeNode will be set 
-        /// to false until the control loses focus.
+        ///     Defines the state of the spinner, if IsEditing
+        ///     is because the user is currently editing the value
+        ///     so the Updating value of the TreeNode will be set
+        ///     to false until the control loses focus.
         /// </summary>
         public bool IsEditing;
 
@@ -135,29 +135,29 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// What type of numeric value will this spinner handle
+        ///     What type of numeric value will this spinner handle
         /// </summary>
         public static readonly DependencyProperty ModeProperty =
             DependencyProperty.Register("Mode", typeof(NumericSpinnerMode), typeof(NumericSpinner),
                 new FrameworkPropertyMetadata(NumericSpinnerMode.Float, FrameworkPropertyMetadataOptions.AffectsRender, OnModeChanged));
 
         /// <summary>
-        /// The numeric value held by this spinner. It must be unboxed
-        /// to the type defined by the spinner mode.
+        ///     The numeric value held by this spinner. It must be unboxed
+        ///     to the type defined by the spinner mode.
         /// </summary>
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(Object), typeof(NumericSpinner), new PropertyMetadata(0f, ValueChangedCallback));
 
         /// <summary>
-        /// Determines whether the spinner should be blank instead of 
-        /// showing a "NaN" value.
+        ///     Determines whether the spinner should be blank instead of
+        ///     showing a "NaN" value.
         /// </summary>
         public static readonly DependencyProperty ShowNaNProperty =
             DependencyProperty.Register("ShowNaN", typeof(bool), typeof(NumericSpinner), new PropertyMetadata(true, ValueChangedCallback));
 
         /// <summary>
-        /// Defines a way to move the focus out of the
-        /// textbox when enter is pressed.
+        ///     Defines a way to move the focus out of the
+        ///     textbox when enter is pressed.
         /// </summary>
         protected static readonly TraversalRequest TraversalRequest = new TraversalRequest(FocusNavigationDirection.Next);
 

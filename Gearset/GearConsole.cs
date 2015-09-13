@@ -29,39 +29,38 @@ using System.Net;
 
 namespace Gearset {
     /// <summary>
-    /// This is the main Gearset class. Provides wrapper methods for
-    /// easily accessing the its components functionality.
+    ///     This is the main Gearset class. Provides wrapper methods for
+    ///     easily accessing the its components functionality.
     /// </summary>
     /// <remarks>
-    /// Create a single instance of this sealed class in your game
-    /// and keep it in a static variable you can reach with ease.
-    /// (i.e Util.Console).
-    /// 
-    /// For 3D games, the Gearset camera matrices must be updated using
-    /// the SetMatrices method.
+    ///     Create a single instance of this sealed class in your game
+    ///     and keep it in a static variable you can reach with ease.
+    ///     (i.e Util.Console).
+    ///     For 3D games, the Gearset camera matrices must be updated using
+    ///     the SetMatrices method.
     /// </remarks>
     public sealed class GearConsole {
         public static float LiteVersionNoticeAlpha;
         readonly Game _game;
 
         /// <summary>
-        /// Collection of DebugComponents
+        ///     Collection of DebugComponents
         /// </summary>
         internal List<Gear> Components;
 
         /// <summary>
-        /// Test variable, mainly to know if Xdtk is running or not.
+        ///     Test variable, mainly to know if Xdtk is running or not.
         /// </summary>
         internal int DrawCount;
 
         /// <summary>
-        /// Counts the number of updates that has occured, it is used
-        /// by the Logger.
+        ///     Counts the number of updates that has occured, it is used
+        ///     by the Logger.
         /// </summary>
         internal int UpdateCount;
 
         /// <summary>
-        /// Time in ticks when the last update was made.
+        ///     Time in ticks when the last update was made.
         /// </summary>
         int _lastSaveTime;
 
@@ -70,9 +69,9 @@ namespace Gearset {
         #region Constructor
 
         /// <summary>
-        /// Creates the GearConsole. if you want the console
-        /// to draw 3D debug stuff you need to update the World/View/Projection
-        /// matrices using the <c>SetMatrices</c> or setting them manually.
+        ///     Creates the GearConsole. if you want the console
+        ///     to draw 3D debug stuff you need to update the World/View/Projection
+        ///     matrices using the <c>SetMatrices</c> or setting them manually.
         /// </summary>
         /// <param name="game"></param>
         public GearConsole(Game game) {
@@ -94,125 +93,125 @@ namespace Gearset {
         internal bool Enabled { get { return Settings.Enabled; } }
 
         /// <summary>
-        /// The World Matrix of the game. The prefered method to 
-        /// update all matrices is by using <c>SetMatrices</c>.
+        ///     The World Matrix of the game. The prefered method to
+        ///     update all matrices is by using <c>SetMatrices</c>.
         /// </summary>
         public Matrix WorldMatrix { get { return GearsetResources.World; } set { GearsetResources.World = value; } }
 
         /// <summary>
-        /// The View Matrix of the game camera. The prefered method to 
-        /// update all matrices is by using <c>SetMatrices</c>.
+        ///     The View Matrix of the game camera. The prefered method to
+        ///     update all matrices is by using <c>SetMatrices</c>.
         /// </summary>
         public Matrix ViewMatrix { get { return GearsetResources.View; } set { GearsetResources.View = value; } }
 
         /// <summary>
-        /// The Projection Matrix of game camera. The prefered method to 
-        /// update all matrices is by using <c>SetMatrices</c>.
+        ///     The Projection Matrix of game camera. The prefered method to
+        ///     update all matrices is by using <c>SetMatrices</c>.
         /// </summary>
         public Matrix ProjectionMatrix { get { return GearsetResources.Projection; } set { GearsetResources.Projection = value; } }
 
         /// <summary>
-        /// The Transform Matrix to apply to all 2D overlaids of the client game. 
-        /// Use this if you're creating a 2D game where the camera moves (e.g. a scroller).
-        /// The prefered method to update all matrices is by using <c>SetMatrices</c>.
+        ///     The Transform Matrix to apply to all 2D overlaids of the client game.
+        ///     Use this if you're creating a 2D game where the camera moves (e.g. a scroller).
+        ///     The prefered method to update all matrices is by using <c>SetMatrices</c>.
         /// </summary>
         public Matrix Transform2D { get { return GearsetResources.Transform2D; } set { GearsetResources.Transform2D = value; } }
 
         /// <summary>
-        /// Returns the needle position of the curves in Bender. The game can use this
-        /// value to let designers preview curve animations.
+        ///     Returns the needle position of the curves in Bender. The game can use this
+        ///     value to let designers preview curve animations.
         /// </summary>
         public float BenderNeedlePosition { get { return (Bender != null) ? Bender.SeekNeedlePosition : 0; } }
 
         // Components
         /// <summary>
-        /// Displays a Hierarchy of values on the screen for easy
-        /// tracing, the values must be manually updating using the 
-        /// <c>Show</c> method
+        ///     Displays a Hierarchy of values on the screen for easy
+        ///     tracing, the values must be manually updating using the
+        ///     <c>Show</c> method
         /// </summary>
         internal TreeView TreeView { get; private set; }
 
         /// <summary>
-        /// Displays marks on 3D space.
+        ///     Displays marks on 3D space.
         /// </summary>
         internal Marker Marker { get; private set; }
 
         /// <summary>
-        /// Used to display huge text on the middle of the screen,
-        /// useful when the developer want to be alerted of an important
-        /// event.
+        ///     Used to display huge text on the middle of the screen,
+        ///     useful when the developer want to be alerted of an important
+        ///     event.
         /// </summary>
         internal Alerter Alerter { get; private set; }
 
         /// <summary>
-        /// Used to draw lines on 3D or 2D space. Lines can be persistant
-        /// (with a name) or be drawn for a single frame.
+        ///     Used to draw lines on 3D or 2D space. Lines can be persistant
+        ///     (with a name) or be drawn for a single frame.
         /// </summary>
         internal LineDrawer LineDrawer { get; private set; }
 
         /// <summary>
-        /// Data Sampler used to sample data which can be plotted by a plotter.
+        ///     Data Sampler used to sample data which can be plotted by a plotter.
         /// </summary>
         internal DataSamplerManager DataSamplerManager { get; private set; }
 
         /// <summary>
-        /// Plots graph of Data.
+        ///     Plots graph of Data.
         /// </summary>
         internal Plotter Plotter { get; private set; }
 
         /// <summary>
-        /// Shows labels (text) on the screen.
+        ///     Shows labels (text) on the screen.
         /// </summary>
         internal Labeler Labeler { get; private set; }
 
         /// <summary>
-        /// Draw Vectors in 3D space as arrows
+        ///     Draw Vectors in 3D space as arrows
         /// </summary>
         internal Vector3Drawer Vector3Drawer { get; private set; }
 
         /// <summary>
-        /// Draw Vectors in 2D space as arrows
+        ///     Draw Vectors in 2D space as arrows
         /// </summary>
         internal Vector2Drawer Vector2Drawer { get; private set; }
 
         /// <summary>
-        /// Draw Trasforms (Matrices) in 3D space as 3 orthogonal vectors.
+        ///     Draw Trasforms (Matrices) in 3D space as 3 orthogonal vectors.
         /// </summary>
         internal Transform3Drawer Transform3Drawer { get; private set; }
 
         /// <summary>
-        /// Draw 3 axis aligned, orthogonally oriented circles that represent spheres.
+        ///     Draw 3 axis aligned, orthogonally oriented circles that represent spheres.
         /// </summary>
         internal SphereDrawer SphereDrawer { get; private set; }
 
         /// <summary>
-        /// Draw axis aligned bounding boxes.
+        ///     Draw axis aligned bounding boxes.
         /// </summary>
         internal BoxDrawer BoxDrawer { get; private set; }
 
         /// <summary>
-        /// Draw axis aligned bounding boxes.
+        ///     Draw axis aligned bounding boxes.
         /// </summary>
         internal SolidBoxDrawer SolidBoxDrawer { get; private set; }
 
         /// <summary>
-        /// Code profiler.
+        ///     Code profiler.
         /// </summary>
         public Components.Profiler.Profiler Profiler { get; private set; }
 
         /// <summary>
-        /// Gearset settings
+        ///     Gearset settings
         /// </summary>
         internal GearsetSettings Settings { get { return GearsetSettings.Instance; } }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Gearset's overlays will be visible.
-        /// A shortcut for Settings.Visible;
+        ///     Gets or sets a value indicating whether the Gearset's overlays will be visible.
+        ///     A shortcut for Settings.Visible;
         /// </summary>
         public bool VisibleOverlays { get { return Settings.ShowOverlays; } set { Settings.ShowOverlays = value; } }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Gearset's Initialize method has been called.
+        ///     Gets or sets a value indicating whether the Gearset's Initialize method has been called.
         /// </summary>
         public bool Initialized {
             get { return _initialized; }
@@ -253,7 +252,7 @@ namespace Gearset {
         #endregion
 
         /// <summary>
-        /// Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
+        ///     Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
         /// </summary>
         public void ClearAll() {
             Settings.TreeViewConfig.Clear();
@@ -274,36 +273,36 @@ namespace Gearset {
 
 #if WINDOWS
         /// <summary>
-        /// Components that keeps a list of pickable game elements and
-        /// interacts with the mouse to get notified when they are being
-        /// picked. Useful to visually place objects in the Inspector.
+        ///     Components that keeps a list of pickable game elements and
+        ///     interacts with the mouse to get notified when they are being
+        ///     picked. Useful to visually place objects in the Inspector.
         /// </summary>
         internal Picker Picker { get; private set; }
 
         /// <summary>
-        /// Component that let the game developer inspect game objects
-        /// in real time, showing the value of public fields. The inspector
-        /// is also capable of calling methods on objects.
+        ///     Component that let the game developer inspect game objects
+        ///     in real time, showing the value of public fields. The inspector
+        ///     is also capable of calling methods on objects.
         /// </summary>
         internal InspectorManager Inspector { get; private set; }
 
         /// <summary>
-        /// Widget that places itself on top of the windows titlebar.
+        ///     Widget that places itself on top of the windows titlebar.
         /// </summary>
         internal Widget Widget { get; private set; }
 
         /// <summary>
-        /// Component that logs events.
+        ///     Component that logs events.
         /// </summary>
         internal LoggerManager Logger { get; private set; }
 
         /// <summary>
-        /// Component used to edit XNA curves.
+        ///     Component used to edit XNA curves.
         /// </summary>
         internal Bender Bender { get; private set; }
 
         /// <summary>
-        /// Provides UI to find a Game Object.
+        ///     Provides UI to find a Game Object.
         /// </summary>
         internal Finder Finder { get; private set; }
 #endif
@@ -311,8 +310,8 @@ namespace Gearset {
         #region Initialize
 
         /// <summary>
-        /// Initialize Gearset, this method should be called from your Game's Initialize
-        /// and before any other Gearset method.
+        ///     Initialize Gearset, this method should be called from your Game's Initialize
+        ///     and before any other Gearset method.
         /// </summary>
         public void Initialize() {
 #if WINDOWS
@@ -355,7 +354,7 @@ namespace Gearset {
         #region Initialize (All platforms)
 
         /// <summary>
-        /// Initializes componenets that work in all platforms.
+        ///     Initializes componenets that work in all platforms.
         /// </summary>
         void InitializeForAllPlatforms() {
             GearsetResources.Content = new ResourceContentManager(GearsetResources.Game.Services, Resource1.ResourceManager);
@@ -435,7 +434,7 @@ namespace Gearset {
         #region Initialize (Windows)
 
         /// <summary>
-        /// Initialize components that work on Windows.
+        ///     Initialize components that work on Windows.
         /// </summary>
         void InitializeForWindows() {
 #if WINDOWS
@@ -574,8 +573,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Check if the latest version posted on The Complot site is different
-        /// from our current version.
+        ///     Check if the latest version posted on The Complot site is different
+        ///     from our current version.
         /// </summary>
         void CheckNewVersion(Object state) {
 #if WINDOWS
@@ -626,8 +625,8 @@ namespace Gearset {
         #region Set matrices
 
         /// <summary>
-        /// Use this method after every Update of your game to update the camera
-        /// matrices so 3D overlays can be drawn correctly.
+        ///     Use this method after every Update of your game to update the camera
+        ///     matrices so 3D overlays can be drawn correctly.
         /// </summary>
         public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection) {
             GearsetResources.World = world;
@@ -636,8 +635,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Use this method after every Update of your game to update the camera
-        /// matrices so 3D overlays can be drawn correctly.
+        ///     Use this method after every Update of your game to update the camera
+        ///     matrices so 3D overlays can be drawn correctly.
         /// </summary>
         public void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection, ref Matrix transform2D) {
             GearsetResources.World = world;
@@ -657,21 +656,23 @@ namespace Gearset {
         #region Tree View
 
         /// <summary>
-        /// Adds or modifiy a key without value on the overlaid tree view.
+        ///     Adds or modifiy a key without value on the overlaid tree view.
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
         public void Show(String key) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             TreeView.Set(key, null);
         }
 
         /// <summary>
-        /// Adds or modifies a key/value pair to the overlaid tree view.
+        ///     Adds or modifies a key/value pair to the overlaid tree view.
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
         /// <param name="value">The value to show.</param>
         public void Show(String key, object value) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             TreeView.Set(key, value);
         }
 
@@ -680,13 +681,14 @@ namespace Gearset {
         #region Actions
 
         /// <summary>
-        /// Adds an action button to the bottom of the game window.
+        ///     Adds an action button to the bottom of the game window.
         /// </summary>
         /// <param name="name">Name of the action as it will appear on the button.</param>
         /// <param name="action">Action to perform when the button is clicked.</param>
         public void AddQuickAction(String name, Action action) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Widget.AddAction(name, action);
 #endif
         }
@@ -696,25 +698,27 @@ namespace Gearset {
         #region Plots
 
         /// <summary>
-        /// Adds the provided value to the plot with the provided plotName.
+        ///     Adds the provided value to the plot with the provided plotName.
         /// </summary>
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
         public void Plot(String plotName, float value) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             DataSamplerManager.AddSample(plotName, value);
             Plotter.ShowPlot(plotName);
         }
 
         /// <summary>
-        /// Adds the provided value to the plot with the provided plotName. At the same time modifies
-        /// the history length of the sampler.
+        ///     Adds the provided value to the plot with the provided plotName. At the same time modifies
+        ///     the history length of the sampler.
         /// </summary>
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
         /// <param name="historyLength">The number of samples that the sampler will remember at any given time.</param>
         public void Plot(String plotName, float value, int historyLength) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             DataSamplerManager.AddSample(plotName, value, historyLength);
             Plotter.ShowPlot(plotName);
         }
@@ -724,43 +728,46 @@ namespace Gearset {
         #region Logger
 
         /// <summary>
-        /// Los a message to the specified stream.
+        ///     Los a message to the specified stream.
         /// </summary>
         /// <param name="streamName">Name of the Stream to log the message to</param>
         /// <param name="message">Message to log</param>
         public void Log(String streamName, String content) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(streamName, content);
 #endif
         }
 
         /// <summary>
-        /// Logs the specified message in the default stream.
+        ///     Logs the specified message in the default stream.
         /// </summary>
         /// <param name="content">The message to log.</param>
         public void Log(String content) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(content);
 #endif
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
         /// <param name="arg0">The first format parameter</param>
         public void Log(String streamName, String format, Object arg0) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(streamName, format, arg0);
 #endif
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -768,13 +775,14 @@ namespace Gearset {
         /// <param name="arg1">The second format parameter</param>
         public void Log(String streamName, String format, Object arg0, Object arg1) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(streamName, format, arg0, arg1);
 #endif
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -783,26 +791,28 @@ namespace Gearset {
         /// <param name="arg2">The third format parameter</param>
         public void Log(String streamName, String format, Object arg0, Object arg1, Object arg2) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(streamName, format, arg0, arg1, arg2);
 #endif
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
         /// <param name="arg0">The format parameters</param>
         public void Log(String streamName, String format, params Object[] args) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Logger.Log(streamName, format, args);
 #endif
         }
 
         /// <summary>
-        /// Shows a dialog asking for a filename and saves the log to the specified file.
+        ///     Shows a dialog asking for a filename and saves the log to the specified file.
         /// </summary>
         public void SaveLogToFile() {
 #if WINDOWS
@@ -811,7 +821,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Saves the log to the specified file.
+        ///     Saves the log to the specified file.
         /// </summary>
         /// <param name="filename">Name of the file to save the log (usually ending in .log)</param>
         public void SaveLogToFile(string filename) {
@@ -825,34 +835,38 @@ namespace Gearset {
         #region Marks
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         public void ShowMark(String key, Vector3 position, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Marker.ShowMark(key, position, color);
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         public void ShowMark(String key, Vector3 position) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Marker.ShowMark(key, position);
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         public void ShowMark(String key, Vector2 position, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Marker.ShowMark(key, position, color);
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         public void ShowMark(String key, Vector2 position) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Marker.ShowMark(key, position);
         }
 
@@ -861,11 +875,12 @@ namespace Gearset {
         #region Alert
 
         /// <summary>
-        /// Shows huge text on the center of the screen which fades
-        /// out quickly.
+        ///     Shows huge text on the center of the screen which fades
+        ///     out quickly.
         /// </summary>
         public void Alert(String message) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Alerter.Alert(message);
         }
 
@@ -874,66 +889,74 @@ namespace Gearset {
         #region Line Drawing
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         public void ShowLine(String key, Vector3 v1, Vector3 v2) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLine(key, v1, v2, Color.White);
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         public void ShowLine(String key, Vector3 v1, Vector3 v2, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLine(key, v1, v2, color);
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         public void ShowLineOnce(Vector3 v1, Vector3 v2) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLineOnce(v1, v2, Color.White);
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         public void ShowLineOnce(Vector3 v1, Vector3 v2, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLineOnce(v1, v2, color);
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         public void ShowLine(String key, Vector2 v1, Vector2 v2) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLine(key, v1, v2, Color.White);
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         public void ShowLine(String key, Vector2 v1, Vector2 v2, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLine(key, v1, v2, color);
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         public void ShowLineOnce(Vector2 v1, Vector2 v2) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLineOnce(v1, v2, Color.White);
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         public void ShowLineOnce(Vector2 v1, Vector2 v2, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             LineDrawer.ShowLineOnce(v1, v2, color);
         }
 
@@ -942,83 +965,91 @@ namespace Gearset {
         #region Box Drawing
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="key">Name of the persistent box</param>
-        /// <param name="box">The box to draw</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="key">Name of the persistent box</param>
+        ///     <param name="box">The box to draw</param>
         /// </summary>
         public void ShowBox(String key, BoundingBox box) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBox(key, box);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowBox(String key, Vector3 min, Vector3 max) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBox(key, min, max);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="key">Name of the persistent box</param>
-        /// <param name="box">The box to draw</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="key">Name of the persistent box</param>
+        ///     <param name="box">The box to draw</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         public void ShowBox(String key, BoundingBox box, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBox(key, box, color);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowBox(String key, Vector3 min, Vector3 max, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBox(key, min, max, color);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="box">The BoundingBox to draw</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="box">The BoundingBox to draw</param>
         /// </summary>
         public void ShowBoxOnce(BoundingBox box) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBoxOnce(box);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowBoxOnce(Vector3 min, Vector3 max) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBoxOnce(min, max);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="box">The BoundingBox to draw</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="box">The BoundingBox to draw</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         public void ShowBoxOnce(BoundingBox box, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBoxOnce(box, color);
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         public void ShowBoxOnce(Vector3 min, Vector3 max, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             BoxDrawer.ShowBoxOnce(min, max, color);
         }
 
@@ -1027,87 +1058,96 @@ namespace Gearset {
         #region Sphere Drawing
 
         /// <summary>
-        /// Shows a sphere on the screen.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphere(String key, BoundingSphere sphere) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphere(key, sphere);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphere(String key, Vector3 center, float radius) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphere(key, center, radius);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphere(String key, BoundingSphere sphere, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphere(key, sphere, color);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphere(String key, Vector3 center, float radius, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphere(key, center, radius, color);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphereOnce(BoundingSphere sphere) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphereOnce(sphere);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphereOnce(Vector3 center, float radius) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphereOnce(center, radius);
         }
 
         public void ShowCylinderOnce(Vector3 center, Vector3 radius) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowCylinderOnce(center, radius);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphereOnce(BoundingSphere sphere, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphereOnce(sphere, color);
         }
 
         /// <summary>
-        /// Shows a sphere on the screen for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows a sphere on the screen for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         public void ShowSphereOnce(Vector3 center, float radius, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             SphereDrawer.ShowSphereOnce(center, radius, color);
         }
 
@@ -1116,68 +1156,80 @@ namespace Gearset {
         #region Label Drawing
 
         /// <summary>
-        /// Shows a label at the specified position (the text will be the label's name).
+        ///     Shows a label at the specified position (the text will be the label's name).
         /// </summary>
-        /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
+        /// <param name="name">
+        ///     Name of the label as well of the text to show. Subsequent calls with the same name will modify this
+        ///     label
+        /// </param>
         /// <param name="position">Position where the label will be shown</param>
         public void ShowLabel(String name, Vector2 position) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position);
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         public void ShowLabel(String name, Vector2 position, String text) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position, text);
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         /// <param name="color">Color of the text</param>
         public void ShowLabel(String name, Vector2 position, String text, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position, text, color);
         }
 
         /// <summary>
-        /// Shows a label at the specified position (the text will be the label's name).
+        ///     Shows a label at the specified position (the text will be the label's name).
         /// </summary>
-        /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
+        /// <param name="name">
+        ///     Name of the label as well of the text to show. Subsequent calls with the same name will modify this
+        ///     label
+        /// </param>
         /// <param name="position">Position where the label will be shown</param>
         public void ShowLabel(String name, Vector3 position) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position);
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         public void ShowLabel(String name, Vector3 position, String text) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position, text);
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         /// <param name="color">Color of the text</param>
         public void ShowLabel(String name, Vector3 position, String text, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Labeler.ShowLabel(name, position, text, color);
         }
 
@@ -1186,41 +1238,45 @@ namespace Gearset {
         #region Inspector
 
         /// <summary>
-        /// Sends an object to the Inspector window.
+        ///     Sends an object to the Inspector window.
         /// </summary>
         public void Inspect(String name, Object o) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Inspector.Inspect(name, o);
 #endif
         }
 
         /// <summary>
-        /// Sends an object to the Inspector window.
+        ///     Sends an object to the Inspector window.
         /// </summary>
         public void Inspect(String name, Object o, bool autoExpand) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Inspector.Inspect(name, o, autoExpand);
 #endif
         }
 
         /// <summary>
-        /// Removes an object from the Inspector window.
+        ///     Removes an object from the Inspector window.
         /// </summary>
         public void RemoveInspect(Object o) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Inspector.RemoveInspect(o);
 #endif
         }
 
         /// <summary>
-        /// Clears the Inspector Window.
+        ///     Clears the Inspector Window.
         /// </summary>
         public void ClearInspector() {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Inspector.ClearInspectedObjects();
 #endif
         }
@@ -1230,14 +1286,15 @@ namespace Gearset {
         #region Finder
 
         /// <summary>
-        /// Sets the function that is used by Gearset when a query is written to the
-        /// Finder by the user. It usually searches through your game objects and returns
-        /// a collection of the ones whose name or Type matches the query.
-        /// A search function receives a String and return IEnumerable (e.g. a List)
+        ///     Sets the function that is used by Gearset when a query is written to the
+        ///     Finder by the user. It usually searches through your game objects and returns
+        ///     a collection of the ones whose name or Type matches the query.
+        ///     A search function receives a String and return IEnumerable (e.g. a List)
         /// </summary>
         public void SetFinderSearchFunction(SearchFunction searchFunction) {
 #if WINDOWS
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Finder.Config.SearchFunction = searchFunction;
 #endif
         }
@@ -1247,42 +1304,46 @@ namespace Gearset {
         #region Transform
 
         /// <summary>
-        /// Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
         public void ShowTransform(String name, Matrix transform, float axisScale) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Transform3Drawer.ShowTransform(name, transform, axisScale);
         }
 
         /// <summary>
-        /// Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
         public void ShowTransform(String name, Matrix transform) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Transform3Drawer.ShowTransform(name, transform);
         }
 
         /// <summary>
-        /// Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="transform">Transform to draw</param>
         public void ShowTransformOnce(Matrix transform) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Transform3Drawer.ShowTransformOnce(transform);
         }
 
         /// <summary>
-        /// Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
         public void ShowTransformOnce(Matrix transform, float axisScale) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Transform3Drawer.ShowTransformOnce(transform, axisScale);
         }
 
@@ -1291,46 +1352,50 @@ namespace Gearset {
         #region Vector3
 
         /// <summary>
-        /// Shows a persistent Vector3 on the screen as an arrow.
+        ///     Shows a persistent Vector3 on the screen as an arrow.
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         public void ShowVector3(String name, Vector3 location, Vector3 vector, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector3Drawer.ShowVector3(name, location, vector, color);
         }
 
         /// <summary>
-        /// Shows a persistent Vector3 on the screen as an arrow.
+        ///     Shows a persistent Vector3 on the screen as an arrow.
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         public void ShowVector3(String name, Vector3 location, Vector3 vector) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector3Drawer.ShowVector3(name, location, vector);
         }
 
         /// <summary>
-        /// Shows a Vector3 on the screen as an arrow for one frame.
+        ///     Shows a Vector3 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         public void ShowVector3Once(Vector3 location, Vector3 vector) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector3Drawer.ShowVector3Once(location, vector);
         }
 
         /// <summary>
-        /// Shows a Vector3 on the screen as an arrow for one frame.
+        ///     Shows a Vector3 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         public void ShowVector3Once(Vector3 location, Vector3 vector, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector3Drawer.ShowVector3Once(location, vector, color);
         }
 
@@ -1339,46 +1404,50 @@ namespace Gearset {
         #region Vector2
 
         /// <summary>
-        /// Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
+        ///     Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         public void ShowVector2(String name, Vector2 location, Vector2 vector, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector2Drawer.ShowVector2(name, location, vector, color);
         }
 
         /// <summary>
-        /// Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
+        ///     Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         public void ShowVector2(String name, Vector2 location, Vector2 vector) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector2Drawer.ShowVector2(name, location, vector);
         }
 
         /// <summary>
-        /// Shows a Vector2 on the screen as an arrow for one frame (Screen space coordinates).
+        ///     Shows a Vector2 on the screen as an arrow for one frame (Screen space coordinates).
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         public void ShowVector2Once(Vector2 location, Vector2 vector) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector2Drawer.ShowVector2Once(location, vector);
         }
 
         /// <summary>
-        /// Shows a Vector2 on the screen as an arrow for one frame.
+        ///     Shows a Vector2 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         public void ShowVector2Once(Vector2 location, Vector2 vector, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Vector2Drawer.ShowVector2Once(location, vector, color);
         }
 
@@ -1387,29 +1456,32 @@ namespace Gearset {
         #region Bender
 
         /// <summary>
-        /// Adds a curve for editing in Bender
+        ///     Adds a curve for editing in Bender
         /// </summary>
         /// <param name="name">Name of the curve to add. Group using dot separators.</param>
         /// <param name="curve">Curve to edit in Bender.</param>
         public void AddCurve(String name, Curve curve) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Bender.AddCurve(name, curve);
         }
 
         /// <summary>
-        /// Removes the provided curve from Bender.
+        ///     Removes the provided curve from Bender.
         /// </summary>
         public void RemoveCurve(Curve curve) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Bender.RemoveCurve(curve);
         }
 
         /// <summary>
-        /// Removes a Curve or a Group by name. The complete dot-separated
-        /// path to the curve or group must be given.
+        ///     Removes a Curve or a Group by name. The complete dot-separated
+        ///     path to the curve or group must be given.
         /// </summary>
         public void RemoveCurveOrGroup(String name) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Bender.RemoveCurveOrGroup(name);
         }
 
@@ -1418,27 +1490,30 @@ namespace Gearset {
         #region Profiler
 
         public void StartFrame() {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Profiler.StartFrame();
         }
 
         /// <summary>
-        /// Start measure time.
+        ///     Start measure time.
         /// </summary>
         /// <param name="barIndex">index of bar</param>
         /// <param name="markerName">name of marker.</param>
         /// <param name="color">color</param>
         public void BeginMark(string markerName, Color color) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Profiler.BeginMark(markerName, color);
         }
 
         /// <summary>
-        /// End measuring.
+        ///     End measuring.
         /// </summary>
         /// <param name="markerName">Name of marker.</param>
         public void EndMark(string markerName) {
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             Profiler.EndMark(markerName);
         }
 
@@ -1451,7 +1526,7 @@ namespace Gearset {
         #region Update
 
         /// <summary>
-        /// Call this method at the end of your game's Update method.
+        ///     Call this method at the end of your game's Update method.
         /// </summary>
         public void Update(GameTime gameTime) {
             if (!Initialized)
@@ -1463,7 +1538,8 @@ namespace Gearset {
                 _lastSaveTime = Environment.TickCount;
             }
             UpdateCount++;
-            if (!Enabled) return;
+            if (!Enabled)
+                return;
             //Show("Gearset.Update Count", UpdateCount);
             //Show("Gearset.Draw Count", DrawCount);
 
@@ -1505,12 +1581,13 @@ namespace Gearset {
         #region Draw
 
         /// <summary>
-        /// Call this method at the end of your game's Draw method.
+        ///     Call this method at the end of your game's Draw method.
         /// </summary>
         public void Draw(GameTime gameTime) {
             DrawCount++;
 
-            if (!Settings.Enabled || GearsetResources.GlobalAlpha <= 0) return;
+            if (!Settings.Enabled || GearsetResources.GlobalAlpha <= 0)
+                return;
 
             if (GearsetResources.Effect.GraphicsDevice.IsDisposed)
                 RecreateGraphicResources();

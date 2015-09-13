@@ -2,8 +2,8 @@
 
 namespace Gearset.UI {
     /// <summary>
-    /// A Window, with a title bar to show a title and drag it. 
-    /// Also a scale nob at the bottom-right corner
+    ///     A Window, with a title bar to show a title and drag it.
+    ///     Also a scale nob at the bottom-right corner
     /// </summary>
     public class Window : LayoutBox {
         public Window(Vector2 position, Vector2 clientSize)
@@ -20,17 +20,17 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Gets the title bar LayoutBox
+        ///     Gets the title bar LayoutBox
         /// </summary>
         public LayoutBox TitleBar { get; set; }
 
         /// <summary>
-        /// Gets the scale nob LayoutBox.
+        ///     Gets the scale nob LayoutBox.
         /// </summary>
         public LayoutBox ScaleNob { get; set; }
 
         /// <summary>
-        /// Defines a hight for the title bar.
+        ///     Defines a hight for the title bar.
         /// </summary>
         public float TitleBarSize {
             get { return TitleBar.Height; }
@@ -59,7 +59,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Positions (and sizes) the title bar and the scale nob.
+        ///     Positions (and sizes) the title bar and the scale nob.
         /// </summary>
         public void UpdateLayout() {
             if (TitleBar == null || ScaleNob == null)

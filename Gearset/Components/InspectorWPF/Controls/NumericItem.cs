@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class NumericItem : VisualItemBase {
         Point _downPosition;
@@ -13,16 +13,16 @@ namespace Gearset.Components.InspectorWPF {
         bool _plotValues;
 
         /// <summary>
-        /// Defines the state of the spinner, if IsEditing 
-        /// is because the user is currently editing the value
-        /// so the Updating value of the TreeNode will be set 
-        /// to false until the control loses focus.
+        ///     Defines the state of the spinner, if IsEditing
+        ///     is because the user is currently editing the value
+        ///     so the Updating value of the TreeNode will be set
+        ///     to false until the control loses focus.
         /// </summary>
         public bool IsEditing;
 
         /// <summary>
-        /// True if the TreeNode was Updating before the user
-        /// started to edit it.
+        ///     True if the TreeNode was Updating before the user
+        ///     started to edit it.
         /// </summary>
         bool _wasUpdating;
 
@@ -42,7 +42,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// What type of numeric value will this spinner handle
+        ///     What type of numeric value will this spinner handle
         /// </summary>
         public NumericSpinnerMode Mode { get { return (NumericSpinnerMode)GetValue(ModeProperty); } set { SetValue(ModeProperty, value); } }
 
@@ -75,7 +75,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Updates the UI.
+        ///     Updates the UI.
         /// </summary>
         public override sealed void UpdateUi(Object value) {
             try {
@@ -166,7 +166,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Updates the variable fromt he UI.
+        ///     Updates the variable fromt he UI.
         /// </summary>
         public override sealed void UpdateVariable() {
             TreeNode.Property = Value;
@@ -255,7 +255,7 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// The mode of the Numeric Item
+        ///     The mode of the Numeric Item
         /// </summary>
         public static readonly DependencyProperty ModeProperty =
             DependencyProperty.Register("Mode", typeof(NumericSpinnerMode), typeof(NumericItem),

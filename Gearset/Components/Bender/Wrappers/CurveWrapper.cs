@@ -5,7 +5,7 @@ using Color = System.Windows.Media.Color;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Wraps a Curve, giving it an Id and a Name.
+    ///     Wraps a Curve, giving it an Id and a Name.
     /// </summary>
     public sealed class CurveWrapper {
         public static long LatestId;
@@ -31,7 +31,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Gets or sets whether this curve is visible on the control for editing.
+        ///     Gets or sets whether this curve is visible on the control for editing.
         /// </summary>
         public bool Visible {
             get { return _visible; }
@@ -48,8 +48,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Wraps the Curve's Loop property making sure the control gets invalidated
-        /// when its set.
+        ///     Wraps the Curve's Loop property making sure the control gets invalidated
+        ///     when its set.
         /// </summary>
         public CurveLoopType PreLoop {
             get { return Curve.PreLoop; }
@@ -60,8 +60,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Wraps the Curve's Loop property making sure the control gets invalidated
-        /// when its set.
+        ///     Wraps the Curve's Loop property making sure the control gets invalidated
+        ///     when its set.
         /// </summary>
         public CurveLoopType PostLoop {
             get { return Curve.PostLoop; }
@@ -72,45 +72,45 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Wrapped curve instance. Do not edit it directly, use the CurveWrapper
-        /// methods instead.
+        ///     Wrapped curve instance. Do not edit it directly, use the CurveWrapper
+        ///     methods instead.
         /// </summary>
         public Curve Curve { get; private set; }
 
         /// <summary>
-        /// Id of the curve, this is used by undo commands to reference
-        /// a modification to the wrapped key.
+        ///     Id of the curve, this is used by undo commands to reference
+        ///     a modification to the wrapped key.
         /// </summary>
         public long Id { get; private set; }
 
         /// <summary>
-        /// Pen used to draw this curve.
+        ///     Pen used to draw this curve.
         /// </summary>
         public Pen Pen { get; set; }
 
         /// <summary>
-        /// Pen used to draw this curve.
+        ///     Pen used to draw this curve.
         /// </summary>
         public Pen DashedPen { get; set; }
 
         /// <summary>
-        /// Friendly name of the Wrapped Curve.
+        ///     Friendly name of the Wrapped Curve.
         /// </summary>
         public String Name { get; set; }
 
         /// <summary>
-        /// The color used to build the pens.
+        ///     The color used to build the pens.
         /// </summary>
         public Brush ColorBrush { get; private set; }
 
         /// <summary>
-        /// Reference to the control that contains this wrapper.
+        ///     Reference to the control that contains this wrapper.
         /// </summary>
         public CurveEditorControl2 Control { get; private set; }
 
         /// <summary>
-        /// This is the method to use when adding a key in the editor. It will create
-        /// the corresponding KeyWrapper and add it to the control.
+        ///     This is the method to use when adding a key in the editor. It will create
+        ///     the corresponding KeyWrapper and add it to the control.
         /// </summary>
         public KeyWrapper AddKey(CurveKey key, long id = -1) {
             Curve.Keys.Add(key);
@@ -122,7 +122,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// This method is only to be used when undoing a RemoveKeys command.
+        ///     This method is only to be used when undoing a RemoveKeys command.
         /// </summary>
         internal void RestoreKey(KeyWrapper key) {
             Curve.Keys.Add(key.Key);
@@ -131,8 +131,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// This is the method to use when removing a key in the editor. It will remove
-        /// the corresponding KeyWrapper from the control.
+        ///     This is the method to use when removing a key in the editor. It will remove
+        ///     the corresponding KeyWrapper from the control.
         /// </summary>
         /// <param name="key"></param>
         public void RemoveKey(long id) {
@@ -143,22 +143,22 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Returns the KeyWrapper of the key at the provided position. This is a
-        /// relatively expensive method because it iterates over the dictionary's values.
+        ///     Returns the KeyWrapper of the key at the provided position. This is a
+        ///     relatively expensive method because it iterates over the dictionary's values.
         /// </summary>
         public KeyWrapper GetKeyAt(int index) {
             return Control.GetWrapper(Curve.Keys[index]);
         }
 
         /// <summary>
-        /// Wraps the curve's Evaluate method.
+        ///     Wraps the curve's Evaluate method.
         /// </summary>
         public float Evaluate(float position) {
             return Curve.Evaluate(position);
         }
 
         /// <summary>
-        /// Computes the tangents of all automatic keys.
+        ///     Computes the tangents of all automatic keys.
         /// </summary>
         public void ComputeTangents() {
             for (var i = 0; i < Curve.Keys.Count; i++) {

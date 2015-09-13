@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.UI {
     /// <summary>
-    /// A box.
+    ///     A box.
     /// </summary>
     public class LayoutBox {
         Vector2 _position;
@@ -25,14 +25,14 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Gets or sets the parent of this LayoutBox.
+        ///     Gets or sets the parent of this LayoutBox.
         /// </summary>
         public LayoutBox Parent { get; set; }
 
         public bool IsMouseOver { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the position of this LayoutBox.
+        ///     Gets or sets the position of this LayoutBox.
         /// </summary>
         /// <value>The position</value>
         public Vector2 Position {
@@ -64,7 +64,7 @@ namespace Gearset.UI {
         public float Height { get { return _size.Y; } set { _size.Y = Math.Max(value, 0); } }
 
         /// <summary>
-        /// Returns the area where the elements of this UI box must be drawn.
+        ///     Returns the area where the elements of this UI box must be drawn.
         /// </summary>
         public Rectangle DrawArea { get { return new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y); } }
 
@@ -87,7 +87,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Helper methods, draws the border of the box. Must be called every frame.
+        ///     Helper methods, draws the border of the box. Must be called every frame.
         /// </summary>
         public void DrawCrossLines(Color color) {
             DrawCrossLines(color, GearsetResources.Console.LineDrawer);
@@ -99,15 +99,15 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Helper methods, draws the border of the box. Must be called every frame.
+        ///     Helper methods, draws the border of the box. Must be called every frame.
         /// </summary>
         public void DrawBorderLines(Color color) {
             DrawBorderLines(color, GearsetResources.Console.LineDrawer);
         }
 
         /// <summary>
-        /// Helper methods, draws the border of the box. Must be called every frame.
-        /// TODO: Move this to a UI debug drawer or something similar
+        ///     Helper methods, draws the border of the box. Must be called every frame.
+        ///     TODO: Move this to a UI debug drawer or something similar
         /// </summary>
         internal void DrawBorderLines(Color color, InternalLineDrawer lineDrawer) {
             var screenPos = GetScreenPosition();
@@ -122,7 +122,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Returns true if the passed point is contained in this box.
+        ///     Returns true if the passed point is contained in this box.
         /// </summary>
         internal bool Contains(Vector2 point) {
             var min = GetScreenPosition();
@@ -134,7 +134,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Returns the passed world point in local point of this LayoutBox.
+        ///     Returns the passed world point in local point of this LayoutBox.
         /// </summary>
         public Vector2 WorldToLocal(Vector2 point) {
             var current = Parent;
@@ -148,7 +148,7 @@ namespace Gearset.UI {
         #region Event raisers
 
         /// <summary>
-        /// Only to be called by the MouseRouter
+        ///     Only to be called by the MouseRouter
         /// </summary>
         internal void RaiseMouseDown(Vector2 position) {
             if (MouseDown != null)
@@ -156,7 +156,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Only to be called by the MouseRouter
+        ///     Only to be called by the MouseRouter
         /// </summary>
         internal void RaiseMouseUp(Vector2 position) {
             if (MouseUp != null)
@@ -164,7 +164,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Only to be called by the MouseRouter
+        ///     Only to be called by the MouseRouter
         /// </summary>
         internal void RaiseClick(Vector2 position) {
             if (Click != null)
@@ -172,7 +172,7 @@ namespace Gearset.UI {
         }
 
         /// <summary>
-        /// Only to be called by the MouseRouter
+        ///     Only to be called by the MouseRouter
         /// </summary>
         internal void RaiseDragged(Vector2 delta) {
             if (Dragged != null)

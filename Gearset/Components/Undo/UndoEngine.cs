@@ -4,12 +4,12 @@ using System.Diagnostics;
 namespace Gearset {
     public sealed class UndoEngine {
         /// <summary>
-        /// History of commands for undo.
+        ///     History of commands for undo.
         /// </summary>
         readonly LinkedList<IUndoable> _undoStack;
 
         /// <summary>
-        /// History of commands for redo.
+        ///     History of commands for redo.
         /// </summary>
         readonly LinkedList<IUndoable> _redoStack;
 
@@ -23,8 +23,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Executes a command and adds it to the command history so it can
-        /// be undone/redone.
+        ///     Executes a command and adds it to the command history so it can
+        ///     be undone/redone.
         /// </summary>
         /// <param name="command">The command to execute and keep history of.</param>
         public void Execute(IUndoable command) {
@@ -33,7 +33,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Undoes the last done command
+        ///     Undoes the last done command
         /// </summary>
         public void Undo() {
             if (_undoStack.Count > 0) {
@@ -53,7 +53,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Redo the last undone command
+        ///     Redo the last undone command
         /// </summary>
         public void Redo() {
             if (_redoStack.Count > 0) {
@@ -67,8 +67,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds a command to the history without executing it. This is usefull if
-        /// the command was executed somewhere else but still needs undo/redo.
+        ///     Adds a command to the history without executing it. This is usefull if
+        ///     the command was executed somewhere else but still needs undo/redo.
         /// </summary>
         /// <param name="currentMover"></param>
         public void AddCommand(IUndoable command) {

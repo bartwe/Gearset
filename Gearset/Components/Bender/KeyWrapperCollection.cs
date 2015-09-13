@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// A collection of Key Wrappers. It can be accessed as a dictionary
-    /// using the [] semantic.
+    ///     A collection of Key Wrappers. It can be accessed as a dictionary
+    ///     using the [] semantic.
     /// </summary>
     public sealed class KeyWrapperCollection : ICollection<KeyWrapper> {
         readonly Dictionary<long, KeyWrapper> _keys;
@@ -58,8 +58,8 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Returns the KeyWrapper of the provided key. This is a relatively
-        /// expensive O(n) method because it iterates over the values of a dict.
+        ///     Returns the KeyWrapper of the provided key. This is a relatively
+        ///     expensive O(n) method because it iterates over the values of a dict.
         /// </summary>
         public KeyWrapper GetWrapper(CurveKey key) {
             foreach (var wrapper in _keys.Values) {

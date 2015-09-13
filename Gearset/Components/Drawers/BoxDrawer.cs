@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Draws 2D/3D Boxes 
+    ///     Draws 2D/3D Boxes
     /// </summary>
     sealed class BoxDrawer : Gear {
         readonly InternalLineDrawer _lines;

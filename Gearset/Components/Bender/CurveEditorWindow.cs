@@ -13,7 +13,6 @@ using Point = System.Windows.Point;
 
 namespace Gearset.Components {
     /// <summary>
-    /// 
     /// </summary>
     public partial class CurveEditorWindow : Window {
         bool isDragging;

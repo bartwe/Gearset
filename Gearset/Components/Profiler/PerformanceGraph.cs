@@ -22,7 +22,7 @@ namespace Gearset.Components.Profiler {
         public ProfilerConfig Config { get { return GearsetSettings.Instance.ProfilerConfig; } }
 
         /// <summary>
-        /// Gets or sets a value indicating how often the frame sampling occurs.
+        ///     Gets or sets a value indicating how often the frame sampling occurs.
         /// </summary>
         /// <remarks>0 to sample every frame, 10 to sample every 10th frame, etc.</remarks>
         public uint SkipFrames {

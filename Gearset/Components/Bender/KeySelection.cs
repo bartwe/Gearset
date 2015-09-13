@@ -2,9 +2,9 @@
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Contains the selected key set. It will automatically set the IsSelected
-    /// property to the keys in it, and unset it when they're removed. If a key
-    /// is already selected, it won't be added again.
+    ///     Contains the selected key set. It will automatically set the IsSelected
+    ///     property to the keys in it, and unset it when they're removed. If a key
+    ///     is already selected, it won't be added again.
     /// </summary>
     public sealed class KeySelection : Collection<KeyWrapper> {
         protected override void InsertItem(int index, KeyWrapper item) {

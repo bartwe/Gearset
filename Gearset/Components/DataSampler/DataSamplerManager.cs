@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Keeps values of functions so they can be plotted.
+    ///     Keeps values of functions so they can be plotted.
     /// </summary>
     public sealed class DataSamplerManager : Gear {
         readonly Dictionary<string, DataSampler> _samplers;
@@ -33,8 +33,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds an sampler which is bound to a <c>function</c> that will be sampled
-        /// every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
+        ///     Adds an sampler which is bound to a <c>function</c> that will be sampled
+        ///     every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
         /// </summary>
         public void AddSampler(String name, int historyLength, int sampleRate, Func<float> function) {
             var sampler = new DataSampler(name, historyLength, sampleRate, function);
@@ -47,8 +47,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds an sampler which is bound to a <c>function</c> that will be sampled
-        /// every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
+        ///     Adds an sampler which is bound to a <c>function</c> that will be sampled
+        ///     every <c>sampleRate</c> frames. <c>historyLength</c> values will be kept.
         /// </summary>
         public void AddSampler(String name, int historyLength, int sampleRate, Func<float, float> function) {
             var sampler = new DataSampler(name, historyLength, sampleRate, function);
@@ -56,9 +56,9 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds a single sample to the sampler of the specified name, if the sampler does
-        /// not exists it will be created. This function is intended to be used with sampler that
-        /// are not bound to a function.
+        ///     Adds a single sample to the sampler of the specified name, if the sampler does
+        ///     not exists it will be created. This function is intended to be used with sampler that
+        ///     are not bound to a function.
         /// </summary>
         public void AddSample(String name, float value) {
             DataSampler sampler;
@@ -70,9 +70,9 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds a single sample to the sampler of the specified name, if the sampler does
-        /// not exists it will be created with the specified historyLength. 
-        /// This function is intended to be used with sampler that are not bound to a function.
+        ///     Adds a single sample to the sampler of the specified name, if the sampler does
+        ///     not exists it will be created with the specified historyLength.
+        ///     This function is intended to be used with sampler that are not bound to a function.
         /// </summary>
         public void AddSample(string name, float value, int historyLength) {
             DataSampler sampler;

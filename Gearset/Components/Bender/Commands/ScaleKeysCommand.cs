@@ -2,7 +2,7 @@
 
 namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Scales a set of keys.
+    ///     Scales a set of keys.
     /// </summary>
     public sealed class ScaleKeysCommand : CurveEditorCommand {
         readonly long[] _affectedKeys;
@@ -48,9 +48,9 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// This method will move will update the offset and move the keys accordingly.
-        /// This is to be used while dragging, before the mouse is released and the command
-        /// added (without calling Do()) to the history.
+        ///     This method will move will update the offset and move the keys accordingly.
+        ///     This is to be used while dragging, before the mouse is released and the command
+        ///     added (without calling Do()) to the history.
         /// </summary>
         /// <param name="offset">offset in curve coords</param>
         public void UpdateOffsets(Point offset) {
@@ -78,7 +78,7 @@ namespace Gearset.Components.CurveEditorControl {
         }
 
         /// <summary>
-        /// Performs the actual movement of the keys.
+        ///     Performs the actual movement of the keys.
         /// </summary>
         void ScaleKeys(Point newMin, Point newMax) {
             for (var i = 0; i < _affectedKeys.Length; i++) {

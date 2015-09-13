@@ -9,7 +9,7 @@ namespace Gearset.Components.InspectorWPF {
         static readonly CachedTemplate GenericTemplateCache = new CachedTemplate("genericTemplate");
 
         /// <summary>
-        /// Static constructor
+        ///     Static constructor
         /// </summary>
         static CollectionMarkerListTemplateSelector() {}
 

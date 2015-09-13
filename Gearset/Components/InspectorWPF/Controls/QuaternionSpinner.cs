@@ -5,7 +5,7 @@ using Point = System.Windows.Point;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// Interaction logic for Spinner.xaml
+    ///     Interaction logic for Spinner.xaml
     /// </summary>
     public partial class QuaternionSpinner : VisualItemBase {
         public enum ModeEnum {
@@ -18,8 +18,8 @@ namespace Gearset.Components.InspectorWPF {
         bool _isDragging;
 
         /// <summary>
-        /// True if the TreeNode was Updating before the user
-        /// started to edit it.
+        ///     True if the TreeNode was Updating before the user
+        ///     started to edit it.
         /// </summary>
         bool _wasUpdating;
 
@@ -52,14 +52,14 @@ namespace Gearset.Components.InspectorWPF {
         }
 
         /// <summary>
-        /// Updates the UI.
+        ///     Updates the UI.
         /// </summary>
         public override sealed void UpdateUi(Object value) {
             Value = (Quaternion)value;
         }
 
         /// <summary>
-        /// Updates the variable fromt he UI.
+        ///     Updates the variable fromt he UI.
         /// </summary>
         public override sealed void UpdateVariable() {
             TreeNode.Property = Value;

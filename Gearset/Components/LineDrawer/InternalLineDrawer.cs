@@ -4,22 +4,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
-    /// <summary>   
-    /// Draw lines in 3D space, can draw line lists and line strips.
+    /// <summary>
+    ///     Draw lines in 3D space, can draw line lists and line strips.
     /// </summary>
     public class InternalLineDrawer : Gear {
         /// <summary>
-        /// Sets a maximun of lines we can draw.
+        ///     Sets a maximun of lines we can draw.
         /// </summary>
         const int MaxLineCount = 10000; // Implies a 32k per buffer.
 
         /// <summary>
-        /// Maps an id to an index in the dictionary.
+        ///     Maps an id to an index in the dictionary.
         /// </summary>
         readonly Dictionary<String, int> _persistentLine3DTable = new Dictionary<String, int>();
 
         /// <summary>
-        /// Maps an id to an index in the dictionary.
+        ///     Maps an id to an index in the dictionary.
         /// </summary>
         readonly Dictionary<String, int> _persistentLine2DTable = new Dictionary<String, int>();
 
@@ -29,50 +29,50 @@ namespace Gearset.Components {
         readonly VertexPositionColor[] _singleFrameVertices3D;
 
         /// <summary>
-        /// When a persistent line is deleted it's index will be
-        /// stored here so the next one can take it.
+        ///     When a persistent line is deleted it's index will be
+        ///     stored here so the next one can take it.
         /// </summary>
         readonly Queue<int> _freeSpots3D;
 
         /// <summary>
-        /// When a persistent line is deleted it's index will be
-        /// stored here so the next one can take it.
+        ///     When a persistent line is deleted it's index will be
+        ///     stored here so the next one can take it.
         /// </summary>
         readonly Queue<int> _freeSpots2D;
 
         readonly LineDrawerConfig _config;
 
         /// <summary>
-        /// Number of lines to be drawn on this frame. There
-        /// will be twice as vertices in the singleFrameVertices array.
+        ///     Number of lines to be drawn on this frame. There
+        ///     will be twice as vertices in the singleFrameVertices array.
         /// </summary>
         int _singleFrameLine2DCount;
 
         /// <summary>
-        /// Number of lines to be drawn on this frame. There
-        /// will be twice as vertices in the singleFrameVertices array.
+        ///     Number of lines to be drawn on this frame. There
+        ///     will be twice as vertices in the singleFrameVertices array.
         /// </summary>
         int _singleFrameLine3DCount;
 
         /// <summary>
-        /// Number of lines to be drawn on this frame. There
-        /// will be twice as vertices in the singleFrameVertices array.
+        ///     Number of lines to be drawn on this frame. There
+        ///     will be twice as vertices in the singleFrameVertices array.
         /// </summary>
         int _persistentLine3DCount;
 
         /// <summary>
-        /// Number of lines to be drawn on this frame. There
-        /// will be twice as vertices in the singleFrameVertices array.
+        ///     Number of lines to be drawn on this frame. There
+        ///     will be twice as vertices in the singleFrameVertices array.
         /// </summary>
         int _persistentLine2DCount;
 
         /// <summary>
-        /// Defines the way that coordinates will be interpreted in 2D space. Defaults to Screen space.
+        ///     Defines the way that coordinates will be interpreted in 2D space. Defaults to Screen space.
         /// </summary>
         public CoordinateSpace CoordinateSpace;
 
         /// <summary>
-        /// Gets or sets the config for the Line Drawer.
+        ///     Gets or sets the config for the Line Drawer.
         /// </summary>
         public virtual LineDrawerConfig Config { get { return _config; } }
 
@@ -156,10 +156,10 @@ namespace Gearset.Components {
         #region ShowLine (public methods)
 
         /// <summary>
-        /// Draws a line and keeps drawing it, its values can be changed
-        /// by calling ShowLine again with the same key. If you want to
-        /// make more efficient subsequent calls, get the returned index (
-        /// and call it again but with the index overload.
+        ///     Draws a line and keeps drawing it, its values can be changed
+        ///     by calling ShowLine again with the same key. If you want to
+        ///     make more efficient subsequent calls, get the returned index (
+        ///     and call it again but with the index overload.
         /// </summary>
         public int ShowLine(String key, Vector3 v1, Vector3 v2, Color color) {
             var index = 0;
@@ -187,10 +187,10 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Draws a line and keeps drawing it, its values can be changed
-        /// by calling ShowLine again with the same key. If you want to
-        /// make more efficient subsequent calls, get the returned index (
-        /// and call it again but with the index overload.
+        ///     Draws a line and keeps drawing it, its values can be changed
+        ///     by calling ShowLine again with the same key. If you want to
+        ///     make more efficient subsequent calls, get the returned index (
+        ///     and call it again but with the index overload.
         /// </summary>
         public int ShowLine(String key, Vector2 v1, Vector2 v2, Color color) {
             var index = 0;
@@ -217,9 +217,9 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Use this method only once, then if you want to update the line
-        /// use the (int, Vector3, Vector3, Color) overload with the index
-        /// returned by this method.
+        ///     Use this method only once, then if you want to update the line
+        ///     use the (int, Vector3, Vector3, Color) overload with the index
+        ///     returned by this method.
         /// </summary>
         internal int ShowLine(Vector3 v1, Vector3 v2, Color color) {
             int index;
@@ -237,9 +237,9 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Use this method only once, then if you want to update the line
-        /// use the (int, Vector2, Vector2, Color) overload with the index
-        /// returned by this method.
+        ///     Use this method only once, then if you want to update the line
+        ///     use the (int, Vector2, Vector2, Color) overload with the index
+        ///     returned by this method.
         /// </summary>
         internal int ShowLine(Vector2 v1, Vector2 v2, Color color) {
             int index;
@@ -257,8 +257,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Only use this method if you know you have a valid index. You
-        /// can get a valid index by calling the other overlaods.
+        ///     Only use this method if you know you have a valid index. You
+        ///     can get a valid index by calling the other overlaods.
         /// </summary>
         internal void ShowLine(int index, Vector3 v1, Vector3 v2, Color color) {
             if (index + 1 >= _persistentVertices3D.Length)
@@ -270,8 +270,8 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Only use this method if you know you have a valid index. You
-        /// can get a valid index by calling the other overlaods.
+        ///     Only use this method if you know you have a valid index. You
+        ///     can get a valid index by calling the other overlaods.
         /// </summary>
         internal void ShowLine(int index, Vector2 v1, Vector2 v2, Color color) {
             if (index + 1 >= _persistentVertices2D.Length)
@@ -283,7 +283,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Draws a line for one frame.
+        ///     Draws a line for one frame.
         /// </summary>
         public void ShowLineOnce(Vector3 v1, Vector3 v2, Color color) {
             if (!Visible || GearsetResources.GlobalAlpha <= 0)
@@ -299,7 +299,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Draws a line for one frame.
+        ///     Draws a line for one frame.
         /// </summary>
         public void ShowLineOnce(Vector2 v1, Vector2 v2, Color color) {
             if (!Visible || GearsetResources.GlobalAlpha <= 0)
@@ -315,7 +315,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// If a line with the specified key existe, remove it. Else, do nothing.
+        ///     If a line with the specified key existe, remove it. Else, do nothing.
         /// </summary>
         public void DeleteLine3(String key) {
             if (_persistentLine3DTable.ContainsKey(key)) {
@@ -325,7 +325,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// If a line with the specified key existe, remove it. Else, do nothing.
+        ///     If a line with the specified key existe, remove it. Else, do nothing.
         /// </summary>
         public void DeleteLine3(int index) {
             // Make the current line invisible
@@ -337,7 +337,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// If a line with the specified key exists, remove it. Else, do nothing.
+        ///     If a line with the specified key exists, remove it. Else, do nothing.
         /// </summary>
         public void DeleteLine2(String key) {
             if (_persistentLine2DTable.ContainsKey(key)) {
@@ -347,7 +347,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// If a line with the specified key exists, remove it. Else, do nothing.
+        ///     If a line with the specified key exists, remove it. Else, do nothing.
         /// </summary>
         public void DeleteLine2(int index) {
             // Make the current line invisible

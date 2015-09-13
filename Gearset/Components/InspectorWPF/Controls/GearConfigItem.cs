@@ -3,7 +3,6 @@ using System.Windows;
 
 namespace Gearset.Components.InspectorWPF {
     /// <summary>
-    /// 
     /// </summary>
     public partial class GearConfigItem : VisualItemBase {
         bool _isEventFake;

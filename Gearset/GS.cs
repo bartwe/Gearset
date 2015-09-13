@@ -1,33 +1,3 @@
-// Wrapper for Gearset. You should copy this sealed class into your
-// project and it should be used instead of accessing Gearset's
-// methods directly. It allow you to completely enable/disable Gearset
-// by setting/unsetting the USE_GEARSET symbol in your project
-// properties (i.e. Properties -> Build -> Compilation Symbols).
-// This is useful for when you're game is ready for release.
-// 
-// This file and also provide a level of threadsafeness. 
-// If you need it, you can rename this sealed class and move it to your
-// own namespace, or even to Microsoft.Xna.Framework so it's
-// quickly available from most classes in your project.
-// 
-// IMPORTANT: Calling Gearset methods from other threads will work but
-// the results might appear unordered (e.g. out of order log items)
-// 
-// IMPORTANT: This file is auto generated and released with each version
-// of Gearset. Newer version will probably contain new methods and improvements
-// so it's recommended that you don't add code here because then you will
-// have to move it when a new Gearset version is released.
-
-//The MIT License (MIT)
-
-//Copyright (c) 2015 Juan Campa
-
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -39,18 +9,18 @@ using Microsoft.Xna.Framework;
 
 namespace Gearset {
     /// <summary>
-    /// Wrapper for Gearset. It should be used instead of accessing Gearset's
-    /// methods directly as it provides easy removal and threadsafeness.
+    ///     Wrapper for Gearset. It should be used instead of accessing Gearset's
+    ///     methods directly as it provides easy removal and threadsafeness.
     /// </summary>
     public static class Gs {
         /// <summary>
-        /// The thread that initialized and owns this class.
-        /// (As a side note: should always be the main thread of the Game class.)
+        ///     The thread that initialized and owns this class.
+        ///     (As a side note: should always be the main thread of the Game class.)
         /// </summary>
         static Thread _ownerThread;
 
         /// <summary>
-        /// Actions that where queued because the thread that called them was not the owner thread.
+        ///     Actions that where queued because the thread that called them was not the owner thread.
         /// </summary>
         static readonly ConcurrentQueue<Action> QueuedActions;
 
@@ -63,27 +33,27 @@ namespace Gearset {
         public static GearConsole Console { get; set; }
 
         /// <summary>
-        /// This is the component that calls Update and Draw to make Gearset draw.
-        /// You don't need to do anything special with this.
+        ///     This is the component that calls Update and Draw to make Gearset draw.
+        ///     You don't need to do anything special with this.
         /// </summary>
         public static GearsetComponent GearsetComponent { get; private set; }
 
         /// <summary>
-        /// If you're using a transform for your 2D objects (e.g. in the SpriteBatch)
-        /// make sure that Gearset knows about it either by setting it here or using 
-        /// the SetMatrices overload.
+        ///     If you're using a transform for your 2D objects (e.g. in the SpriteBatch)
+        ///     make sure that Gearset knows about it either by setting it here or using
+        ///     the SetMatrices overload.
         /// </summary>
         public static Matrix Transform2D { get { return Console.Transform2D; } set { Console.Transform2D = value; } }
 
         /// <summary>
-        /// Returns the needle position of the curves in Bender. The game can use this
-        /// value to let designers preview curve animations.
+        ///     Returns the needle position of the curves in Bender. The game can use this
+        ///     value to let designers preview curve animations.
         /// </summary>
         public static float BenderNeedlePosition { get { return Console.BenderNeedlePosition; } }
 
         /// <summary>
-        /// This is the method you need to work for Gearset to work on your game.
-        /// Remember to call SetMatrices to make Gearset's camera match yours.
+        ///     This is the method you need to work for Gearset to work on your game.
+        ///     Remember to call SetMatrices to make Gearset's camera match yours.
         /// </summary>
         /// <param name="game">Your game instance</param>
         [Conditional("USE_GEARSET")]
@@ -131,8 +101,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This sealed class will call update on the Debug sealed class so that it can pump
-        /// queued calls from other threads.
+        ///     This sealed class will call update on the Debug sealed class so that it can pump
+        ///     queued calls from other threads.
         /// </summary>
         sealed class GearsetWrapperUpdater : GearsetComponentBase {
             public GearsetWrapperUpdater(Game game)
@@ -151,8 +121,8 @@ namespace Gearset {
         #region SetMatrices
 
         /// <summary>
-        /// Use this method after every Update of your game to update the camera
-        /// matrices so 3D overlays can be drawn correctly.
+        ///     Use this method after every Update of your game to update the camera
+        ///     matrices so 3D overlays can be drawn correctly.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection) {
@@ -168,8 +138,8 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Use this method after every Update of your game to update the camera
-        /// matrices so 3D overlays can be drawn correctly.
+        ///     Use this method after every Update of your game to update the camera
+        ///     matrices so 3D overlays can be drawn correctly.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void SetMatrices(ref Matrix world, ref Matrix view, ref Matrix projection, ref Matrix transform2D) {
@@ -194,9 +164,9 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Wrapper for method execution.
-        /// It checks if the current calling thread is the same that initialized this class.
-        /// If not, then the action is queued to be consumed during the update process.
+        ///     Wrapper for method execution.
+        ///     It checks if the current calling thread is the same that initialized this class.
+        ///     If not, then the action is queued to be consumed during the update process.
         /// </summary>
         /// <param name="action"></param>
         static void EnqueueAction(Action action) {
@@ -208,12 +178,13 @@ namespace Gearset {
         #region Wrappers for Gearset methods
 
         /// <summary>
-        /// Adds or modifiy a key without value on the overlaid tree view.
+        ///     Adds or modifiy a key without value on the overlaid tree view.
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
         [Conditional("USE_GEARSET")]
         public static void Show(String key) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Show(key);
             else
@@ -221,13 +192,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds or modifies a key/value pair to the overlaid tree view.
+        ///     Adds or modifies a key/value pair to the overlaid tree view.
         /// </summary>
         /// <param name="key">A dot-separated list of keys.</param>
         /// <param name="value">The value to show.</param>
         [Conditional("USE_GEARSET")]
         public static void Show(String key, object value) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Show(key, value);
             else
@@ -235,13 +207,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds an action button to the bottom of the game window.
+        ///     Adds an action button to the bottom of the game window.
         /// </summary>
         /// <param name="name">Name of the action as it will appear on the button.</param>
         /// <param name="action">Action to perform when the button is clicked.</param>
         [Conditional("USE_GEARSET")]
         public static void AddQuickAction(String name, Action action) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.AddQuickAction(name, action);
             else
@@ -249,13 +222,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds the provided value to the plot with the provided plotName.
+        ///     Adds the provided value to the plot with the provided plotName.
         /// </summary>
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
         [Conditional("USE_GEARSET")]
         public static void Plot(String plotName, float value) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Plot(plotName, value);
             else
@@ -263,15 +237,16 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds the provided value to the plot with the provided plotName. At the same time modifies
-        /// the history length of the sampler.
+        ///     Adds the provided value to the plot with the provided plotName. At the same time modifies
+        ///     the history length of the sampler.
         /// </summary>
         /// <param name="plotName">A name that represent a data set.</param>
         /// <param name="value">The value to add to the sampler</param>
         /// <param name="historyLength">The number of samples that the sampler will remember at any given time.</param>
         [Conditional("USE_GEARSET")]
         public static void Plot(String plotName, float value, int historyLength) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Plot(plotName, value, historyLength);
             else
@@ -279,13 +254,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Los a message to the specified stream.
+        ///     Los a message to the specified stream.
         /// </summary>
         /// <param name="streamName">Name of the Stream to log the message to</param>
         /// <param name="content">Message to log</param>
         [Conditional("USE_GEARSET")]
         public static void Log(String streamName, String content) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(streamName, content);
             else
@@ -293,12 +269,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Logs the specified message in the default stream.
+        ///     Logs the specified message in the default stream.
         /// </summary>
         /// <param name="content">The message to log.</param>
         [Conditional("USE_GEARSET")]
         public static void Log(String content) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(content);
             else
@@ -306,14 +283,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
         /// <param name="arg0">The first format parameter</param>
         [Conditional("USE_GEARSET")]
         public static void Log(String streamName, String format, Object arg0) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(streamName, format, arg0);
             else
@@ -321,7 +299,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -329,7 +307,8 @@ namespace Gearset {
         /// <param name="arg1">The second format parameter</param>
         [Conditional("USE_GEARSET")]
         public static void Log(String streamName, String format, Object arg0, Object arg1) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(streamName, format, arg0, arg1);
             else
@@ -337,7 +316,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Logs a formatted string to the specified stream.
+        ///     Logs a formatted string to the specified stream.
         /// </summary>
         /// <param name="streamName">Stream to log to</param>
         /// <param name="format">The format string</param>
@@ -346,7 +325,8 @@ namespace Gearset {
         /// <param name="arg2">The third format parameter</param>
         [Conditional("USE_GEARSET")]
         public static void Log(String streamName, String format, Object arg0, Object arg1, Object arg2) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(streamName, format, arg0, arg1, arg2);
             else
@@ -355,7 +335,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void Log(String streamName, String format, params Object[] args) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Log(streamName, format, args);
             else
@@ -363,11 +344,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a dialog asking for a filename and saves the log to the specified file.
+        ///     Shows a dialog asking for a filename and saves the log to the specified file.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void SaveLogToFile() {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.SaveLogToFile();
             else
@@ -375,12 +357,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Saves the log to the specified file.
+        ///     Saves the log to the specified file.
         /// </summary>
         /// <param name="filename">Name of the file to save the log (usually ending in .log)</param>
         [Conditional("USE_GEARSET")]
         public static void SaveLogToFile(string filename) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.SaveLogToFile(filename);
             else
@@ -388,11 +371,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowMark(String key, Vector3 position, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowMark(key, position, color);
             else
@@ -400,11 +384,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowMark(String key, Vector3 position) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowMark(key, position);
             else
@@ -412,11 +397,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowMark(String key, Vector2 position, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowMark(key, position, color);
             else
@@ -424,11 +410,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// This is an experimental feature.
+        ///     This is an experimental feature.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowMark(String key, Vector2 position) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowMark(key, position);
             else
@@ -436,12 +423,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows huge text on the center of the screen which fades
-        /// out quickly.
+        ///     Shows huge text on the center of the screen which fades
+        ///     out quickly.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void Alert(String message) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Alert(message);
             else
@@ -449,11 +437,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLine(String key, Vector3 v1, Vector3 v2) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLine(key, v1, v2);
             else
@@ -461,11 +450,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLine(String key, Vector3 v1, Vector3 v2, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLine(key, v1, v2, color);
             else
@@ -473,11 +463,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLineOnce(Vector3 v1, Vector3 v2) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLineOnce(v1, v2);
             else
@@ -485,11 +476,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLineOnce(Vector3 v1, Vector3 v2, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLineOnce(v1, v2, color);
             else
@@ -497,11 +489,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLine(String key, Vector2 v1, Vector2 v2) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLine(key, v1, v2);
             else
@@ -509,11 +502,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points.
+        ///     Draws a line between two points.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLine(String key, Vector2 v1, Vector2 v2, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLine(key, v1, v2, color);
             else
@@ -521,11 +515,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLineOnce(Vector2 v1, Vector2 v2) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLineOnce(v1, v2);
             else
@@ -533,11 +528,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Draws a line between two points for one frame.
+        ///     Draws a line between two points for one frame.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowLineOnce(Vector2 v1, Vector2 v2, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLineOnce(v1, v2, color);
             else
@@ -545,13 +541,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="key">Name of the persistent box</param>
-        /// <param name="box">The box to draw</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="key">Name of the persistent box</param>
+        ///     <param name="box">The box to draw</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBox(String key, BoundingBox box) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBox(key, box);
             else
@@ -559,13 +556,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBox(String key, Vector3 min, Vector3 max) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBox(key, min, max);
             else
@@ -573,14 +571,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="key">Name of the persistent box</param>
-        /// <param name="box">The box to draw</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="key">Name of the persistent box</param>
+        ///     <param name="box">The box to draw</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBox(String key, BoundingBox box, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBox(key, box, color);
             else
@@ -588,13 +587,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBox(String key, Vector3 min, Vector3 max, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBox(key, min, max, color);
             else
@@ -602,12 +602,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="box">The BoundingBox to draw</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="box">The BoundingBox to draw</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBoxOnce(BoundingBox box) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBoxOnce(box);
             else
@@ -615,9 +616,9 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBoxOnce(Vector3 min, Vector3 max) {
@@ -630,13 +631,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="box">The BoundingBox to draw</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="box">The BoundingBox to draw</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBoxOnce(BoundingBox box, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBoxOnce(box, color);
             else
@@ -644,14 +646,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows an axis aligned bounding box for one frame.
-        /// <param name="min">Minimum values of the box in each axis</param>
-        /// <param name="max">Maximum values of the box in each axis</param>
-        /// <param name="color">The color that will be used to draw the box</param>
+        ///     Shows an axis aligned bounding box for one frame.
+        ///     <param name="min">Minimum values of the box in each axis</param>
+        ///     <param name="max">Maximum values of the box in each axis</param>
+        ///     <param name="color">The color that will be used to draw the box</param>
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ShowBoxOnce(Vector3 min, Vector3 max, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowBoxOnce(min, max, color);
             else
@@ -660,7 +663,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphere(String key, BoundingSphere sphere) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphere(key, sphere);
             else
@@ -669,7 +673,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphere(String key, Vector3 center, float radius) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphere(key, center, radius);
             else
@@ -678,7 +683,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphere(String key, BoundingSphere sphere, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphere(key, sphere, color);
             else
@@ -687,7 +693,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphere(String key, Vector3 center, float radius, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphere(key, center, radius, color);
             else
@@ -696,7 +703,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphereOnce(BoundingSphere sphere) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphereOnce(sphere);
             else
@@ -705,7 +713,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphereOnce(Vector3 center, float radius) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphereOnce(center, radius);
             else
@@ -714,7 +723,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowCylinderOnce(Vector3 center, Vector3 radius) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowCylinderOnce(center, radius);
             else
@@ -723,7 +733,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphereOnce(BoundingSphere sphere, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphereOnce(sphere, color);
             else
@@ -732,7 +743,8 @@ namespace Gearset {
 
         [Conditional("USE_GEARSET")]
         public static void ShowSphereOnce(Vector3 center, float radius, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowSphereOnce(center, radius, color);
             else
@@ -740,13 +752,17 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified position (the text will be the label's name).
+        ///     Shows a label at the specified position (the text will be the label's name).
         /// </summary>
-        /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
+        /// <param name="name">
+        ///     Name of the label as well of the text to show. Subsequent calls with the same name will modify this
+        ///     label
+        /// </param>
         /// <param name="position">Position where the label will be shown</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector2 position) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position);
             else
@@ -754,14 +770,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector2 position, String text) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position, text);
             else
@@ -769,7 +786,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
@@ -777,7 +794,8 @@ namespace Gearset {
         /// <param name="color">Color of the text</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector2 position, String text, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position, text, color);
             else
@@ -785,13 +803,17 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified position (the text will be the label's name).
+        ///     Shows a label at the specified position (the text will be the label's name).
         /// </summary>
-        /// <param name="name">Name of the label as well of the text to show. Subsequent calls with the same name will modify this label</param>
+        /// <param name="name">
+        ///     Name of the label as well of the text to show. Subsequent calls with the same name will modify this
+        ///     label
+        /// </param>
         /// <param name="position">Position where the label will be shown</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector3 position) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position);
             else
@@ -799,14 +821,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
         /// <param name="text">Text to show on the label</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector3 position, String text) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position, text);
             else
@@ -814,7 +837,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a label at the specified positon that displays the specified text.
+        ///     Shows a label at the specified positon that displays the specified text.
         /// </summary>
         /// <param name="name">Name of the label. Subsequent calls with the same name will modify this label</param>
         /// <param name="position">Position of the label</param>
@@ -822,7 +845,8 @@ namespace Gearset {
         /// <param name="color">Color of the text</param>
         [Conditional("USE_GEARSET")]
         public static void ShowLabel(String name, Vector3 position, String text, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowLabel(name, position, text, color);
             else
@@ -830,11 +854,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Sends an object to the Inspector window.
+        ///     Sends an object to the Inspector window.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void Inspect(String name, Object o) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Inspect(name, o);
             else
@@ -842,11 +867,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Sends an object to the Inspector window.
+        ///     Sends an object to the Inspector window.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void Inspect(String name, Object o, bool autoExpand) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.Inspect(name, o, autoExpand);
             else
@@ -854,11 +880,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Removes an object from the Inspector window.
+        ///     Removes an object from the Inspector window.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void RemoveInspect(Object o) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.RemoveInspect(o);
             else
@@ -866,11 +893,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Clears the Inspector Window.
+        ///     Clears the Inspector Window.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ClearInspector() {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ClearInspector();
             else
@@ -878,14 +906,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Sets the function that is used by Gearset when a query is written to the
-        /// Finder by the user. It usually searches through your game objects and returns
-        /// a collection of the ones whose name or Type matches the query.
-        /// A search function receives a String and return IEnumerable (e.g. a List)
+        ///     Sets the function that is used by Gearset when a query is written to the
+        ///     Finder by the user. It usually searches through your game objects and returns
+        ///     a collection of the ones whose name or Type matches the query.
+        ///     A search function receives a String and return IEnumerable (e.g. a List)
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void SetFinderSearchFunction(SearchFunction searchFunction) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.SetFinderSearchFunction(searchFunction);
             else
@@ -893,14 +922,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
         [Conditional("USE_GEARSET")]
         public static void ShowTransform(String name, Matrix transform, float axisScale) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowTransform(name, transform, axisScale);
             else
@@ -908,13 +938,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a persistent Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="name">Name of the persistent Matrix</param>
         /// <param name="transform">Transform to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowTransform(String name, Matrix transform) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowTransform(name, transform);
             else
@@ -922,12 +953,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="transform">Transform to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowTransformOnce(Matrix transform) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowTransformOnce(transform);
             else
@@ -935,13 +967,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
+        ///     Shows a one-frame Matrix Transform on the screen as 3 orthogonal vectors.
         /// </summary>
         /// <param name="transform">Transform to draw</param>
         /// <param name="axisScale">Scale to apply to each axis</param>
         [Conditional("USE_GEARSET")]
         public static void ShowTransformOnce(Matrix transform, float axisScale) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowTransformOnce(transform, axisScale);
             else
@@ -949,7 +982,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Vector3 on the screen as an arrow.
+        ///     Shows a persistent Vector3 on the screen as an arrow.
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
@@ -957,7 +990,8 @@ namespace Gearset {
         /// <param name="color">Color of the arrow to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector3(String name, Vector3 location, Vector3 vector, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector3(name, location, vector, color);
             else
@@ -965,14 +999,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Vector3 on the screen as an arrow.
+        ///     Shows a persistent Vector3 on the screen as an arrow.
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector3(String name, Vector3 location, Vector3 vector) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector3(name, location, vector);
             else
@@ -980,13 +1015,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a Vector3 on the screen as an arrow for one frame.
+        ///     Shows a Vector3 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector3Once(Vector3 location, Vector3 vector) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector3Once(location, vector);
             else
@@ -994,14 +1030,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a Vector3 on the screen as an arrow for one frame.
+        ///     Shows a Vector3 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector3Once(Vector3 location, Vector3 vector, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector3Once(location, vector, color);
             else
@@ -1009,7 +1046,7 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
+        ///     Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
@@ -1017,7 +1054,8 @@ namespace Gearset {
         /// <param name="color">Color of the arrow to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector2(String name, Vector2 location, Vector2 vector, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector2(name, location, vector, color);
             else
@@ -1025,14 +1063,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
+        ///     Shows a persistent Vector2 on the screen as an arrow (Screen space coordinates).
         /// </summary>
         /// <param name="name">Name of the persistent Vector</param>
         /// <param name="location">Location of the vector to draw (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector2(String name, Vector2 location, Vector2 vector) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector2(name, location, vector);
             else
@@ -1040,13 +1079,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a Vector2 on the screen as an arrow for one frame (Screen space coordinates).
+        ///     Shows a Vector2 on the screen as an arrow for one frame (Screen space coordinates).
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector2Once(Vector2 location, Vector2 vector) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector2Once(location, vector);
             else
@@ -1054,14 +1094,15 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Shows a Vector2 on the screen as an arrow for one frame.
+        ///     Shows a Vector2 on the screen as an arrow for one frame.
         /// </summary>
         /// <param name="location">Location of the vector to show (i.e. position of the start of the arrow)</param>
         /// <param name="vector">Vector to show</param>
         /// <param name="color">Color of the arrow to draw</param>
         [Conditional("USE_GEARSET")]
         public static void ShowVector2Once(Vector2 location, Vector2 vector, Color color) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ShowVector2Once(location, vector, color);
             else
@@ -1069,13 +1110,14 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Adds a curve for editing in Bender
+        ///     Adds a curve for editing in Bender
         /// </summary>
         /// <param name="name">Name of the curve to add. Group using dot separators.</param>
         /// <param name="curve">Curve to edit in Bender.</param>
         [Conditional("USE_GEARSET")]
         public static void AddCurve(String name, Curve curve) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.AddCurve(name, curve);
             else
@@ -1083,11 +1125,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Removes the provided curve from Bender.
+        ///     Removes the provided curve from Bender.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void RemoveCurve(Curve curve) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.RemoveCurve(curve);
             else
@@ -1095,12 +1138,13 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Removes a Curve or a Group by name. The complete dot-separated
-        /// path to the curve or group must be given.
+        ///     Removes a Curve or a Group by name. The complete dot-separated
+        ///     path to the curve or group must be given.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void RemoveCurveOrGroup(String name) {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.RemoveCurveOrGroup(name);
             else
@@ -1108,11 +1152,12 @@ namespace Gearset {
         }
 
         /// <summary>
-        /// Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
+        ///     Clears all Gearset Components erasing all retained data. Inspector and Logger won't be cleared.
         /// </summary>
         [Conditional("USE_GEARSET")]
         public static void ClearAll() {
-            if (!_initialized) return;
+            if (!_initialized)
+                return;
             if (SameThread())
                 Console.ClearAll();
             else

@@ -1,6 +1,6 @@
 ﻿namespace Gearset.Components.CurveEditorControl {
     /// <summary>
-    /// Changes the tangent value of a given key.
+    ///     Changes the tangent value of a given key.
     /// </summary>
     public sealed class ChangeTangentCommand : CurveEditorCommand {
         readonly long _affectedKey;
@@ -13,7 +13,7 @@
         float _tangentValue;
 
         /// <summary>
-        /// Creates a new command to select the given keys. You can pass null to deselect all.
+        ///     Creates a new command to select the given keys. You can pass null to deselect all.
         /// </summary>
         public ChangeTangentCommand(CurveEditorControl2 control, long keyId, TangentSelectionMode selectedTangent)
             : base(control) {
@@ -45,9 +45,9 @@
         }
 
         /// <summary>
-        /// This method will update the offset and update the key tangent accordingly.
-        /// This is to be used while dragging, before the mouse is released and the command
-        /// added (without calling Do()) to the history.
+        ///     This method will update the offset and update the key tangent accordingly.
+        ///     This is to be used while dragging, before the mouse is released and the command
+        ///     added (without calling Do()) to the history.
         /// </summary>
         public void UpdateOffset(float tangent) {
             ChangeTangent(tangent);
@@ -55,7 +55,7 @@
         }
 
         /// <summary>
-        /// Performs the actual movement of the keys.
+        ///     Performs the actual movement of the keys.
         /// </summary>
         void ChangeTangent(float tangent) {
             var key = Control.Keys[_affectedKey];

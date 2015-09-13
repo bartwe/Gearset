@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gearset.Components {
     /// <summary>
-    /// Shows important alerts on the screen
+    ///     Shows important alerts on the screen
     /// </summary>
     public sealed class Alerter : Gear {
         readonly List<AlertItem> _alerts = new List<AlertItem>();
@@ -13,8 +13,8 @@ namespace Gearset.Components {
         readonly float _textHeight;
 
         /// <summary>
-        /// We use this list to delete elements that are not
-        /// being shown anymore.
+        ///     We use this list to delete elements that are not
+        ///     being shown anymore.
         /// </summary>
         readonly LinkedList<AlertItem> _toRemove = new LinkedList<AlertItem>();
 
@@ -40,7 +40,8 @@ namespace Gearset.Components {
         public void Alert(String message) {
             _alerts.Add(new AlertItem(message, _alertPosition, 40));
             _alertPosition.Y += 48;
-            if (_alertPosition.Y >= 300) _alertPosition.Y = 150;
+            if (_alertPosition.Y >= 300)
+                _alertPosition.Y = 150;
         }
 
         #endregion
@@ -49,8 +50,10 @@ namespace Gearset.Components {
 
         public override void Update(GameTime gameTime) {
             foreach (var i in _alerts) {
-                if (i.RemainingTime > 0) i.RemainingTime--;
-                else if (i.RemainingTime == 0) _toRemove.AddLast(i);
+                if (i.RemainingTime > 0)
+                    i.RemainingTime--;
+                else if (i.RemainingTime == 0)
+                    _toRemove.AddLast(i);
             }
             foreach (var i in _toRemove) {
                 _alerts.Remove(i);
@@ -65,7 +68,8 @@ namespace Gearset.Components {
 
         public override void Draw(GameTime gameTime) {
             // Only draw if we're doing a spriteBatch passs
-            if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass) return;
+            if (GearsetResources.CurrentRenderPass != RenderPass.SpriteBatchPass)
+                return;
             foreach (var i in _alerts) {
                 var textWidth = GearsetResources.FontAlert.MeasureString(i.Text).X;
                 var origin = new Vector2(textWidth * .5f, _textHeight * .5f);

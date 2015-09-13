@@ -64,7 +64,7 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Adds the provided curve to Bender
+        ///     Adds the provided curve to Bender
         /// </summary>
         /// <param name="name">The name of the curve, a dot-separated path can be used to group curves</param>
         /// <param name="curve">The curve to add to Bender</param>
@@ -73,15 +73,15 @@ namespace Gearset.Components {
         }
 
         /// <summary>
-        /// Removes the provided Curve from Bender.
+        ///     Removes the provided Curve from Bender.
         /// </summary>
         public void RemoveCurve(Curve curve) {
             curveTreeViewModel.RemoveCurve(curve);
         }
 
         /// <summary>
-        /// Removes a Curve or a Group by name. The complete dot-separated
-        /// path to the curve or group must be given.
+        ///     Removes a Curve or a Group by name. The complete dot-separated
+        ///     path to the curve or group must be given.
         /// </summary>
         public void RemoveCurveOrGroup(String name) {
             curveTreeViewModel.RemoveCurveOrGroup(name);
