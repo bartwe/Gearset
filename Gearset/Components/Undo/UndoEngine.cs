@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Gearset {
     public sealed class UndoEngine {
@@ -42,12 +41,6 @@ namespace Gearset {
                     command.Undo();
                     _undoStack.RemoveLast();
                     _redoStack.AddLast(command);
-                }
-                else {
-#if DEBUG
-                    // WHY CANT UNDO?
-                    Debugger.Break();
-#endif
                 }
             }
         }
