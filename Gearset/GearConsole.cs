@@ -578,44 +578,44 @@ namespace Gearset {
         /// </summary>
         void CheckNewVersion(Object state) {
 #if WINDOWS
-            var webRequest = (HttpWebRequest)WebRequest.Create("http://www.thecomplot.com/latestversion");
-            webRequest.UserAgent = typeof(GearConsole).Assembly.GetName().Version.ToString();
-            webRequest.Method = "GET";
-            webRequest.Proxy = WebRequest.GetSystemWebProxy();
-            webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
-            webRequest.Credentials = CredentialCache.DefaultCredentials;
+            //var webRequest = (HttpWebRequest)WebRequest.Create("http://www.thecomplot.com/latestversion");
+            //webRequest.UserAgent = typeof(GearConsole).Assembly.GetName().Version.ToString();
+            //webRequest.Method = "GET";
+            //webRequest.Proxy = WebRequest.GetSystemWebProxy();
+            //webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
+            //webRequest.Credentials = CredentialCache.DefaultCredentials;
 
-            try {
-                var response = webRequest.GetResponse();
-                using (TextReader reader = new StreamReader(response.GetResponseStream())) {
-                    var latestVersion = reader.ReadLine();
-                    var latestVersionNumbers = latestVersion.Split('.');
-                    var currentVersionNumbers = typeof(GearConsole).Assembly.GetName().Version.ToString().Split('.');
-                    // WARNING: 2 bools to represent 3 states. Both true is invalid.
-                    var newVersionAvailable = false;
-                    var currentVersionIsDev = false;
-                    for (var i = 0; i < latestVersionNumbers.Length; i++) {
-                        int current, latest;
-                        if (int.TryParse(currentVersionNumbers[i], out current) && int.TryParse(latestVersionNumbers[i], out latest)) {
-                            if (latest > current) {
-                                newVersionAvailable = true;
-                                break;
-                            }
-                            if (latest < current) {
-                                currentVersionIsDev = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (newVersionAvailable) {
-                        Inspector.AddNotice("New Gearset version available", "http://www.thecomplot.com/gearsetdownload.html", "Get it now");
-                    }
-                    else if (currentVersionIsDev) {
-                        Inspector.AddNotice("Unreleased version, do not distribute", "http://www.thecomplot.com/gearsetdownload.html", "Get latest release");
-                    }
-                }
-            }
-            catch {}
+            //try {
+            //    var response = webRequest.GetResponse();
+            //    using (TextReader reader = new StreamReader(response.GetResponseStream())) {
+            //        var latestVersion = reader.ReadLine();
+            //        var latestVersionNumbers = latestVersion.Split('.');
+            //        var currentVersionNumbers = typeof(GearConsole).Assembly.GetName().Version.ToString().Split('.');
+            //        // WARNING: 2 bools to represent 3 states. Both true is invalid.
+            //        var newVersionAvailable = false;
+            //        var currentVersionIsDev = false;
+            //        for (var i = 0; i < latestVersionNumbers.Length; i++) {
+            //            int current, latest;
+            //            if (int.TryParse(currentVersionNumbers[i], out current) && int.TryParse(latestVersionNumbers[i], out latest)) {
+            //                if (latest > current) {
+            //                    newVersionAvailable = true;
+            //                    break;
+            //                }
+            //                if (latest < current) {
+            //                    currentVersionIsDev = true;
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //        if (newVersionAvailable) {
+            //            Inspector.AddNotice("New Gearset version available", "http://www.thecomplot.com/gearsetdownload.html", "Get it now");
+            //        }
+            //        else if (currentVersionIsDev) {
+            //            Inspector.AddNotice("Unreleased version, do not distribute", "http://www.thecomplot.com/gearsetdownload.html", "Get latest release");
+            //        }
+            //    }
+            //}
+            //catch {}
 
 #endif
         }
