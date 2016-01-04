@@ -64,7 +64,7 @@ namespace Gearset.Components {
             }
         }
 
-        CurveTreeLeaf FindContainerLeaf(CurveTreeNode node, Curve curve) {
+        static CurveTreeLeaf FindContainerLeaf(CurveTreeNode node, Curve curve) {
             for (var i = node.Children.Count - 1; i >= 0; i--) {
                 var leaf = node.Children[i] as CurveTreeLeaf;
                 if (leaf != null && ReferenceEquals(curve, leaf.Curve.Curve)) {
@@ -150,7 +150,7 @@ namespace Gearset.Components {
             //}
         }
 
-        CurveTreeNode GetChildNode(CurveTreeNode node, string name) {
+        static CurveTreeNode GetChildNode(CurveTreeNode node, string name) {
             foreach (var item in node.Children) {
                 if (item.Name == name)
                     return item;

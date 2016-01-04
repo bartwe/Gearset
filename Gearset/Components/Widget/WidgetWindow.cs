@@ -52,7 +52,7 @@ namespace Gearset.Components {
 
         public void XdtkWidget_Loaded(object sender, RoutedEventArgs e) {
             var wndHelper = new WindowInteropHelper(this);
-            var exStyle = (int)GetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GwlExstyle);
+            var exStyle = (int)NativeMethods.GetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GwlExstyle);
             exStyle |= (int)ExtendedWindowStyles.WsExToolwindow;
             SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
@@ -70,22 +70,22 @@ namespace Gearset.Components {
             // ...    
         }
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+        static class NativeMethods {
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetWindowLong(IntPtr hWnd, Int32 nIndex);
+        }
 
         public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong) {
             var error = 0;
             var result = IntPtr.Zero; // Win32 SetWindowLong doesn't clear error on success
             SetLastError(0);
             if (IntPtr.Size == 4) {
-                // use SetWindowLong
-                var tempResult = IntSetWindowLong(hWnd, nIndex, IntPtrToInt32(dwNewLong));
+                var tempResult = SetWindowLong(hWnd, nIndex, IntPtrToInt32(dwNewLong));
                 error = Marshal.GetLastWin32Error();
                 result = new IntPtr(tempResult);
             }
             else {
-                // use SetWindowLongPtr
-                result = IntSetWindowLongPtr(hWnd, nIndex, dwNewLong);
+                result = SetWindowLongPtr(hWnd, nIndex, dwNewLong);
                 error = Marshal.GetLastWin32Error();
             }
             if ((result == IntPtr.Zero) && (error != 0)) {
@@ -94,18 +94,18 @@ namespace Gearset.Components {
             return result;
         }
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", SetLastError = true)]
-        static extern IntPtr IntSetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr SetWindowLongPtr(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong);
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowLong", SetLastError = true)]
-        static extern Int32 IntSetWindowLong(IntPtr hWnd, int nIndex, Int32 dwNewLong);
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern Int32 SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
         static int IntPtrToInt32(IntPtr intPtr) {
             return unchecked((int)intPtr.ToInt64());
         }
 
         [DllImport("kernel32.dll", EntryPoint = "SetLastError")]
-        public static extern void SetLastError(int dwErrorCode);
+        public static extern void SetLastError(Int32 dwErrorCode);
 
         #endregion
     }

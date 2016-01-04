@@ -95,7 +95,7 @@ namespace Gearset.Components {
         ///     The default search function. It will search through the GameComponentCollection
         ///     of the Game.
         /// </summary>
-        FinderResult DefaultSearchFunction(String queryString) {
+        static FinderResult DefaultSearchFunction(String queryString) {
             var result = new FinderResult();
             var searchParams = queryString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 

@@ -281,7 +281,7 @@ namespace Gearset.Components.Logger {
             LogItems.Enqueue(new LogItem { Stream = _defaultStream, Content = message, UpdateNumber = GearsetResources.Console.UpdateCount });
         }
 
-        Visual GetDescendantByType(Visual element, Type type) {
+        static Visual GetDescendantByType(Visual element, Type type) {
             if (element == null)
                 return null;
             if (element.GetType() == type)

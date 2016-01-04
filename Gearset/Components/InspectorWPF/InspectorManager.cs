@@ -157,7 +157,7 @@ namespace Gearset.Components.InspectorWPF {
             ((CollectionView)Window.TreeView1.ItemsSource).Refresh();
         }
 
-        void UpdateFilterRecursively(InspectorNode node) {
+        static void UpdateFilterRecursively(InspectorNode node) {
             if (node.ChildrenView != null) {
                 foreach (var child in node.Children) {
                     UpdateFilterRecursively(child);

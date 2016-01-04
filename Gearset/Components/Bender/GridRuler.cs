@@ -167,7 +167,7 @@ namespace Gearset.Components.CurveEditorControl {
             Mouse.Capture(null);
         }
 
-        void CurveEditorControl_MouseWheel(object sender, MouseWheelEventArgs e) {}
+        static void CurveEditorControl_MouseWheel(object sender, MouseWheelEventArgs e) {}
 
         #endregion
 

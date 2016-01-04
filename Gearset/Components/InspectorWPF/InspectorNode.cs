@@ -569,7 +569,7 @@ namespace Gearset.Components.InspectorWPF {
             }
         }
 
-        void CollectionViewSource_Filter(object sender, FilterEventArgs e) {
+        static void CollectionViewSource_Filter(object sender, FilterEventArgs e) {
             e.Accepted = GearsetResources.Console.Inspector.FilterPredicate(e.Item);
         }
 

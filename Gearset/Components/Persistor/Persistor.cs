@@ -122,7 +122,7 @@ namespace Gearset.Components.Persistor {
         ///     to the value value. If the fields aren't of the same type
         ///     it will be silently ignored.
         /// </summary>
-        void TrySetValue(IPersistent o, FieldInfo info, Object value) {
+        static void TrySetValue(IPersistent o, FieldInfo info, Object value) {
             if (value.GetType() == info.FieldType)
                 info.SetValue(o, value);
         }
@@ -132,7 +132,7 @@ namespace Gearset.Components.Persistor {
         ///     to the value value. If the fields aren't of the same type
         ///     it will be silently ignored.
         /// </summary>
-        void TrySetValue(IPersistent o, PropertyInfo info, Object value) {
+        static void TrySetValue(IPersistent o, PropertyInfo info, Object value) {
             if (value.GetType() == info.PropertyType)
                 info.SetValue(o, value, null);
         }

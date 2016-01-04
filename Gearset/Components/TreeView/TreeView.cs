@@ -163,7 +163,7 @@ namespace Gearset.Components {
         }
 
 
-        void DrawText(String text, Vector2 drawPosition) {
+        static void DrawText(String text, Vector2 drawPosition) {
             var color = new Color(1, 1, 1, GearsetResources.GlobalAlpha) * GearsetResources.GlobalAlpha;
             var shadowColor = new Color(0, 0, 0, GearsetResources.GlobalAlpha) * GearsetResources.GlobalAlpha;
 

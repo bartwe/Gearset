@@ -261,13 +261,13 @@ namespace Gearset {
             Settings.PlotterConfig.Clear();
         }
 
-        void OnExit(Object sender, EventArgs args) {
+        static void OnExit(Object sender, EventArgs args) {
 #if WINDOWS
             GearsetSettings.Save();
 #endif
         }
 
-        void BackgroundSave(Object state) {
+        static void BackgroundSave(Object state) {
             GearsetSettings.Save();
         }
 
@@ -415,7 +415,7 @@ namespace Gearset {
             _game.GraphicsDevice.DeviceReset += GraphicsDevice_DeviceReset;
         }
 
-        void RecreateGraphicResources() {
+        static void RecreateGraphicResources() {
             GearsetResources.Effect = new BasicEffect(GearsetResources.Device);
             GearsetResources.Effect2D = new BasicEffect(GearsetResources.Device);
             GearsetResources.SpriteBatch = new SpriteBatch(GearsetResources.Device);
@@ -495,7 +495,7 @@ namespace Gearset {
 #endif
         }
 
-        void GameWindow_Activated(object sender, EventArgs e) {
+        static void GameWindow_Activated(object sender, EventArgs e) {
             //if (Inspector.Window.IsVisible)
             //{
             //    //Inspector.Window.WindowState = WindowState.Minimized;
@@ -576,7 +576,7 @@ namespace Gearset {
         ///     Check if the latest version posted on The Complot site is different
         ///     from our current version.
         /// </summary>
-        void CheckNewVersion(Object state) {
+        static void CheckNewVersion(Object state) {
 #if WINDOWS
             //var webRequest = (HttpWebRequest)WebRequest.Create("http://www.thecomplot.com/latestversion");
             //webRequest.UserAgent = typeof(GearConsole).Assembly.GetName().Version.ToString();
@@ -1567,7 +1567,7 @@ namespace Gearset {
             }
         }
 
-        void UpdateRecursively(Gear gear, GameTime gameTime) {
+        static void UpdateRecursively(Gear gear, GameTime gameTime) {
             if (gear.Enabled) {
                 foreach (var child in gear.Children) {
                     UpdateRecursively(child, gameTime);
@@ -1671,7 +1671,7 @@ namespace Gearset {
             #endregion
         }
 
-        void DrawRecursively(Gear gear, GameTime gameTime) {
+        static void DrawRecursively(Gear gear, GameTime gameTime) {
             if (gear.Visible) {
                 gear.Draw(gameTime);
                 foreach (var child in gear.Children) {

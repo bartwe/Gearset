@@ -23,7 +23,7 @@ namespace Gearset.UI {
             _overCollidingSet = new List<LayoutBox>();
         }
 
-        bool HaveFocus { get { return true; } } // return parent.Game.IsActive; } }
+        static bool HaveFocus { get { return true; } } // return parent.Game.IsActive; } }
 
         /// <summary>
         ///     True if the mouse was just pressed, last one frame true.
@@ -78,7 +78,7 @@ namespace Gearset.UI {
             }
         }
 
-        void FindCollidingBoxes(List<LayoutBox> collidingSet, Vector2 position) {
+        static void FindCollidingBoxes(List<LayoutBox> collidingSet, Vector2 position) {
             collidingSet.Clear();
             foreach (var box in UiManager.Boxes) {
                 if (box.Contains(position))
