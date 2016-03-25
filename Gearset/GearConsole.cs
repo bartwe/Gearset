@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,7 +20,6 @@ using Gearset.Components.InspectorWPF;
 using Gearset.Components.Logger;
 #endif
 #if WINDOWS
-using System.Net;
 
 #endif
 
