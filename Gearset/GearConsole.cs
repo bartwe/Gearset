@@ -18,6 +18,7 @@ using TreeView = Gearset.Components.TreeView;
 #if WINDOWS
 using Gearset.Components.InspectorWPF;
 using Gearset.Components.Logger;
+
 #endif
 #if WINDOWS
 
