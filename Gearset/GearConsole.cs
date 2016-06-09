@@ -1128,6 +1128,12 @@ namespace Gearset {
             SphereDrawer.ShowCylinderOnce(center, radius);
         }
 
+        public void ShowCylinderOnce(Vector3 center, Vector3 radius, Color color) {
+            if (!Enabled)
+                return;
+            SphereDrawer.ShowCylinderOnce(center, radius, color);
+        }
+
         /// <summary>
         ///     Shows a sphere on the screen for one frame.
         ///     <param name="min">Minimum values of the box in each axis</param>

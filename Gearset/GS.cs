@@ -732,6 +732,16 @@ namespace Gearset {
         }
 
         [Conditional("USE_GEARSET")]
+        public static void ShowCylinderOnce(Vector3 center, Vector3 radius, Color color) {
+            if (!_initialized)
+                return;
+            if (SameThread())
+                Console.ShowCylinderOnce(center, radius, color);
+            else
+                EnqueueAction(() => Console.ShowCylinderOnce(center, radius, color));
+        }
+
+        [Conditional("USE_GEARSET")]
         public static void ShowSphereOnce(BoundingSphere sphere, Color color) {
             if (!_initialized)
                 return;
