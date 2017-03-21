@@ -392,7 +392,6 @@ namespace Gearset.Components.InspectorWPF {
                 if (node.Target == o) {
                     container = node;
                     break;
-                    ;
                 }
             }
             if (container != null)
