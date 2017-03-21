@@ -108,7 +108,7 @@ namespace Gearset.Components.Persistor {
                             if (info is FieldInfo) {
                                 TrySetValue(o, (FieldInfo)info, _data[id][info.Name]);
                             }
-                            else if (info is FieldInfo) {
+                            else if (info is PropertyInfo) {
                                 TrySetValue(o, (PropertyInfo)info, _data[id][info.Name]);
                             }
                         }
